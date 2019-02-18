@@ -61,10 +61,13 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
 ### Install via composer
 
 Add Flywork to composer.json configuration file.
+
 ```
 $ composer require interart/flywork
 ```
+
 Then update the composer
+
 ```
 $ composer update
 ```
