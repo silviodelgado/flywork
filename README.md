@@ -56,6 +56,22 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
   * [Minify](https://www.minifier.org)
     * for minifying assets (CSS and JS) files
 
+## Get Started
+
+### Install via composer
+
+Add Flywork to composer.json configuration file.
+```
+$ composer require interart/flywork
+```
+Then update the composer
+```
+$ composer update
+```
+
+See the proof of concept project in [Flywork-poc](https://github.com/silviodelgado/flywork-poc) to get more details about using features.
+
+
 ## License
 
 This project is licensed under [The MIT License (MIT)](/LICENSE).
