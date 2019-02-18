@@ -144,7 +144,10 @@ abstract class Controller
         if (!empty($viewbag)) {
             extract($viewbag);
         }
-        require ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $file_view . '.php';
+
+        $file_view = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $file_view . '.php';
+        require $file_view;
+        
         if ($return_as_result) {
             return ob_get_clean();
         }

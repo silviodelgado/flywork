@@ -32,7 +32,7 @@ final class Session
             $expire = ini_get('session.gc_maxlifetime');
         }
 
-        if (empty($_COOKIE['PHPSESSID'])) {
+        if (empty(filter_input(INPUT_COOKIE, 'PHPSESSID'))) {
             session_set_cookie_params($expire);
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
