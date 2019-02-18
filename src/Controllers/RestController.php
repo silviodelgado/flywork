@@ -26,7 +26,12 @@ abstract class RestController extends Controller
 
     protected function handle_not_authenticated()
     {
-        return $this->kill('Unauthorized request1', 401);
+        return $this->kill('Unauthorized request', 401);
+    }
+    
+    protected function handle_not_administrator()
+    {
+        return $this->kill('Unauthorized request', 401);
     }
 
     /**

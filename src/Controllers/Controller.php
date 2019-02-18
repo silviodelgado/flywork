@@ -2,8 +2,8 @@
 
 namespace Interart\Flywork\Controllers;
 
-use Interart\Flywork\Traits\AutoProperty;
 use Interart\Flywork\Library\Session;
+use Interart\Flywork\Traits\AutoProperty;
 
 /**
  * Main controller class.
@@ -20,7 +20,9 @@ abstract class Controller
     protected static $instance;
 
     protected $need_auth = false;
+    protected $need_admin = false;
     protected $is_logged = false;
+    protected $is_admin = false;
 
     protected $session;
     protected $db;
@@ -42,9 +44,12 @@ abstract class Controller
     }
 
     protected function prepare_controller()
-    {        
+    {
         if ($this->need_auth && !$this->is_logged) {
             return $this->handle_not_authenticated();
+        }
+        if ($this->need_admin && !$this->is_admin) {
+            return $this->handle_not_administrator();
         }
     }
 
@@ -54,6 +59,13 @@ abstract class Controller
      * @return void
      */
     abstract protected function handle_not_authenticated();
+
+    /**
+     * Defines application behavior if user isn't an administrator.
+     *
+     * @return void
+     */
+    abstract protected function handle_not_administrator();
 
     /**
      * Initialize properties.
@@ -147,7 +159,7 @@ abstract class Controller
 
         $file_view = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $file_view . '.php';
         require $file_view;
-        
+
         if ($return_as_result) {
             return ob_get_clean();
         }
