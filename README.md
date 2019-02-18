@@ -25,16 +25,16 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
 
 **Flywork** provides you the following features:
 
-- Route (custom and auto-route) management
-- RESTful request management support
-- Database access and manipulation
-- View management (using native engine)
-- Cache management
-- Session management
-- Language (translation) manipulation
-- Bundle engine for JS e CSS files (with minifier)
-- Form fields manipulation
-- Too few settings do start
+* Route (custom and auto-route) management
+* RESTful request management support
+* Database access and manipulation
+* View management (using native engine)
+* Cache management
+* Session management
+* Language (translation) manipulation
+* Bundle engine for JS e CSS files (with minifier)
+* Form fields manipulation
+* Too few settings do start
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=U4XC3N7P7FV7L&item_name=Help+Flywork+development&currency_code=USD&source=url"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate now!"></a>
 
