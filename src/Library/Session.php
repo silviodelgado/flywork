@@ -15,6 +15,8 @@ final class Session
 {
     use AutoProperty;
 
+    private $vars;
+
     /**
      * Default constructor
      */
@@ -30,13 +32,6 @@ final class Session
             $expire = ini_get('session.gc_maxlifetime');
         }
 
-        //session_set_cookie_params($expire);
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        //setcookie("PHPSESSID", session_id(), time() + $expire);
-        
-        /* *
         if (empty($_COOKIE['PHPSESSID'])) {
             session_set_cookie_params($expire);
             if (session_status() == PHP_SESSION_NONE) {
@@ -48,10 +43,11 @@ final class Session
             }
             setcookie("PHPSESSID", session_id(), time() + $expire);
         }
-        /* */
 
-        if (isset($_SESSION['data']) && is_array($_SESSION['data'])) {
-            foreach ($_SESSION['data'] as $key => $value) {
+        $this->vars = &$_SESSION;
+
+        if (isset($this->vars['data']) && is_array($this->vars['data'])) {
+            foreach ($this->vars['data'] as $key => $value) {
                 $this->$key = $value;
             }
         }
@@ -72,7 +68,7 @@ final class Session
 
         if (is_array($data)) {
             foreach ($data as $key => $val) {
-                $_SESSION['data'][$key] = $val;
+                $this->vars['data'][$key] = $val;
                 $this->$key = $val;
             }
             return;
@@ -82,7 +78,7 @@ final class Session
             throw InvalidArgumentException(sprintf("Value of '%s' to store in session cannot be empty", $data));
         }
 
-        $_SESSION['data'][$data] = $value;
+        $this->vars['data'][$data] = $value;
         $this->$data = $value;
     }
 
@@ -94,8 +90,8 @@ final class Session
      */
     public function get(string $key)
     {
-        if (isset($_SESSION['data'][$key])) {
-            return $_SESSION['data'][$key];
+        if (isset($this->vars['data'][$key])) {
+            return $this->vars['data'][$key];
         }
     }
 
@@ -112,12 +108,12 @@ final class Session
             return;
         }
 
-        if (isset($_SESSION['data'][$key])) {
-            $_SESSION['data'][$key] = null;
-            unset($_SESSION['data'][$key]);
+        if (isset($this->vars['data'][$key])) {
+            $this->vars['data'][$key] = null;
+            unset($this->vars['data'][$key]);
         }
 
-        if (count($_SESSION['data']) == 0) {
+        if (count($this->vars['data']) == 0) {
             session_destroy();
         }
     }
@@ -134,24 +130,24 @@ final class Session
     public function flash($key, $message = null, $keepFlash = false)
     {
         if (empty($message)) {
-            if (isset($_SESSION['data'])
-                && isset($_SESSION['data']['flashmessage'])
-                && isset($_SESSION['data']['flashmessage'][$key])) {
+            if (isset($this->vars['data'])
+                && isset($this->vars['data']['flashmessage'])
+                && isset($this->vars['data']['flashmessage'][$key])) {
 
-                $result = $_SESSION['data']['flashmessage'][$key];
+                $result = $this->vars['data']['flashmessage'][$key];
 
                 if (!$keepFlash) {
-                    $_SESSION['data']['flashmessage'][$key] = null;
+                    $this->vars['data']['flashmessage'][$key] = null;
                 }
 
                 return $result;
             }
         }
 
-        if (!isset($_SESSION['data']['flashmessage'])) {
-            $_SESSION['data']['flashmessage'] = [];
+        if (!isset($this->vars['data']['flashmessage'])) {
+            $this->vars['data']['flashmessage'] = [];
         }
-        $_SESSION['data']['flashmessage'][$key] = $message;
+        $this->vars['data']['flashmessage'][$key] = $message;
     }
 
 }
