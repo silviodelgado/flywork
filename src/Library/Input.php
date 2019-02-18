@@ -223,7 +223,7 @@ final class Input
 
     private function parse_safe_html($value, string $additional_tags = '')
     {
-        $allowed_tags = '<a><b><strong><i><em><hr><div><blockquote><p><span><h1><h2><h3><h4><h5><h6><ul><li>';
+        $allowed_tags = '<a><b><strong><i><em><hr><div><blockquote><p><span><h1><h2><h3><h4><h5><h6><ul><ol><li><table><caption><thead><tbody><tfoot><tr><th><td>';
         $allowed_tags .= $additional_tags;
         $result = strip_tags($value, $allowed_tags);
 
