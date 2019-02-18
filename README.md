@@ -1,0 +1,71 @@
+<img src="https://www.interart.com/utils/logo-flywork2.png" alt="Flywork">
+
+# Flywork
+Lightweight PHP MVC framework
+
+![version](https://img.shields.io/badge/version-0.9-green.svg?maxAge=2592000)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/112157151d184ad4ac0a3e3d5a40c467)](https://www.codacy.com/app/silviodelgado/flywork?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=silviodelgado/flywork&amp;utm_campaign=Badge_Grade)
+<a href="https://github.com/silviodelgado/flywork/issues">
+  <img src="https://img.shields.io/github/issues/silviodelgado/flywork.svg" alt="Issues">
+</a>
+<a href="https://github.com/silviodelgado/flywork/blob/master/LICENSE">
+  <img src="https://img.shields.io/github/license/silviodelgado/flywork.svg" alt="MIT license">
+</a>
+<a href="https://github.com/silviodelgado/flywork/">
+  <img src="https://img.shields.io/badge/forkable-yes-green.svg" alt="This is a forkable respository">
+</a>
+
+## What is this?
+
+**Flywork** is a lightweight **PHP framework**, using **MVC** pattern, to help you to create web applications rapidly.
+
+## Main Features
+
+**Flywork** provides you the following features:
+
+- Route (custom and auto-route) management
+- RESTful request management support
+- Database access and manipulation
+- View management (using native engine)
+- Cache management
+- Session management
+- Language (translation) manipulation
+- Bundle engine for JS e CSS files (with minifier)
+- Form fields manipulation
+- Too few settings do start
+
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=U4XC3N7P7FV7L&item_name=Help+Flywork+development&currency_code=USD&source=url"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate now!"></a>
+
+## Requirements
+
+* PHP 7.1+
+* [Composer](https://getcomposer.org/) Dependency Manager
+* [Apache Server](https://httpd.apache.org/)
+* ```mod_rewrite``` enabled
+
+## Dependencies
+
+* Language
+  * [PDO](http://php.net/manual/pt_BR/book.pdo.php) (PHP Data Objects) Extension (for Medoo library)
+  * [MbString](http://php.net/manual/en/book.mbstring.php) Extension
+* External libraries
+  * [Medoo](https://medoo.in)
+    * optional for DB access/management
+  * [Minify](https://www.minifier.org)
+    * for minifying assets (CSS and JS) files
+
+## License
+
+This project is licensed under [The MIT License (MIT)](/LICENSE).
+
+This is a free software (like free beer), but you can consider donate to help its development.<br>
+You can use [Paypal (click in this link)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=U4XC3N7P7FV7L&item_name=Help+Flywork+development&currency_code=USD&source=url) to make a donation securely.
+
+## Roadmap
+
+* Improve Session management class (to accept others engines)
+* Add Log Management (PSR-3)
+* Add Unit Tests
+
+&copy;2018-2019 [Silvio Delgado](https://www.silviodelgado.net)
+

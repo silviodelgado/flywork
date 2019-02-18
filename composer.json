@@ -1,0 +1,22 @@
+{
+    "name": "interart/flywork",
+    "description": "Lightweight PHP MVC framework",
+    "version": "2.0.0",
+    "type": "project",
+    "authors": [{
+        "name": "Silvio Delgado",
+        "email": "silviomdelgado@gmail.com",
+        "homepage": "https://www.silviodelgado.net",
+        "role": "Developer"
+    }],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Interart\\Flywork\\": "/src"
+        }
+    },
+    "require": {
+        "catfan/medoo": "^1.6",
+        "matthiasmullie/minify": "^1.3"
+    }
+}
