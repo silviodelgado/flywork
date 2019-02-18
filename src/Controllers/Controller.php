@@ -20,8 +20,8 @@ abstract class Controller
     protected static $instance;
 
     protected $need_auth = false;
-    protected $need_admin = false;
     protected $is_logged = false;
+    protected $need_admin = false;
     protected $is_admin = false;
 
     protected $session;
