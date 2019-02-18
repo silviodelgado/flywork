@@ -65,7 +65,8 @@ final class Cache
             throw new Exception('Unable to create cache folder');
         }
 
-        file_put_contents(WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache', serialize($data));
+        $file = WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache';
+        file_put_contents($file, serialize($data));
     }
 
     /**
