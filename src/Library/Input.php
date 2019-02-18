@@ -50,7 +50,7 @@ final class Input
      *
      * @param string $field_name Field name
      * @param string $true_value Default input value which makes the condition TRUE
-     * @return bool
+     * @return int
      */
     public function get_bool(string $field_name, string $true_value)
     {
@@ -307,9 +307,9 @@ final class Input
             return;
         }
 
-        $dt = \DateTime::createFromFormat($input_format, $data);
-        if ($dt !== false) {
-            return $dt->format($output_format);
+        $date = \DateTime::createFromFormat($input_format, $data);
+        if ($date !== false) {
+            return $date->format($output_format);
         }
     }
 

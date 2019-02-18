@@ -30,9 +30,10 @@ trait BundleManager
         $bundle_name = 'bundle' . ucfirst($type);
         if (is_array($files)) {
             $this->$bundle_name = array_merge($this->$bundle_name, $files);
-        } else {
-            $this->$bundle_name = $files;
+            return;
         }
+        
+        $this->$bundle_name = $files;
     }
 
     /**

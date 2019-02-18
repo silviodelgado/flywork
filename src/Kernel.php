@@ -163,10 +163,10 @@ final class Kernel
         // throws ArgumentCountError if is wrong parameter count
         if (empty($this->route_parts)) {
             call_user_func([$controller, $this->action_name]);
-        } else {
-            call_user_func_array([$controller, $this->action_name], $this->route_parts);
+            exit(1);
         }
-
+        
+        call_user_func_array([$controller, $this->action_name], $this->route_parts);
         exit(1);
     }
 
