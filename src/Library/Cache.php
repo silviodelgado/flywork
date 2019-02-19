@@ -11,29 +11,31 @@ namespace Interart\Flywork\Library;
  */
 final class Cache
 {
-
     /**
-     * Default constructor
+     * Determines whether an item is present in the cache
+     *
+     * @param string $key The cache item key
+     * @return boolean
      */
-    public function __construct()
+    public function has(string $key)
     {
-
+        return file_exists(WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache');
     }
 
     /**
-     * Returns cache content for given $key
+     * Fetches a value from the cache
      *
-     * @param string $key Cache reference
-     * @param mixed $defaultValue Default value it should returns.
-     * @return Cache content string, if exists
+     * @param string $key The cache item key
+     * @param mixed $default_value Default value it should returns
+     * @return mixed The value of the item from the cache, or $default_value in case of cache miss
      */
-    public function get(string $key, $defaultValue = null)
+    public function get(string $key, $default_value = null)
     {
-        if (!file_exists($file = WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache')) {
-            return $defaultValue;
+        if (!$this->has($key)) {
+            return $default_value;
         }
 
-        $data = file_get_contents($file);
+        $data = file_get_contents(WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache');
         if ($data === false) {
             throw new Exception('Fail on getting cache data');
         }
@@ -44,22 +46,22 @@ final class Cache
         }
 
         $this->delete($key);
-        return $defaultValue;
+        return $default_value;
     }
 
     /**
-     * Save a content to cache
+     * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time
      *
-     * @param string $key Cache reference
-     * @param mixed $content Content to save
+     * @param string $key The cache item key
+     * @param mixed $value Content to save
      * @param integer $ttl Defines cache life in seconds (default: 60 seconds)
      * @return void
      */
-    public function save(string $key, $content, int $ttl = 60)
+    public function save(string $key, $value, int $ttl = 60)
     {
         $data = [
             'deadline' => time() + $ttl,
-            'content'  => $content,
+            'content'  => $value,
         ];
         if (!is_dir(WRITEPATH . 'cache') && !mkdir(WRITEPATH . 'cache', 0664)) {
             throw new Exception('Unable to create cache folder');
@@ -70,12 +72,12 @@ final class Cache
     }
 
     /**
-     * Delete a specific cache content
+     * Delete an item from the cache by its unique key
      *
-     * @param string $key Cache reference
+     * @param string $key The cache item key
      * @return void
      */
-    public function remove(string $key)
+    public function delete(string $key)
     {
         if (file_exists($file = WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache')) {
             @unlink($file);
@@ -83,7 +85,7 @@ final class Cache
     }
 
     /**
-     * Clear all cache content
+     * Wipes clean the entire cache's keys
      *
      * @return void
      */
