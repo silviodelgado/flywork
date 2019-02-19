@@ -46,7 +46,7 @@ abstract class RestController extends Controller
         header("HTTP/1.1 " . $code);
 
         $this->JsonResult(false, $message);
-        die;
+        exit;
     }
 
     private function get($id)
@@ -129,6 +129,6 @@ abstract class RestController extends Controller
         }
 
         echo json_encode($result, ENV == 'dev' ? JSON_PRETTY_PRINT : 0);
-        exit(1);
+        exit;
     }
 }
