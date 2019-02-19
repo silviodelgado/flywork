@@ -3,7 +3,7 @@
 namespace Interart\Flywork\Library;
 
 /**
- * Fields manipulation (from form or query string requests).
+ * Form/Query input handler.
  * It supports GET and POST methods.
  *
  * @copyright   2018 Silvio Delgado

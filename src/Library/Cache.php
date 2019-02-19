@@ -3,7 +3,7 @@
 namespace Interart\Flywork\Library;
 
 /**
- * Cache manipulation.
+ * Cache handler.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com

@@ -136,12 +136,12 @@ abstract class Controller
     /**
      * Native template engine.
      *
-     * @param array $viewbag Array with values to be rendered
+     * @param array $view_bag Array with values to be rendered
      * @param string $file_view Relative path to template file
      * @param boolean $return_as_result Specifies if the return should be rendered or returned as string
      * @return mixed If $return_as_result is true, returns rendered view as string, otherwise, renders HTML
      */
-    public function view(array $viewbag = [], string $file_view = '', bool $return_as_result = false)
+    public function view(array $view_bag = [], string $file_view = '', bool $return_as_result = false)
     {
         if (empty($file_view)) {
             $file_view = debug_backtrace()[1]['function'];
@@ -153,8 +153,8 @@ abstract class Controller
             ob_start();
         }
         $_ctrl = $this;
-        if (!empty($viewbag)) {
-            extract($viewbag);
+        if (!empty($view_bag)) {
+            extract($view_bag);
         }
 
         $file_view = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $file_view . '.php';

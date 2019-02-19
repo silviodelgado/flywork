@@ -14,6 +14,20 @@ trait BundleManager
     private $bundleCss = [];
     private $bundleJs = [];
 
+    private function check_type(string $type)
+    {
+        if (!in_array($type, ['js', 'css'])) {
+            throw new InvalidArgumentException("Type mismatch [js, css]");
+        }
+    }
+
+    private function check_files(array $files)
+    {
+        if (empty($files)) {
+            throw new \InvalidArgumentException('File list cannot be empty');
+        }
+    }
+
     /**
      * Add file(s) by type to current request.
      *
@@ -23,19 +37,15 @@ trait BundleManager
      */
     protected function add_bundle(string $type, array $files)
     {
-        if (!in_array($type, ['js', 'css'])) {
-            throw new InvalidArgumentException("Type mismatch [js, css]");
-        }
-
-        $bundle_name = 'bundle' . ucfirst($type);
-        if (is_array($files)) {
-            $this->$bundle_name = array_merge($this->$bundle_name, $files);
-            return;
-        }
+        $type = strtolower($type);
+        $this->check_type($type);
         
-        $this->$bundle_name = $files;
+        $this->check_files($files);
+        
+        $bundle_name = 'bundle' . ucfirst($type);
+        $this->$bundle_name = array_merge($this->$bundle_name, $files);
     }
-
+    
     /**
      * Generate bundle file for specified type
      *
@@ -45,15 +55,15 @@ trait BundleManager
      */
     public function bundle(string $type, array $files = [])
     {
-        if (!in_array($type, ['js', 'css'])) {
-            throw new InvalidArgumentException("Type mismatch [js, css]");
-        }
+        $type = strtolower($type);
+        $this->check_type($type);
 
         $bundle_name = 'bundle' . ucfirst($type);
-        $bundle_class = 'MatthiasMullie\\Minify\\' . strtoupper($type);
-
         $files = array_merge($this->$bundle_name, $files);
+        $this->check_files($this->$bundle_name);
         $path = WEBPATH . $type . DIRECTORY_SEPARATOR;
+
+        $bundle_class = 'MatthiasMullie\\Minify\\' . strtoupper($type);
         $minifier = new $bundle_class();
         $prefix = str_replace('/', '-', trim(filter_input(INPUT_SERVER, 'PATH_INFO'), '/'));
         $key = strtolower($prefix) . '_' . md5(serialize($files)) . '.' . $type;
@@ -70,10 +80,25 @@ trait BundleManager
             foreach ($files as $file) {
                 $minifier->add($path . str_replace('/', DIRECTORY_SEPARATOR, $file) . '.' . $type);
             }
-            
+
             $minifier->minify(WEBPATH . 'bundles' . DIRECTORY_SEPARATOR . $key);
         }
 
         return '/bundles/' . $key;
+    }
+
+    /**
+     * Wipes clean the entire bundle by type
+     *
+     * @param string $type
+     * @return void
+     */
+    public function clear(string $type)
+    {
+        $type = strtolower($type);
+        $this->check_type($type);
+
+        @array_map('unlink', glob(WEBPATH . 'bundles' . DIRECTORY_SEPARATOR . '*.' . $type) ?? []);
+
     }
 }

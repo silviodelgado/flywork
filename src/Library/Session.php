@@ -5,7 +5,7 @@ namespace Interart\Flywork\Library;
 use Interart\Flywork\Traits\AutoProperty;
 
 /**
- * Session management and manipulation.
+ * Session handling.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
