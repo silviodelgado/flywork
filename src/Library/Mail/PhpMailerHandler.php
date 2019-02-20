@@ -6,7 +6,7 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
 {
     public function __construct(array $options)
     {
-        $this->mailer = new PHPMailer(ENV == 'dev');
+        $this->mailer = new PHPMailer\PHPMailer(ENV == 'dev');
         $this->send_method_name = 'send';
 
         parent::__construct($options);
