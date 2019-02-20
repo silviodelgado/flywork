@@ -1,6 +1,6 @@
 <?php
 
-namespace Interart\Library\Mail;
+namespace Interart\Flywork\Library\Mail;
 
 class PhpMailerHandler extends MailHandler implements IMailHandler
 {
