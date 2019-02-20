@@ -3,12 +3,12 @@
 namespace Interart\Flywork\Library\Mail;
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 class PhpMailerHandler extends MailHandler implements IMailHandler
 {
     public function __construct(array $options)
     {
-        $this->mailer = new PHPMailer(ENV == 'dev');
         $this->send_method_name = 'send';
 
         parent::__construct($options);
@@ -27,7 +27,8 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
         if ($this->mailer->SMTPAuth) {
             $this->mailer->isSMTP();
         }
-        $this->mailer->SMTPDebug = (ENV == 'dev' ? 2 : 1);
+        
+        $this->mailer->SMTPDebug = ($this->debug ? SMTP::DEBUG_SERVER : SMTP::DEBUG_OFF);
 
         foreach($this->to as $to) {
             $this->mailer->addAddress($to[0], $to[1]);

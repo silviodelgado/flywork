@@ -22,6 +22,8 @@ interface IMailHandler
 
     public function set_alternative_body(string $body);
 
+    public function set_debug(bool $is_debug);
+
     public function send();
 
     public function get_errors();

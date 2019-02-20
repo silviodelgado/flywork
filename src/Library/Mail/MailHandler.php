@@ -29,6 +29,7 @@ abstract class MailHandler implements IMailHandler
     protected $body;
     protected $body_alt;
 
+    protected $is_debug = false;
     protected $errors = [];
 
     public function __construct($options)
@@ -40,6 +41,7 @@ abstract class MailHandler implements IMailHandler
         
         $this->smtp_secure = $options['smtp_secure'] ?? '';
         $this->smtp_auth = $options['use_smtp'] ?? false;
+        $this->is_debug = $options['debug'] ?? false;
     }
 
     public function add_to(string $email_address, string $name = '')
@@ -86,6 +88,11 @@ abstract class MailHandler implements IMailHandler
     public function set_alternative_body(string $body)
     {
         $this->body_alt = $body;
+    }
+
+    public function set_debug(bool $is_debug)
+    {
+        $this->is_debug = $is_debug;
     }
 
     public function send()
