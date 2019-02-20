@@ -1,7 +1,6 @@
 {
     "name": "interart/flywork",
     "description": "Lightweight PHP MVC framework",
-    "version": "2.0.0",
     "type": "project",
     "authors": [{
         "name": "Silvio Delgado",
