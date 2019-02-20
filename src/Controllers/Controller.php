@@ -124,10 +124,10 @@ abstract class Controller
      * @param integer $http_code
      * @return void
      */
-    public function redirect(string $paurith, int $http_code = 0)
+    public function redirect(string $uri, int $http_code = 0)
     {
         if (headers_sent()) {
-            print '<script type="text/javascript">'
+            echo '<script type="text/javascript">'
                 . 'window.location.href="' . $uri . '";'
                 . '</script>'
                 . '<noscript>'
