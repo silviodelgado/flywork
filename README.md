@@ -3,7 +3,7 @@
 # Flywork
 Lightweight PHP MVC framework
 
-![version](https://img.shields.io/badge/version-2.0-green.svg?maxAge=2592000)
+![version](https://img.shields.io/badge/version-2.1-green.svg?maxAge=2592000)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d1ced1265dbb45b7ad5b82d072105ac9)](https://www.codacy.com/app/silviodelgado/flywork?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=silviodelgado/flywork&amp;utm_campaign=Badge_Grade)
 <a href="https://github.com/silviodelgado/flywork/issues">
   <img src="https://img.shields.io/github/issues/silviodelgado/flywork.svg" alt="Issues">

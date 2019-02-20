@@ -124,13 +124,25 @@ abstract class Controller
      * @param integer $http_code
      * @return void
      */
-    public function redirect(string $path, int $http_code = 0)
+    public function redirect(string $paurith, int $http_code = 0)
     {
-        if ($http_code) {
-            header("Location: " . $path, true, $http_code);
-            return;
+        if (headers_sent()) {
+            print '<script type="text/javascript">'
+                . 'window.location.href="' . $uri . '";'
+                . '</script>'
+                . '<noscript>'
+                . '<meta http-equiv="refresh" content="0;url=' . $uri . '" />'
+                . '</noscript>';
+            exit;
         }
-        header("Location: " . $path);
+
+        if ($http_code) {
+            header("Location: " . $uri, true, $http_code);
+            exit;
+        }
+
+        header("Location: " . $uri);
+        exit;
     }
 
     /**

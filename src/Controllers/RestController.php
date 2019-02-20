@@ -46,7 +46,7 @@ abstract class RestController extends Controller
         header("HTTP/1.1 " . $code);
 
         $this->JsonResult(false, $message);
-        exit;
+        exit(1);
     }
 
     private function get($id)

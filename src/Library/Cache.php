@@ -11,6 +11,11 @@ namespace Interart\Flywork\Library;
  */
 final class Cache
 {
+    private function parse_key(string $key)
+    {
+        return preg_replace('/[^a-zA-Z0-9-_]/', ''. $key);
+    }
+
     /**
      * Determines whether an item is present in the cache
      *
@@ -19,6 +24,8 @@ final class Cache
      */
     public function has(string $key)
     {
+        $key = $this->parse_key($key);
+        
         return file_exists(WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache');
     }
 
@@ -31,6 +38,8 @@ final class Cache
      */
     public function get(string $key, $default_value = null)
     {
+        $key = $this->parse_key($key);
+
         if (!$this->has($key)) {
             return $default_value;
         }
@@ -59,6 +68,8 @@ final class Cache
      */
     public function save(string $key, $value, int $ttl = 60)
     {
+        $key = $this->parse_key($key);
+        
         $data = [
             'deadline' => time() + $ttl,
             'content'  => $value,
@@ -79,6 +90,8 @@ final class Cache
      */
     public function delete(string $key)
     {
+        $key = $this->parse_key($key);
+        
         if (file_exists($file = WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache')) {
             @unlink($file);
         }
