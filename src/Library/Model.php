@@ -14,12 +14,12 @@ abstract class Model
 {
     protected $db;
     protected $table_name;
-    protected $primary_key;
-    protected $default_order_by;
+    protected $primary_key = 'id';
+    protected $default_order_by = '';
     protected $columns = [];
+    protected $num_rows = 0;
+    protected $result = [];
 
-    public $result = [];
-    public $rows = 0;
 
     /**
      * Default constructor.
@@ -33,6 +33,18 @@ abstract class Model
     }
 
     abstract protected function init();
+
+    abstract protected function validate();
+
+    public function num_rows()
+    {
+        return $this->num_rows;
+    }
+
+    public function result()
+    {
+        return $this->result;
+    }
 
     /**
      * Returns true if result has any row
@@ -60,7 +72,7 @@ abstract class Model
         ];
         $where = array_merge($default_filters, $where);
         $this->result = $this->db->get($this->table_name, $this->columns, $where);
-        $this->rows = count($this->result) ? 1 : 0;
+        $this->num_rows = count($this->result) ? 1 : 0;
         return $this;
     }
 
@@ -78,7 +90,7 @@ abstract class Model
         $where = array_merge($default_filters, $where);
         $order = ['ORDER' => $order_by ?? $this->default_order_by];
         $this->result = $this->db->select($this->table_name, $this->columns, $where, $order);
-        $this->rows = count($this->result);
+        $this->num_rows = count($this->result);
         return $this;
     }
 
@@ -99,10 +111,10 @@ abstract class Model
             }
         }
         $pdo = $this->db->insert($this->table_name, $data);
-        $this->rows = $pdo->rowCount();
+        $this->num_rows = $pdo->rowCount();
 
-        if ($this->rows) {
-            return $this->FindById($this->result[$this->primary_key]);
+        if ($this->num_rows) {
+            return $this->FindById($this->db->id());
         }
 
         return $this;
@@ -119,7 +131,7 @@ abstract class Model
     public function Update(array $params, array $default_filters = [])
     {
         if (!isset($this->result[$this->primary_key])) {
-            $this->rows = 0;
+            $this->num_rows = 0;
             return $this;
         }
 
@@ -133,9 +145,9 @@ abstract class Model
             }
         }
         $pdo = $this->db->update($this->table_name, $data, $where);
-        $this->rows = $pdo->rowCount();
+        $this->num_rows = $pdo->rowCount();
 
-        if ($this->rows) {
+        if ($this->num_rows) {
             return $this->FindById($this->result[$this->primary_key]);
         }
 
@@ -152,7 +164,7 @@ abstract class Model
     public function Delete(array $default_filters = [])
     {
         if (!isset($this->result[$this->primary_key])) {
-            $this->rows = 0;
+            $this->num_rows = 0;
             return $this;
         }
 
@@ -164,9 +176,9 @@ abstract class Model
             'deleted'    => true,
         ];
         $pdo = $this->db->update($this->table_name, $data, $where);
-        $this->rows = $pdo->rowCount();
+        $this->num_rows = $pdo->rowCount();
 
-        if ($this->rows) {
+        if ($this->num_rows) {
             $this->result = array_merge($this->result, $data);
         }
 
