@@ -35,10 +35,10 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
         foreach($this->recipients->getTo() as $to) {
             $this->mailer->addAddress($to->getEmail(), $to->getName());
         }
-        foreach($this->recipients->get_cc() as $cc) {
+        foreach($this->recipients->getCc() as $cc) {
             $this->mailer->addCC($cc->getEmail(), $cc->getName());
         }
-        foreach($this->recipients->get_bcc() as $bcc) {
+        foreach($this->recipients->getBcc() as $bcc) {
             $this->mailer->addBCC($bcc->getEmail(), $bcc->getName());
         }
 
