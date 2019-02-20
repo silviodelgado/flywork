@@ -11,7 +11,7 @@ final class SMTPConfig
     public function __construct(string $secure_method, bool $use_auth, bool $debug)
     {
         $this->secure_method = $secure_method;
-        $this->use_auth = $auth;
+        $this->use_auth = $use_auth;
         $this->debug = $debug;
     }
 
@@ -22,12 +22,12 @@ final class SMTPConfig
 
     public function get_secure_method()
     {
-        return $this->secure;
+        return $this->secure_method;
     }
 
     public function use_auth()
     {
-        return $this->use_auth();
+        return $this->use_auth;
     }
 
     public function is_debug()

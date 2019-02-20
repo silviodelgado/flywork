@@ -32,7 +32,7 @@ final class MailMessage
 
     public function is_html() : bool
     {
-        return $this->is_html();
+        return $this->is_html;
     }
 
     public function get_body()

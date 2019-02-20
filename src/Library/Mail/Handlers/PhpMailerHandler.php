@@ -2,6 +2,8 @@
 
 namespace Interart\Flywork\Library\Mail\Handlers;
 
+use Interart\Flywork\Library\Mail\MailHandler;
+use Interart\Flywork\Library\Mail\IMailHandler;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
@@ -41,7 +43,7 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
         }
 
         $this->mailer->setFrom($this->sender->get_sender()->get_email(), $this->sender->get_sender()->get_name());
-        $this->mailer->addReplyTo($this->senderget_reply_to()->get_email(), $this->sender->get_reply_to()->get_name());
+        $this->mailer->addReplyTo($this->sender->get_reply_to()->get_email(), $this->sender->get_reply_to()->get_name());
 
         foreach ($this->attachments as $attach) {
             $this->mailer->addAttachment($attach->get_path(), $attach->get_custom_name());
