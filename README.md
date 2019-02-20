@@ -37,6 +37,7 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
 * Language (translation) handling
 * Bundle engine for JS e CSS files (with minifier)
 * Form fields handling
+* Mail encapsulated handler
 * Too few settings do start
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=U4XC3N7P7FV7L&item_name=Help+Flywork+development&currency_code=USD&source=url"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate now!"></a>
@@ -55,9 +56,11 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
   * [MbString](http://php.net/manual/en/book.mbstring.php) Extension
 * External libraries
   * [Medoo](https://medoo.in)
-    * optional for DB access/management
+    * DB access/management
   * [Minify](https://www.minifier.org)
-    * for minifying assets (CSS and JS) files
+    * Minify assets (CSS and JS) files
+  * [PHPMailer](https://phpmailer.github.io/PHPMailer)
+    * Library for send e-mails
 
 ## Get Started
 
