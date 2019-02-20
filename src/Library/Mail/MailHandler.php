@@ -50,27 +50,27 @@ abstract class MailHandler implements IMailHandler
 
     public function addTo(string $email_address, string $name = '')
     {
-        $this->recipients->add_to($email_address, $name);
+        $this->recipients->addTo($email_address, $name);
     }
 
     public function addCc(string $email_address, string $name = '')
     {
-        $this->recipients->add_cc($email_address, $name);
+        $this->recipients->addCc($email_address, $name);
     }
 
     public function addBcc(string $email_address, string $name = '')
     {
-        $this->recipients->add_bcc($email_address, $name);
+        $this->recipients->addBcc($email_address, $name);
     }
 
     public function setFrom(string $email_address, string $name)
     {
-        $this->sender->set_sender($email_address, $name);
+        $this->sender->setSender($email_address, $name);
     }
 
     public function setReplyTo(string $email_address, string $name)
     {
-        $this->sender->set_reply_to($email_address, $name);
+        $this->sender->setReplyTo($email_address, $name);
     }
 
     public function addAttachment(string $path, string $name = '')
@@ -81,22 +81,22 @@ abstract class MailHandler implements IMailHandler
 
     public function setSubject(string $subject)
     {
-        $this->message->set_subject($subject);
+        $this->message->setSubject($subject);
     }
 
     public function setBody(string $body, bool $is_html = true)
     {
-        $this->message->set_body($body, $is_html);
+        $this->message->setBody($body, $is_html);
     }
 
     public function setAlternativeBody(string $body)
     {
-        $this->message->set_alternative_body($body);
+        $this->message->setAlternativeBody($body);
     }
 
     public function setDebug(bool $is_debug)
     {
-        $this->smtp_config->set_debug($is_debug);
+        $this->smtp_config->setDebug($is_debug);
     }
 
     public function send()
@@ -108,7 +108,7 @@ abstract class MailHandler implements IMailHandler
             $send_method = $this->send_method_name;
             $this->mailer->$send_method();
         } catch (\Exception $ex) {
-            $this->errors[] = $this->shipping_errors();
+            $this->errors[] = $this->shippingErrors();
         }
     }
 
