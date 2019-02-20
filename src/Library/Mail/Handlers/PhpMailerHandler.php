@@ -39,7 +39,7 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
             $this->mailer->addCC($cc->get_email(), $cc->get_name());
         }
         foreach($this->recipients->get_bcc() as $bcc) {
-            $this->mailer->addBCC($cc->get_email(), $cc->get_name());
+            $this->mailer->addBCC($bcc->get_email(), $bcc->get_name());
         }
 
         $this->mailer->setFrom($this->sender->get_sender()->get_email(), $this->sender->get_sender()->get_name());
