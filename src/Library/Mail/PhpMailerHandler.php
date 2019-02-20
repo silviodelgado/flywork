@@ -12,7 +12,7 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
         parent::__construct($options);
     }
     
-    private function parse_options()
+    protected function parse_options()
     {
         $this->mailer = new PHPMailer(ENV == 'dev');
         $this->mailer->Host = $this->host;
@@ -54,7 +54,7 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
         }
     }
 
-    private function validate()
+    protected function validate()
     {
 
     }
