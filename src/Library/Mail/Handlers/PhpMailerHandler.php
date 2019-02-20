@@ -64,5 +64,4 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
     {
         return $this->mailer->ErrorInfo;
     }
-
 }
