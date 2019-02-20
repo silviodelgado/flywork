@@ -1,6 +1,6 @@
 <?php
 
-namespace Interart\Library\Mail;
+namespace Interart\Flywork\Library\Mail;
 
 abstract class MailHandler implements IMailHandler
 {
