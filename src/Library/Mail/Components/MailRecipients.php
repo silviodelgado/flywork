@@ -8,32 +8,32 @@ final class MailRecipients
     private $cc = [];
     private $bcc = [];
 
-    public function add_to(string $email_address, string $name = '')
+    public function addTo(string $email_address, string $name = '')
     {
         $this->to[] = new MailAddress($email_address, $name);
     }
 
-    public function add_cc(string $email_address, string $name = '')
+    public function addCc(string $email_address, string $name = '')
     {
         $this->cc[] = new MailAddress($email_address, $name);
     }
 
-    public function add_bcc(string $email_address, string $name = '')
+    public function addBcc(string $email_address, string $name = '')
     {
         $this->bcc[] = new MailAddress($email_address, $name);
     }
 
-    public function get_to()
+    public function getTo()
     {
         return $this->to;
     }
 
-    public function get_cc()
+    public function getCc()
     {
         return $this->cc;
     }
 
-    public function get_bcc()
+    public function getBcc()
     {
         return $this->bcc;
     }

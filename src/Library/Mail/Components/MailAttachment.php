@@ -13,12 +13,12 @@ final class MailAttachment
         $this->custom_name = $custom_name;
     }
 
-    public function get_path()
+    public function getPath()
     {
         return $this->path;
     }
 
-    public function get_custom_name()
+    public function getCustomName()
     {
         return $this->custom_name;
     }

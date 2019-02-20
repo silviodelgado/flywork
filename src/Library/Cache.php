@@ -13,7 +13,7 @@ final class Cache
 {
     private function parse_key(string $key)
     {
-        return preg_replace('/[^a-zA-Z0-9-_]/', ''. $key);
+        return preg_replace('/[^a-zA-Z0-9-_]/', '', $key);
     }
 
     /**

@@ -9,38 +9,38 @@ final class MailMessage
     protected $body;
     protected $body_alt;
 
-    public function set_subject(string $subject)
+    public function setSubject(string $subject)
     {
         $this->subject = $subject;
     }
 
-    public function set_body(string $body, bool $is_html = true)
+    public function setBody(string $body, bool $is_html = true)
     {
         $this->body = $body;
         $this->is_html = $is_html;
     }
 
-    public function set_alternative_body(string $body)
+    public function setAlternativeBody(string $body)
     {
         $this->body_alt = $body;
     }
 
-    public function get_subject()
+    public function getSubject()
     {
         return $this->subject;
     }
 
-    public function is_html() : bool
+    public function isHtml() : bool
     {
         return $this->is_html;
     }
 
-    public function get_body()
+    public function getBody()
     {
         return $this->body;
     }
 
-    public function get_alternative_body()
+    public function getAlternativeBody()
     {
         if (empty($this->body_alt) && $this->is_html) {
             $body = str_replace('<br>', PHP_EOL, $this->body);

@@ -19,40 +19,40 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
     protected function parse_options()
     {
         $this->mailer = new PHPMailer(ENV == 'dev');
-        $this->mailer->Host = $this->mail_server_config->get_host();
-        $this->mailer->Port = $this->mail_server_config->get_port();
-        $this->mailer->Username = $this->mail_server_config->get_username();
-        $this->mailer->Password = $this->mail_server_config->get_password();
+        $this->mailer->Host = $this->mail_server_config->getHost();
+        $this->mailer->Port = $this->mail_server_config->getPort();
+        $this->mailer->Username = $this->mail_server_config->getUsername();
+        $this->mailer->Password = $this->mail_server_config->getPassword();
         
-        $this->mailer->SMTPSecure = $this->smtp_config->get_secure_method();
-        $this->mailer->SMTPAuth = $this->smtp_config->use_auth();
+        $this->mailer->SMTPSecure = $this->smtp_config->getSecureMethod();
+        $this->mailer->SMTPAuth = $this->smtp_config->useAuth();
         if ($this->mailer->SMTPAuth) {
             $this->mailer->isSMTP();
         }
         
-        $this->mailer->SMTPDebug = ($this->smtp_config->is_debug() ? SMTP::DEBUG_SERVER : SMTP::DEBUG_OFF);
+        $this->mailer->SMTPDebug = ($this->smtp_config->isDebug() ? SMTP::DEBUG_SERVER : SMTP::DEBUG_OFF);
 
-        foreach($this->recipients->get_to() as $to) {
-            $this->mailer->addAddress($to->get_email(), $to->get_name());
+        foreach($this->recipients->getTo() as $to) {
+            $this->mailer->addAddress($to->getEmail(), $to->getName());
         }
         foreach($this->recipients->get_cc() as $cc) {
-            $this->mailer->addCC($cc->get_email(), $cc->get_name());
+            $this->mailer->addCC($cc->getEmail(), $cc->getName());
         }
         foreach($this->recipients->get_bcc() as $bcc) {
-            $this->mailer->addBCC($bcc->get_email(), $bcc->get_name());
+            $this->mailer->addBCC($bcc->getEmail(), $bcc->getName());
         }
 
-        $this->mailer->setFrom($this->sender->get_sender()->get_email(), $this->sender->get_sender()->get_name());
-        $this->mailer->addReplyTo($this->sender->get_reply_to()->get_email(), $this->sender->get_reply_to()->get_name());
+        $this->mailer->setFrom($this->sender->getSender()->getEmail(), $this->sender->getSender()->getName());
+        $this->mailer->addReplyTo($this->sender->getReplyTo()->getEmail(), $this->sender->getReplyTo()->getName());
 
         foreach ($this->attachments as $attach) {
-            $this->mailer->addAttachment($attach->get_path(), $attach->get_custom_name());
+            $this->mailer->addAttachment($attach->getPath(), $attach->getCustomName());
         }
 
-        $this->mailer->Subject = $this->message->get_subject();
-        $this->mailer->isHTML($this->message->is_html());
-        $this->mailer->Body = $this->message->get_body();
-        $this->mailer->AltBody = $this->message->get_alternative_body();
+        $this->mailer->Subject = $this->message->getSubject();
+        $this->mailer->isHTML($this->message->isHtml());
+        $this->mailer->Body = $this->message->getBody();
+        $this->mailer->AltBody = $this->message->getAlternativeBody();
     }
 
     protected function validate()
@@ -60,7 +60,7 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
 
     }
 
-    protected function shipping_errors()
+    protected function shippingErrors()
     {
         return $this->mailer->ErrorInfo;
     }

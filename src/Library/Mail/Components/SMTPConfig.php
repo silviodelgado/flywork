@@ -15,22 +15,22 @@ final class SMTPConfig
         $this->debug = $debug;
     }
 
-    public function set_debug(bool $is_debug = false)
+    public function setDebug(bool $is_debug = false)
     {
         $this->debug = $is_debug;
     }
 
-    public function get_secure_method()
+    public function getSecureMethod()
     {
         return $this->secure_method;
     }
 
-    public function use_auth()
+    public function useAuth()
     {
         return $this->use_auth;
     }
 
-    public function is_debug()
+    public function isDebug()
     {
         return $this->debug;
     }

@@ -35,7 +35,7 @@ trait BundleManager
      * @param string $file File (or array of files) to be bundled
      * @return void
      */
-    protected function add_bundle(string $type, array $files)
+    protected function addBundle(string $type, array $files)
     {
         $type = strtolower($type);
         $this->check_type($type);

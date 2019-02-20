@@ -17,22 +17,22 @@ final class MailConfig
         $this->password = $password;
     }
 
-    public function get_host()
+    public function getHost()
     {
         return $this->host;
     }
 
-    public function get_port()
+    public function getPort()
     {
         return $this->port;
     }
 
-    public function get_username()
+    public function getUsername()
     {
         return $this->username;
     }
 
-    public function get_password()
+    public function getPassword()
     {
         return $this->password;
     }

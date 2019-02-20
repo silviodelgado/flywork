@@ -13,12 +13,12 @@ final class MailAddress
         $this->name = $name;
     }
 
-    public function get_email()
+    public function getEmail()
     {
         return $this->email_address;
     }
 
-    public function get_name()
+    public function getName()
     {
         return $this->name;
     }

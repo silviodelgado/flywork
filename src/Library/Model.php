@@ -36,7 +36,7 @@ abstract class Model
 
     abstract protected function validate();
 
-    public function num_rows()
+    public function numRows()
     {
         return $this->num_rows;
     }
@@ -51,7 +51,7 @@ abstract class Model
      *
      * @return bool
      */
-    public function HasResult()
+    public function hasResult()
     {
         return count($this->result) > 0;
     }
@@ -64,7 +64,7 @@ abstract class Model
      * @param array $default_filters
      * @return mixed
      */
-    public function FindById($id, array $default_filters = [])
+    public function findById($id, array $default_filters = [])
     {
         $where = [
             $this->primary_key => $id,
@@ -84,7 +84,7 @@ abstract class Model
      * @param array $default_filters
      * @return array
      */
-    public function FindAll(string $order_by = '', array $default_filters = [])
+    public function findAll(string $order_by = '', array $default_filters = [])
     {
         $where = ['deleted' => 0];
         $where = array_merge($default_filters, $where);
@@ -102,7 +102,7 @@ abstract class Model
      * @param array $default_filters
      * @return Model
      */
-    public function Insert(array $params, array $default_filters = [])
+    public function insert(array $params, array $default_filters = [])
     {
         $data = $default_filters;
         foreach ($params as $key => $value) {
@@ -128,7 +128,7 @@ abstract class Model
      * @param array $default_filters
      * @return Model
      */
-    public function Update(array $params, array $default_filters = [])
+    public function update(array $params, array $default_filters = [])
     {
         if (!isset($this->result[$this->primary_key])) {
             $this->num_rows = 0;
@@ -161,7 +161,7 @@ abstract class Model
      * @param array $default_filters
      * @return Model
      */
-    public function Delete(array $default_filters = [])
+    public function delete(array $default_filters = [])
     {
         if (!isset($this->result[$this->primary_key])) {
             $this->num_rows = 0;

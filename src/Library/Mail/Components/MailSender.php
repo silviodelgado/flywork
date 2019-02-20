@@ -7,22 +7,22 @@ final class MailSender
     private $sender;
     private $reply_to;
 
-    public function set_sender(string $email_address, string $name = '')
+    public function setSender(string $email_address, string $name = '')
     {
         $this->sender = new MailAddress($email_address, $name);
     }
 
-    public function set_reply_to(string $email_address, string $name = '')
+    public function setReplyTo(string $email_address, string $name = '')
     {
         $this->reply_to = new MailAddress($email_address, $name);
     }
 
-    public function get_sender()
+    public function getSender()
     {
         return $this->sender;
     }
 
-    public function get_reply_to()
+    public function getReplyTo()
     {
         return $this->reply_to ?? new MailAddress($this->sender->get_email());
     }

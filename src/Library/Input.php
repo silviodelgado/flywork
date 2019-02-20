@@ -30,7 +30,7 @@ final class Input
      */
     public function get(string $field_name)
     {
-        return $this->_field(INPUT_GET, $field_name);
+        return $this->field(INPUT_GET, $field_name);
     }
 
     /**
@@ -40,9 +40,9 @@ final class Input
      * @param string $additional_tags Additional tags allowed in input value
      * @return string
      */
-    public function get_html(string $field_name, string $additional_tags = '')
+    public function getHtml(string $field_name, string $additional_tags = '')
     {
-        return $this->_field_html(INPUT_GET, $field_name, $additional_tags);
+        return $this->field_html(INPUT_GET, $field_name, $additional_tags);
     }
 
     /**
@@ -52,9 +52,9 @@ final class Input
      * @param string $true_value Default input value which makes the condition TRUE
      * @return int
      */
-    public function get_bool(string $field_name, string $true_value)
+    public function getBool(string $field_name, string $true_value)
     {
-        return $this->_field_bool(INPUT_GET, $field_name, $true_value);
+        return $this->field_bool(INPUT_GET, $field_name, $true_value);
     }
 
     /**
@@ -64,9 +64,9 @@ final class Input
      * @param boolean $allow_negative Defines if the returned number can be negative
      * @return long
      */
-    public function get_num(string $field_name, bool $allow_negative = true)
+    public function getNum(string $field_name, bool $allow_negative = true)
     {
-        return $this->_field_num(INPUT_GET, $field_name, $allow_negative);
+        return $this->field_num(INPUT_GET, $field_name, $allow_negative);
     }
 
     /**
@@ -77,9 +77,9 @@ final class Input
      * @param integer $decimal_digits Quantity of decimal digits in result
      * @return float
      */
-    public function get_float(string $field, string $input_culture = 'pt-br', int $decimal_digits = 2)
+    public function getFloat(string $field, string $input_culture = 'pt-br', int $decimal_digits = 2)
     {
-        return $this->_field_float(INPUT_GET, $field, $decimal_digits, $input_culture);
+        return $this->field_float(INPUT_GET, $field, $decimal_digits, $input_culture);
     }
 
     /**
@@ -89,9 +89,9 @@ final class Input
      * @param string $input_format Which format of the field value
      * @return string (Format: Y-m-d)
      */
-    public function get_date(string $field_name, string $input_format)
+    public function getDate(string $field_name, string $input_format)
     {
-        return $this->_field_datetime(INPUT_GET, $field_name, $input_format, 'Y-m-d');
+        return $this->field_datetime(INPUT_GET, $field_name, $input_format, 'Y-m-d');
     }
 
     /**
@@ -101,9 +101,9 @@ final class Input
      * @param string $input_format Which format of the field value
      * @return string (Format: Y-m-d H:i:s)
      */
-    public function get_datetime(string $field_name, string $input_format)
+    public function getDatetime(string $field_name, string $input_format)
     {
-        return $this->_field_datetime(INPUT_GET, $field_name, $input_format, 'Y-m-d H:i:s');
+        return $this->field_datetime(INPUT_GET, $field_name, $input_format, 'Y-m-d H:i:s');
     }
 
     // post
@@ -116,7 +116,7 @@ final class Input
      */
     public function post(string $field_name)
     {
-        return $this->_field(INPUT_POST, $field_name);
+        return $this->field(INPUT_POST, $field_name);
     }
 
     /**
@@ -126,9 +126,9 @@ final class Input
      * @param string $additional_tags Additional tags allowed in input value
      * @return string
      */
-    public function post_html(string $field_name, string $additional_tags = '')
+    public function postHtml(string $field_name, string $additional_tags = '')
     {
-        return $this->_field_html(INPUT_POST, $field_name, $additional_tags);
+        return $this->field_html(INPUT_POST, $field_name, $additional_tags);
     }
 
     /**
@@ -138,9 +138,9 @@ final class Input
      * @param string $true_value Default input value which makes the condition TRUE
      * @return bool
      */
-    public function post_bool(string $field_name, string $true_value)
+    public function postBool(string $field_name, string $true_value)
     {
-        return $this->_field_bool(INPUT_POST, $field_name, $true_value);
+        return $this->field_bool(INPUT_POST, $field_name, $true_value);
     }
 
     /**
@@ -150,9 +150,9 @@ final class Input
      * @param boolean $allow_negative Defines if the returned number can be negative
      * @return long
      */
-    public function post_num(string $field_name, bool $allow_negative = true)
+    public function postNum(string $field_name, bool $allow_negative = true)
     {
-        return $this->_field_num(INPUT_POST, $field_name, $allow_negative);
+        return $this->field_num(INPUT_POST, $field_name, $allow_negative);
     }
 
     /**
@@ -163,9 +163,9 @@ final class Input
      * @param integer $decimal_digits Quantity of decimal digits in result
      * @return float
      */
-    public function post_float(string $field, string $input_culture = 'pt-br', int $decimal_digits = 2)
+    public function postFloat(string $field, string $input_culture = 'pt-br', int $decimal_digits = 2)
     {
-        return $this->_field_float(INPUT_POST, $field, $decimal_digits, $input_culture);
+        return $this->field_float(INPUT_POST, $field, $decimal_digits, $input_culture);
     }
 
     /**
@@ -175,9 +175,9 @@ final class Input
      * @param string $input_format Which format of the field value
      * @return string (Format: Y-m-d)
      */
-    public function post_date(string $field_name, string $input_format)
+    public function postDate(string $field_name, string $input_format)
     {
-        return $this->_field_datetime(INPUT_POST, $field_name, $input_format, 'Y-m-d');
+        return $this->field_datetime(INPUT_POST, $field_name, $input_format, 'Y-m-d');
     }
 
     /**
@@ -187,14 +187,14 @@ final class Input
      * @param string $input_format Which format of the field value
      * @return string (Format: Y-m-d H:i:s)
      */
-    public function post_datetime(string $field_name, string $input_format)
+    public function postDatetime(string $field_name, string $input_format)
     {
-        return $this->_field_datetime(INPUT_POST, $field_name, $input_format, 'Y-m-d H:i:s');
+        return $this->field_datetime(INPUT_POST, $field_name, $input_format, 'Y-m-d H:i:s');
     }
 
     // private methods
 
-    private function _field(int $type, string $field_name, int $filter = FILTER_DEFAULT)
+    private function field(int $type, string $field_name, int $filter = FILTER_DEFAULT)
     {
         if (!in_array($type, [INPUT_GET, INPUT_POST])) {
             throw new InvalidArgumentException('Invalid field type.');
@@ -227,7 +227,7 @@ final class Input
         $allowed_tags .= $additional_tags;
         $result = strip_tags($value, $allowed_tags);
 
-        $dom = new \DOMDocument();
+        $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($result);
         $xpath = new \DOMXPath($dom);
 
@@ -264,26 +264,26 @@ final class Input
         return $result;
     }
 
-    private function _field_html(int $type, string $field_name, string $additional_tags = '')
+    private function field_html(int $type, string $field_name, string $additional_tags = '')
     {
-        // return trim($this->_field($type, $field_name, FILTER_SANITIZE_SPECIAL_CHARS));
-        return $this->parse_safe_html($this->_field($type, $field_name), $additional_tags);
+        // return trim($this->field($type, $field_name, FILTER_SANITIZE_SPECIAL_CHARS));
+        return $this->parse_safe_html($this->field($type, $field_name), $additional_tags);
     }
 
-    private function _field_bool(int $type, string $field_name, string $true_value)
+    private function field_bool(int $type, string $field_name, string $true_value)
     {
-        return $this->_field($type, $field_name) == $true_value ? 1 : 0;
+        return $this->field($type, $field_name) == $true_value ? 1 : 0;
     }
 
-    private function _field_num(int $type, string $field_name, bool $allow_negative = true)
+    private function field_num(int $type, string $field_name, bool $allow_negative = true)
     {
-        $data = $this->_field($type, $field_name);
+        $data = $this->field($type, $field_name);
         return preg_replace(($allow_negative ? '/[^0-9\.\,\-]/' : '/[^0-9\.\,]/'), '', $data);
     }
 
-    private function _field_float(int $type, string $field_name, int $decimal_digits = 2, string $input_culture = 'en-us')
+    private function field_float(int $type, string $field_name, int $decimal_digits = 2, string $input_culture = 'en-us')
     {
-        $data = $this->_field($type, $field_name);
+        $data = $this->field($type, $field_name);
 
         if (empty($data)) {
             return;
@@ -299,9 +299,9 @@ final class Input
         return number_format($data, $decimal_digits, '.', '');
     }
 
-    private function _field_datetime(int $type, string $field_name, string $input_format, string $output_format)
+    private function field_datetime(int $type, string $field_name, string $input_format, string $output_format)
     {
-        $data = $this->_field($type, $field_name);
+        $data = $this->field($type, $field_name);
 
         if (empty($data)) {
             return;
