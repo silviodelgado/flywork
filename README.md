@@ -14,6 +14,9 @@ Lightweight PHP MVC framework
 <a href="https://github.com/silviodelgado/flywork/">
   <img src="https://img.shields.io/badge/forkable-yes-green.svg" alt="This is a forkable respository">
 </a>
+[![Latest Stable Version](https://poser.pugx.org/interart/flywork/v/stable)](https://packagist.org/packages/interart/flywork)
+[![Latest Unstable Version](https://poser.pugx.org/interart/flywork/v/unstable)](https://packagist.org/packages/interart/flywork)
+[![composer.lock](https://poser.pugx.org/interart/flywork/composerlock)](https://packagist.org/packages/interart/flywork)
 
 ## What is this?
 
