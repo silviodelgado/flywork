@@ -59,7 +59,7 @@ trait BundleManager
         $this->check_type($type);
 
         $bundle_name = 'bundle' . ucfirst($type);
-        $files = array_merge($this->$bundle_name, $files);
+        $this->$bundle_name = array_merge($this->$bundle_name, $files);
         $this->check_files($this->$bundle_name);
         $path = WEBPATH . $type . DIRECTORY_SEPARATOR;
 
