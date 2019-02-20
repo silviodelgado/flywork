@@ -101,7 +101,7 @@ abstract class MailHandler implements IMailHandler
         }
     }
 
-    protected abstract function shipping_errors();
+    abstract protected function shipping_errors();
 
     public function get_errros()
     {
