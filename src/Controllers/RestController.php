@@ -28,7 +28,7 @@ abstract class RestController extends Controller
     {
         return $this->kill('Unauthorized request', 401);
     }
-    
+
     protected function handle_not_administrator()
     {
         return $this->kill('Unauthorized request', 401);
@@ -49,15 +49,15 @@ abstract class RestController extends Controller
         exit(1);
     }
 
-    private function get($id)
-    {
-        $result = $this->entity->FindById($id, $this->defaul_filter);
-        return $this->JsonResult(true, '', ['data' => $result]);
-    }
-
     function list() {
 
         $result = $this->entity->FindAll('', $this->defaul_filter);
+        return $this->JsonResult(true, '', ['data' => $result]);
+    }
+
+    private function get($id)
+    {
+        $result = $this->entity->FindById($id, $this->defaul_filter);
         return $this->JsonResult(true, '', ['data' => $result]);
     }
 
@@ -91,6 +91,12 @@ abstract class RestController extends Controller
         return $this->JsonResult(true, '', ['data' => $result]);
     }
 
+    /**
+     * Drives call to respective method
+     *
+     * @param mixed $id ID requested, if applicable
+     * @return void
+     */
     public function _translate_call($id = null)
     {
         $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');

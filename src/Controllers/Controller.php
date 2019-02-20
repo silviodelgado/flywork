@@ -103,6 +103,7 @@ abstract class Controller
             $request_data = filter_input(INPUT_SERVER, 'QUERY_STRING');
         }
 
+        $vars = [];
         parse_str($request_data, $vars);
         return $vars;
     }

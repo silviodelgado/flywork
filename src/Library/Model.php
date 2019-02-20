@@ -36,11 +36,21 @@ abstract class Model
 
     abstract protected function validate();
 
+    /**
+     * Shows the number of rows in result set
+     *
+     * @return int
+     */
     public function numRows()
     {
         return $this->num_rows;
     }
 
+    /**
+     * Returns result set after select query
+     *
+     * @return array
+     */
     public function result()
     {
         return $this->result;
