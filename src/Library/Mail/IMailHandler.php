@@ -2,6 +2,14 @@
 
 namespace Interart\Flywork\Library\Mail;
 
+/**
+ * Mail handlers interface.
+ * All mail handlers should implement this interface.
+ *
+ * @copyright   2019 Silvio Delgado
+ * @author      Silvio Delgado - silviomdelgado@gmail.com
+ * @version     2.0
+ */
 interface IMailHandler
 {
     public function addTo(string $email_address, string $name = '');

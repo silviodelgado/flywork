@@ -7,6 +7,13 @@ use Interart\Flywork\Library\Mail\IMailHandler;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
+/**
+ * PHPMailer wrap handler
+ *
+ * @copyright   2019 Silvio Delgado
+ * @author      Silvio Delgado - silviomdelgado@gmail.com
+ * @version     2.0
+ */
 class PhpMailerHandler extends MailHandler implements IMailHandler
 {
     public function __construct(array $options)
