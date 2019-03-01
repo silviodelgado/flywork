@@ -12,6 +12,16 @@ namespace Interart\Flywork\Library;
  */
 final class Input
 {
+    private $date_patterns = [
+        'Y-m-d'         => '/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/',
+        'Y-m-d H:i'     => '/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]})\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/',
+        'Y-m-d H:i:s'   => '/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/',
+        'd/m/Y'         => '/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/([0-9]{4})$/',
+        'd/m/Y H:i'     => '/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/([0-9]{4})\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/',
+        'd/m/Y H:i:s'   => '/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/([0-9]{4})\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/',
+        'm/d/Y g:i A'   => '/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/([0-9]{4})\s(0[0-9]|1[0-2]):([0-5][0-9])\s(AM|PM|am|pm)$/',
+        'm/d/Y g:i:s A' => '/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/([0-9]{4})\s(0[0-9]|1[0-2]):([0-5][0-9]):([0-5][0-9])\s(AM|PM|am|pm)$/',
+    ];
 
     /**
      * Default constructor
@@ -89,7 +99,7 @@ final class Input
      * @param string $input_format Which format of the field value
      * @return string (Format: Y-m-d)
      */
-    public function getDate(string $field_name, string $input_format)
+    public function getDate(string $field_name, string $input_format = '')
     {
         return $this->field_datetime(INPUT_GET, $field_name, $input_format, 'Y-m-d');
     }
@@ -101,7 +111,7 @@ final class Input
      * @param string $input_format Which format of the field value
      * @return string (Format: Y-m-d H:i:s)
      */
-    public function getDatetime(string $field_name, string $input_format)
+    public function getDatetime(string $field_name, string $input_format = '')
     {
         return $this->field_datetime(INPUT_GET, $field_name, $input_format, 'Y-m-d H:i:s');
     }
@@ -175,7 +185,7 @@ final class Input
      * @param string $input_format Which format of the field value
      * @return string (Format: Y-m-d)
      */
-    public function postDate(string $field_name, string $input_format)
+    public function postDate(string $field_name, string $input_format = '')
     {
         return $this->field_datetime(INPUT_POST, $field_name, $input_format, 'Y-m-d');
     }
@@ -187,7 +197,7 @@ final class Input
      * @param string $input_format Which format of the field value
      * @return string (Format: Y-m-d H:i:s)
      */
-    public function postDatetime(string $field_name, string $input_format)
+    public function postDatetime(string $field_name, string $input_format = '')
     {
         return $this->field_datetime(INPUT_POST, $field_name, $input_format, 'Y-m-d H:i:s');
     }
@@ -299,7 +309,22 @@ final class Input
         return number_format($data, $decimal_digits, '.', '');
     }
 
-    private function field_datetime(int $type, string $field_name, string $input_format, string $output_format)
+    private function create_datetime(string $input, string $input_format = '')
+    {
+        if (!empty($input_format)) {
+            return \DateTime::createFromFormat($input, $input_format);
+        }
+
+        foreach ($this->date_patterns as $key => $value) {
+            if (preg_match($value, $input)) {
+                return \DateTime::createFromFormat($key, $input);
+            }
+        }
+
+        return false;
+    }
+
+    private function field_datetime(int $type, string $field_name, string $input_format = '', string $output_format = 'Y-m-d H:i:s')
     {
         $data = $this->field($type, $field_name);
 
@@ -307,9 +332,10 @@ final class Input
             return;
         }
 
-        $date = \DateTime::createFromFormat($input_format, $data);
-        if ($date !== false) {
-            return $date->format($output_format);
+        $value = $this->create_datetime($data, $input_format);
+
+        if ($value !== false) {
+            return $value->format($output_format);
         }
     }
 
