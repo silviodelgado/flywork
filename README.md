@@ -88,6 +88,9 @@ This project is licensed under [The MIT License (MIT)](/LICENSE).
 This is a free software (like free beer), but you can consider donate to help its development.<br>
 You can use [Paypal (click in this link)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=U4XC3N7P7FV7L&item_name=Help+Flywork+development&currency_code=USD&source=url) to make a donation securely.
 
+## Contributing
+If you have any idea how this project can be improved, plese see [Contributing](https://github.com/silviodelgado/flywork/blob/master/CONTRIBUTING.md) section to get details. Thank you. :)
+
 ## Roadmap
 
 * Improve Session management class (to accept others engines)
