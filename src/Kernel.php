@@ -156,7 +156,7 @@ final class Kernel
         $controller_name = '\\App\\Controllers\\' . $this->controller_name;
         // throws Error if class not found
         $controller = new $controller_name();
-        $controller->init($options);
+        $controller->_init($options);
 
         $this->validate_route_parts($controller);
 

@@ -73,7 +73,7 @@ abstract class Controller
      * @param array $options
      * @return void
      */
-    public function init(array $options)
+    public function _init(array $options)
     {
         if (!empty($options['db_settings'])) {
             $this->db = new \Medoo\Medoo($options['db_settings']);
@@ -83,7 +83,16 @@ abstract class Controller
             $entity_name = '\\App\\Models\\' . $this->entity_name;
             $this->entity = new $entity_name($this->db);
         }
+
+        $this->_start();
     }
+
+    /**
+     * Executes routines after Controller initialization.
+     *
+     * @return void
+     */
+    abstract public function _start();
 
     /**
      * Obtains all input vars sent in request.
@@ -125,7 +134,7 @@ abstract class Controller
      * @param integer $http_code
      * @return void
      */
-    public function redirect(string $uri, int $http_code = 0)
+    protected function redirect(string $uri, int $http_code = 0)
     {
         if (headers_sent()) {
             echo '<script type="text/javascript">'
@@ -154,7 +163,7 @@ abstract class Controller
      * @param boolean $return_as_result Specifies if the return should be rendered or returned as string
      * @return mixed If $return_as_result is true, returns rendered view as string, otherwise, renders HTML
      */
-    public function view(array $view_bag = [], string $file_view = '', bool $return_as_result = false)
+    protected function view(array $view_bag = [], string $file_view = '', bool $return_as_result = false)
     {
         if (empty($file_view)) {
             $file_view = debug_backtrace()[1]['function'];
