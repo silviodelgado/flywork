@@ -47,7 +47,7 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
 
 * PHP 7.1+
 * [Composer](https://getcomposer.org/) Dependency Manager
-* [Apache Server](https://httpd.apache.org/)
+* [Apache 2.4 Server](https://httpd.apache.org/)
 * ```mod_rewrite``` enabled
 
 ## Dependencies
@@ -62,6 +62,9 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
     * Minify assets (CSS and JS) files
   * [PHPMailer](https://phpmailer.github.io/PHPMailer)
     * Library for send e-mails
+  * [PSR/Log](https://packagist.org/packages/psr/log)
+    * Log management interface
+
 
 ## Get Started
 
