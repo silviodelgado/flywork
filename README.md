@@ -3,7 +3,7 @@
 # Flywork
 Lightweight PHP MVC framework
 
-![version](https://img.shields.io/badge/version-2.1-green.svg?maxAge=2592000)
+![version](https://img.shields.io/badge/version-2.2-green.svg?maxAge=2592000)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d1ced1265dbb45b7ad5b82d072105ac9)](https://www.codacy.com/app/silviodelgado/flywork?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=silviodelgado/flywork&amp;utm_campaign=Badge_Grade)
 <a href="https://github.com/silviodelgado/flywork/issues">
   <img src="https://img.shields.io/github/issues/silviodelgado/flywork.svg" alt="Issues">
@@ -38,6 +38,7 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
 * Bundle engine for JS e CSS files (with minifier)
 * Form fields handling
 * Mail encapsulated handler
+* Log management - PSR-3 compliant
 * Too few settings do start
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=U4XC3N7P7FV7L&item_name=Help+Flywork+development&currency_code=USD&source=url"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate now!"></a>
@@ -91,7 +92,6 @@ You can use [Paypal (click in this link)](https://www.paypal.com/cgi-bin/webscr?
 ## Roadmap
 
 * Improve Session management class (to accept others engines)
-* Add Log Management (PSR-3)
 * Add Unit Tests
 
 &copy;2018-2019 [Silvio Delgado](https://www.silviodelgado.net)
