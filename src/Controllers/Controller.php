@@ -129,10 +129,10 @@ abstract class Controller
     {
         if (headers_sent()) {
             echo '<script type="text/javascript">'
-                . 'window.location.href="' . $uri . '";'
+                . "window.location.href=\"{$uri}\";"
                 . '</script>'
                 . '<noscript>'
-                . '<meta http-equiv="refresh" content="0;url=' . $uri . '" />'
+                . "<meta http-equiv=\"refresh\" content=\"0;url={$uri}\">"
                 . '</noscript>';
             exit;
         }
