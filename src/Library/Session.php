@@ -9,7 +9,7 @@ use Interart\Flywork\Traits\AutoProperty;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
- * @version     2.0
+ * @version     2.1
  */
 final class Session
 {
@@ -21,7 +21,7 @@ final class Session
     /**
      * Default constructor
      */
-    public function __construct($session_name = '', $expire = 0, string $domain = '', bool $secure = null)
+    public function __construct($session_name = '', $expire = 0, $domain = null, $secure = null)
     {
         if (!empty($session_name)) {
             session_name($session_name . '_fly');
@@ -30,6 +30,8 @@ final class Session
         $this->parse_expire($expire);
 
         $this->set_cookie($domain, $secure);
+
+        $this->start_session();
 
         $this->session = &$_SESSION;
 
@@ -50,18 +52,19 @@ final class Session
         $this->expire = ini_get('session.gc_maxlifetime');
     }
 
-    private function set_cookie(string $domain, bool $secure)
+    private function set_cookie($domain, $secure)
     {
-        if (empty(filter_input(INPUT_COOKIE, 'PHPSESSID'))) {
-            $domain = $domain ?? filter_input(INPUT_SERVER, 'SERVER_NAME');
-            $secure = $secure ?? !empty(filter_input(INPUT_SERVER, 'HTTPS'));
-            session_set_cookie_params($this->expire, '/', $domain, $secure);
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
-            }
+        if (!empty(filter_input(INPUT_COOKIE, 'PHPSESSID'))) {
             return;
         }
 
+        $domain = $domain ?? filter_input(INPUT_SERVER, 'SERVER_NAME');
+        $secure = $secure ?? !empty(filter_input(INPUT_SERVER, 'HTTPS'));
+        session_set_cookie_params($this->expire, '/', $domain, $secure);
+    }
+
+    private function start_session()
+    {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
@@ -84,8 +87,8 @@ final class Session
     {
         if (self::is_valid_session()) {
             if (!self::prevent_hijacking()) {
-                $this->session['ipAddress'] = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
-                $this->session['userAgent'] = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
+                $this->session['_ipAddress'] = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
+                $this->session['_userAgent'] = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
                 $this->regenerate_session();
             } elseif (self::should_randomly_regenerate()) {
                 $this->regenerate_session();
@@ -94,6 +97,20 @@ final class Session
         }
 
         $this->clear();
+    }
+
+    /**
+     * Returns Session ID
+     *
+     * @return string
+     */
+    public function id()
+    {
+        if (\session_status() == PHP_SESSION_NONE) {
+            return;
+        }
+
+        return session_id();
     }
 
     /**
@@ -134,6 +151,16 @@ final class Session
     public function get(string $key)
     {
         return $this->session['_data'][$key] ?? null;
+    }
+
+    /**
+     * Returns all values stored in session.
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->session['_data'] ?? [];
     }
 
     /**
@@ -211,15 +238,15 @@ final class Session
 
     private function prevent_hijacking()
     {
-        if (!isset($this->session['ipAddress']) || !isset($this->session['userAgent'])) {
+        if (!isset($this->session['_ipAddress']) || !isset($this->session['_userAgent'])) {
             return false;
         }
 
-        if ($this->session['ipAddress'] != filter_input(INPUT_SERVER, 'REMOTE_ADDR')) {
+        if ($this->session['_ipAddress'] != filter_input(INPUT_SERVER, 'REMOTE_ADDR')) {
             return false;
         }
 
-        if ($_SESSION['userAgent'] != filter_input(INPUT_SERVER, 'HTTP_USER_AGENT')) {
+        if ($this->session['_userAgent'] != filter_input(INPUT_SERVER, 'HTTP_USER_AGENT')) {
             return false;
         }
 
@@ -228,30 +255,30 @@ final class Session
 
     private function regenerate_session()
     {
-        if (isset($this->session['OBSOLETE']) && $this->session['OBSOLETE'] == true) {
+        if (isset($this->session['_OBSOLETE']) && $this->session['_OBSOLETE'] == true) {
             return;
         }
 
-        $this->session['OBSOLETE'] = true;
-        $this->session['EXPIRES'] = time() + 10;
+        $this->session['_OBSOLETE'] = true;
+        $this->session['_EXPIRES'] = time() + 10;
 
         session_regenerate_id(false);
         $newSession = session_id();
         session_write_close();
         session_id($newSession);
-        session_start();
+        $this->start_session();
 
-        unset($this->session['OBSOLETE']);
-        unset($this->session['EXPIRES']);
+        unset($this->session['_OBSOLETE']);
+        unset($this->session['_EXPIRES']);
     }
 
     private function is_valid_session()
     {
-        if (isset($this->session['OBSOLETE']) && !isset($this->session['EXPIRES'])) {
+        if (isset($this->session['_OBSOLETE']) && !isset($this->session['_EXPIRES'])) {
             return false;
         }
 
-        if (isset($this->session['EXPIRES']) && $this->session['EXPIRES'] < time()) {
+        if (isset($this->session['_EXPIRES']) && $this->session['_EXPIRES'] < time()) {
             return false;
         }
 
