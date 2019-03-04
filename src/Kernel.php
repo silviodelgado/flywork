@@ -54,24 +54,41 @@ final class Kernel
         $this->request_path = trim(explode('?', $this->request_uri)[0], '/');
         $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
 
-        if (!empty($settings['default_route'])) {
-            if (!empty($settings['default_route']['controller'])) {
-                $this->default_route['controller'] = $settings['default_route']['controller'];
-            }
+        $this->parse_settings_default_route($settings);
 
-            if (!empty($settings['default_route']['action'])) {
-                $this->default_route['action'] = $settings['default_route']['action'];
-            }
+        $this->parse_settings_custom_routes($settings);
+
+        $this->parse_settings_db($settings);
+
+    }
+
+    private function parse_settings_default_route($settings)
+    {
+        if (empty($settings['default_route'])) {
+            return;
+        }
+        
+        if (!empty($settings['default_route']['controller'])) {
+            $this->default_route['controller'] = $settings['default_route']['controller'];
         }
 
+        if (!empty($settings['default_route']['action'])) {
+            $this->default_route['action'] = $settings['default_route']['action'];
+        }
+    }
+
+    private function parse_settings_custom_routes($settings)
+    {
         if (!empty($settings['custom_routes'])) {
             $this->routes = array_merge($this->routes, $settings['custom_routes']);
         }
+    }
 
+    private function parse_settings_db()
+    {
         if (!empty($settings['database_entry'])) {
             $this->db_settings = $settings['database'][$settings['database_entry']];
         }
-
     }
 
     /**
@@ -79,7 +96,7 @@ final class Kernel
      *
      * @return void
      */
-    private function translate_route()
+    private function translate_route($settings)
     {
         if (empty($this->request_path)) {
             return;
@@ -165,7 +182,7 @@ final class Kernel
             call_user_func([$controller, $this->action_name]);
             return;
         }
-        
+
         call_user_func_array([$controller, $this->action_name], $this->route_parts);
     }
 
