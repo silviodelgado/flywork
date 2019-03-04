@@ -21,7 +21,7 @@ final class Session
     /**
      * Default constructor
      */
-    public function __construct($session_name = '', $expire = 0, string $path = '/', string $domain = '', bool $secure = false)
+    public function __construct($session_name = '', $expire = 0, string $domain = '', bool $secure = false)
     {
         if (!empty($session_name)) {
             session_name($session_name);
@@ -31,7 +31,7 @@ final class Session
 
         if (empty(filter_input(INPUT_COOKIE, 'PHPSESSID'))) {
             $domain == $domain ?? filter_input(INPUT_SERVER, 'HTTP_HOST');
-            session_set_cookie_params($this->expire, $path, $domain, $secure);
+            session_set_cookie_params($this->expire, '/', $domain, $secure);
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
@@ -135,6 +135,24 @@ final class Session
         }
     }
 
+    private function get_flash(string $key, bool $keepFlash)
+    {
+        if (!isset($this->vars['data'])
+            || !isset($this->vars['data']['flashmessage'])
+            || !isset($this->vars['data']['flashmessage'][$key])) {
+            return;
+        }
+
+        $result = $this->vars['data']['flashmessage'][$key];
+
+        if (!$keepFlash) {
+            $this->vars['data']['flashmessage'][$key] = null;
+            unset($this->vars['data']['flashmessage'][$key]);
+        }
+
+        return $result;
+    }
+
     /**
      * Store flash message in session (to be used in the next request).
      * Get flash message stored in session.
@@ -144,21 +162,14 @@ final class Session
      * @param bool $keepFlash Define if message should be destroyed after return
      * @return void
      */
-    public function flash($key, $message = null, $keepFlash = false)
+    public function flash(string $key, $message = null, bool $keepFlash = false)
     {
+        if (empty($key)) {
+            throw new \InvalidArgumentException('Key cannot be empty.');
+        }
+        
         if (empty($message)) {
-            if (isset($this->vars['data'])
-                && isset($this->vars['data']['flashmessage'])
-                && isset($this->vars['data']['flashmessage'][$key])) {
-
-                $result = $this->vars['data']['flashmessage'][$key];
-
-                if (!$keepFlash) {
-                    $this->vars['data']['flashmessage'][$key] = null;
-                }
-
-                return $result;
-            }
+            return $this->get_flash($key, $keepFlash);
         }
 
         if (!isset($this->vars['data']['flashmessage'])) {
