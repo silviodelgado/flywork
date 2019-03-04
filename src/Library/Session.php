@@ -56,12 +56,13 @@ final class Session
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
-        } else {
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
-            }
-            setcookie("PHPSESSID", session_id(), time() + $this->expire);
+            return;
         }
+
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        setcookie("PHPSESSID", session_id(), time() + $this->expire);
     }
 
     private function parse_vars()
@@ -172,7 +173,7 @@ final class Session
         if (empty($key)) {
             throw new \InvalidArgumentException('Key cannot be empty.');
         }
-        
+
         if (empty($message)) {
             return $this->get_flash($key, $keepFlash);
         }
