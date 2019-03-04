@@ -84,7 +84,7 @@ final class Kernel
         }
     }
 
-    private function parse_settings_db()
+    private function parse_settings_db($settings)
     {
         if (!empty($settings['database_entry'])) {
             $this->db_settings = $settings['database'][$settings['database_entry']];
@@ -96,7 +96,7 @@ final class Kernel
      *
      * @return void
      */
-    private function translate_route($settings)
+    private function translate_route()
     {
         if (empty($this->request_path)) {
             return;
