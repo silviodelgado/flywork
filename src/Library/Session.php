@@ -33,7 +33,7 @@ final class Session
 
         $this->vars = &$_SESSION;
 
-        $this->parseVars();
+        $this->parse_vars();
     }
 
     private function parse_expire($expire)
