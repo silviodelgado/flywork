@@ -12,7 +12,7 @@ use Psr\Log\LogLevel;
  * @author      Silvio Delgado - silviomdelgado@gmail.com
  * @version     1.1
  */
-class Logger implements LoggerInterface
+final class Logger implements LoggerInterface
 {
     const STORAGE_TYPE_FILE = 1;
     const STORAGE_TYPE_DB = 2;
