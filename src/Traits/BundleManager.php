@@ -21,6 +21,13 @@ trait BundleManager
         }
     }
 
+    private function check_bundle_folder()
+    {
+        if (!is_dir(WEBPATH . 'bundles')) {
+            throw new \Exception('Bundle folder doesn\'t exist in public web path.');
+        }
+    }
+
     private function check_files(array $files)
     {
         if (empty($files)) {
@@ -39,13 +46,13 @@ trait BundleManager
     {
         $type = strtolower($type);
         $this->check_type($type);
-        
+
         $this->check_files($files);
-        
+
         $bundle_name = 'bundle' . ucfirst($type);
         $this->$bundle_name = array_merge($this->$bundle_name, $files);
     }
-    
+
     /**
      * Generate bundle file for specified type
      *
@@ -57,6 +64,7 @@ trait BundleManager
     {
         $type = strtolower($type);
         $this->check_type($type);
+        $this->check_bundle_folder();
 
         $bundle_name = 'bundle' . ucfirst($type);
         $this->$bundle_name = array_merge($this->$bundle_name, $files);
@@ -69,14 +77,6 @@ trait BundleManager
         $key = strtolower($prefix) . '_' . md5(serialize($files)) . '.' . $type;
 
         if (ENV == 'dev' || !file_exists(WEB_PATH . 'bundles' . DIRECTORY_SEPARATOR . $key)) {
-
-            if (!is_dir($bundle_path = WEBPATH . 'bundles')) {
-                mkdir($bundle_path, 0744, true);
-                chmod($bundle_path, 0744);
-                chgrp($bundle_path, 'www-data');
-                touch($bundle_path . 'index.html');
-            }
-
             foreach ($files as $file) {
                 $minifier->add($path . str_replace('/', DIRECTORY_SEPARATOR, $file) . '.' . $type);
             }
