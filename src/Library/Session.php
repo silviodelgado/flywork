@@ -16,24 +16,22 @@ final class Session
     use AutoProperty;
 
     private $vars;
+    private $expire;
 
     /**
      * Default constructor
      */
-    public function __construct($session_name = '', $expire = 0)
+    public function __construct($session_name = '', $expire = 0, string $path = '/', string $domain = '', bool $secure = false)
     {
         if (!empty($session_name)) {
             session_name($session_name);
         }
 
-        if ($expire) {
-            ini_set('session.gc_maxlifetime', $expire);
-        } else {
-            $expire = ini_get('session.gc_maxlifetime');
-        }
+        $this->parse_expire($expire);
 
         if (empty(filter_input(INPUT_COOKIE, 'PHPSESSID'))) {
-            session_set_cookie_params($expire);
+            $domain == $domain ?? filter_input(INPUT_SERVER, 'HTTP_HOST');
+            session_set_cookie_params($this->expire, $path, $domain, $secure);
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
@@ -41,15 +39,34 @@ final class Session
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
-            setcookie("PHPSESSID", session_id(), time() + $expire);
+            setcookie("PHPSESSID", session_id(), time() + $this->expire);
         }
 
         $this->vars = &$_SESSION;
 
-        if (isset($this->vars['data']) && is_array($this->vars['data'])) {
-            foreach ($this->vars['data'] as $key => $value) {
-                $this->$key = $value;
-            }
+        $this->parseVars();
+    }
+
+    private function parse_expire($expire)
+    {
+        $this->expire = $expire;
+
+        if ($this->expire) {
+            ini_set('session.gc_maxlifetime', $this->expire);
+            return;
+        }
+
+        $this->expire = ini_get('session.gc_maxlifetime');
+    }
+
+    private function parse_vars()
+    {
+        if (!isset($this->vars['data']) || !is_array($this->vars['data'])) {
+            return;
+        }
+
+        foreach ($this->vars['data'] as $key => $value) {
+            $this->$key = $value;
         }
     }
 
