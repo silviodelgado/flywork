@@ -29,18 +29,7 @@ final class Session
 
         $this->parse_expire($expire);
 
-        if (empty(filter_input(INPUT_COOKIE, 'PHPSESSID'))) {
-            $domain == $domain ?? filter_input(INPUT_SERVER, 'HTTP_HOST');
-            session_set_cookie_params($this->expire, '/', $domain, $secure);
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
-            }
-        } else {
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
-            }
-            setcookie("PHPSESSID", session_id(), time() + $this->expire);
-        }
+        $this->set_cookie($domain, $secure);
 
         $this->vars = &$_SESSION;
 
@@ -57,6 +46,22 @@ final class Session
         }
 
         $this->expire = ini_get('session.gc_maxlifetime');
+    }
+
+    private function set_cookie(string $domain, bool $secure)
+    {
+        if (empty(filter_input(INPUT_COOKIE, 'PHPSESSID'))) {
+            $domain == $domain ?? filter_input(INPUT_SERVER, 'HTTP_HOST');
+            session_set_cookie_params($this->expire, '/', $domain, $secure);
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+        } else {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            setcookie("PHPSESSID", session_id(), time() + $this->expire);
+        }
     }
 
     private function parse_vars()
