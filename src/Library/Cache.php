@@ -13,7 +13,7 @@ final class Cache
 {
     private function parse_key(string $key)
     {
-        return preg_replace('/[^a-zA-Z0-9-_]/', '', $key);
+        return preg_replace('/[^a-zA-Z0-9-_\.]/', '', $key);
     }
 
     /**
@@ -46,7 +46,7 @@ final class Cache
 
         $data = file_get_contents(WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache');
         if ($data === false) {
-            throw new Exception('Fail on getting cache data');
+            throw new \Exception('Fail on getting cache data');
         }
 
         $obj = unserialize($data);
@@ -74,8 +74,8 @@ final class Cache
             'deadline' => time() + $ttl,
             'content'  => $value,
         ];
-        if (!is_dir(WRITEPATH . 'cache') && !mkdir(WRITEPATH . 'cache', 0664)) {
-            throw new Exception('Unable to create cache folder');
+        if (!is_dir(WRITEPATH . 'cache')) {
+            throw new \Exception('Cache folder does not exist.');
         }
 
         $file = WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache';
