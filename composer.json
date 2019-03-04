@@ -11,7 +11,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Interart\\Flywork\\": "/src"
+            "Interart\\Flywork\\": "src"
         }
     },
     "require": {
