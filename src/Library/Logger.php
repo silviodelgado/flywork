@@ -1,6 +1,6 @@
 <?php
 
-namespace Interart\Flywork\Library\Log;
+namespace Interart\Flywork\Library;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
@@ -12,7 +12,7 @@ use Psr\Log\LogLevel;
  * @author      Silvio Delgado - silviomdelgado@gmail.com
  * @version     1.1
  */
-class LogManager implements LoggerInterface
+class Logger implements LoggerInterface
 {
     const STORAGE_TYPE_FILE = 1;
     const STORAGE_TYPE_DB = 2;

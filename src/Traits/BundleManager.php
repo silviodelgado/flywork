@@ -21,11 +21,13 @@ trait BundleManager
         }
     }
 
-    private function check_bundle_folder()
+    private function get_bundle_folder()
     {
-        if (!is_dir(WEBPATH . 'bundles')) {
+        if (!is_dir($bundle_path = WEBPATH . 'bundles' . DIRECTORY_SEPARATOR)) {
             throw new \Exception('Bundle folder doesn\'t exist in public web path.');
         }
+        
+        return $bundle_path;
     }
 
     private function check_files(array $files)
@@ -64,24 +66,26 @@ trait BundleManager
     {
         $type = strtolower($type);
         $this->check_type($type);
-        $this->check_bundle_folder();
+
+        $bundle_path = $this->get_bundle_folder();
+        $file_path = WEBPATH . $type . DIRECTORY_SEPARATOR;
 
         $bundle_name = 'bundle' . ucfirst($type);
         $this->$bundle_name = array_merge($this->$bundle_name, $files);
         $this->check_files($this->$bundle_name);
-        $path = WEBPATH . $type . DIRECTORY_SEPARATOR;
 
         $bundle_class = 'MatthiasMullie\\Minify\\' . strtoupper($type);
         $minifier = new $bundle_class();
+        
         $prefix = str_replace('/', '-', trim(filter_input(INPUT_SERVER, 'PATH_INFO'), '/'));
         $key = strtolower($prefix) . '_' . md5(serialize($files)) . '.' . $type;
 
-        if (ENV == 'dev' || !file_exists(WEB_PATH . 'bundles' . DIRECTORY_SEPARATOR . $key)) {
+        if (ENV == 'dev' || !file_exists($bundle_path . $key)) {
             foreach ($files as $file) {
-                $minifier->add($path . str_replace('/', DIRECTORY_SEPARATOR, $file) . '.' . $type);
+                $minifier->add($file_path . str_replace('/', DIRECTORY_SEPARATOR, $file) . '.' . $type);
             }
 
-            $minifier->minify(WEBPATH . 'bundles' . DIRECTORY_SEPARATOR . $key);
+            $minifier->minify($bundle_path . $key);
         }
 
         return '/bundles/' . $key;
