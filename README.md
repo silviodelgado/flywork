@@ -6,7 +6,7 @@ Lightweight PHP MVC framework
 ![version](https://img.shields.io/badge/version-2.2-green.svg?maxAge=2592000)
 [![Latest Stable Version](https://poser.pugx.org/interart/flywork/v/stable)](https://packagist.org/packages/interart/flywork)
 [![Latest Unstable Version](https://poser.pugx.org/interart/flywork/v/unstable)](https://packagist.org/packages/interart/flywork)
-[![composer.lock](https://poser.pugx.org/interart/flywork/composerlock)](https://packagist.org/packages/interart/flywork)
+![composer.lock](https://poser.pugx.org/interart/flywork/composerlock)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d1ced1265dbb45b7ad5b82d072105ac9)](https://www.codacy.com/app/silviodelgado/flywork?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=silviodelgado/flywork&amp;utm_campaign=Badge_Grade)
 [![Code Climate](https://codeclimate.com/github/silviodelgado/flywork/badges/gpa.svg)](https://codeclimate.com/github/silviodelgado/flywork)
