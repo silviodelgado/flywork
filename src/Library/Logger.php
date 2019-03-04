@@ -152,21 +152,17 @@ final class Logger implements LoggerInterface
 
     private function validateSettings()
     {
-        if ($this->storage_type == self::STORAGE_TYPE_FILE) {
-            if (empty($this->log_path)) {
-                throw new \Exception('You must set log path before save log entry.');
-            }
-            return;
+        if ($this->storage_type == self::STORAGE_TYPE_FILE && empty($this->log_path)) {
+            throw new \Exception('You must set log path before save log entry.');
         }
 
-        if ($this->storage_type == self::STORAGE_TYPE_DB) {
-            if (empty($this->db) && empty($this->db_settings)) {
-                throw new \Exception('You must set database settings before save log entry.');
-            }
-            return;
+        if ($this->storage_type == self::STORAGE_TYPE_DB && empty($this->db) && empty($this->db_settings)) {
+            throw new \Exception('You must set database settings before save log entry.');
         }
 
-        throw new \Exception('Storage type wasn\'t properly configured.');
+        if (!\in_array($this->storage_type, [self::STORAGE_TYPE_FILE, self::STORAGE_TYPE_DB])) {
+            throw new \Exception('Storage type wasn\'t properly configured.');
+        }
     }
 
     /**
