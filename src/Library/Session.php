@@ -92,11 +92,7 @@ final class Session
         }
 
         foreach ($this->session['sess_data'] as $key => $value) {
-            if ($this->encrypted) {
-                $this->$key = $this->security->decrypt($value);
-            } else {
-                $this->$key = $value;
-            }
+            $this->$key = $this->encrypted ? $this->security->decrypt($value) : $value;
         }
     }
 
@@ -165,19 +161,15 @@ final class Session
      */
     public function all()
     {
-        if ($this->encrypted) {
-            $result = [];
-            foreach ($this->session['sess_data'] as $key => $value) {
-                if ($this->encrypted) {
-                    $result[$key] = $this->security->decrypt($value);
-                } else {
-                    $result[$key] = $value;
-                }
-            }
-            return $result;
+        if (!$this->encrypted) {
+            return $this->session['sess_data'];
         }
 
-        return $this->session['sess_data'];
+        $result = [];
+        foreach ($this->session['sess_data'] as $key => $value) {
+            $result[$key] = $this->security->decrypt($value);
+        }
+        return $result;
     }
 
     /**
