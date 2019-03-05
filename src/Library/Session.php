@@ -3,6 +3,7 @@
 namespace Interart\Flywork\Library;
 
 use Interart\Flywork\Traits\AutoProperty;
+use Interart\Flywork\Library\Security;
 
 /**
  * Session handling.
@@ -19,11 +20,7 @@ final class Session
     private $expire;
     private $domain;
     private $encrypted;
-    private $security_config = [
-        'cipher' => 'AES-256-XTS',
-        'key'    => '2b66f87fdac6830e',
-        'iv'     => '58077f401138b82f',
-    ];
+    private $security;
 
     /**
      * Default constructor.
@@ -34,7 +31,7 @@ final class Session
      * @param bool $secure
      * @param string $encrypt_key
      */
-    public function __construct($session_name = '', $expire = 0, $domain = null, $encrypt_key = null)
+    public function __construct($session_name = '', $expire = 0, $domain = null, $encrypt = false)
     {
         if (!empty($session_name)) {
             session_name($session_name);
@@ -42,9 +39,9 @@ final class Session
 
         $this->expire = $expire;
         $this->domain = $domain;
-        $this->encrypted = !empty($encrypt_key);
+        $this->encrypted = $encrypt;
         if ($this->encrypted) {
-            $this->security_config['key'] = $encrypt_key;
+            $this->security = new Security();
         }
 
         $this->parse_expire();
@@ -95,18 +92,8 @@ final class Session
         }
 
         foreach ($this->session['sess_data'] as $key => $value) {
-            $this->$key = $this->decrypt($value);
+            $this->$key = $this->security->decrypt($value);
         }
-    }
-
-    private function encrypt($plain)
-    {
-        return base64_encode(openssl_encrypt(json_encode($plain), $this->security_config['cipher'], $this->security_config['key'], 0, $this->security_config['iv']));
-    }
-
-    private function decrypt($encrypted)
-    {
-        return json_decode(trim(openssl_decrypt(base64_decode($encrypted), $this->security_config['cipher'], $this->security_config['key'], 0, $this->security_config['iv'])));
     }
 
     /**
@@ -147,7 +134,7 @@ final class Session
             throw \InvalidArgumentException(sprintf("Value of '%s' to store in session cannot be empty", $data));
         }
 
-        $this->session['sess_data'][$data] = $this->encrypted ? $this->encrypt($value) : $value;
+        $this->session['sess_data'][$data] = $this->encrypted ? $this->security->encrypt($value) : $value;
     }
 
     /**
@@ -161,7 +148,7 @@ final class Session
         $data = $this->session['sess_data'][$key] ?? null;
 
         if ($this->encrypted && !empty($data)) {
-            $data = $this->decrypt($data);
+            $data = $this->security->decrypt($data);
         }
 
         return $data ?? $default;
@@ -177,7 +164,7 @@ final class Session
         if ($this->encrypted) {
             $result = [];
             foreach ($this->session['sess_data'] as $key => $value) {
-                $result[$key] = $this->decrypt($value);
+                $result[$key] = $this->security->decrypt($value);
             }
             return $result;
         }
@@ -219,7 +206,7 @@ final class Session
         $data = $this->session['sess_data']['flash'][$key];
 
         if ($this->encrypted && !empty($data)) {
-            $data = $this->decrypt($data);
+            $data = $this->security->decrypt($data);
         }
 
         if (!$keepFlash) {
@@ -254,7 +241,7 @@ final class Session
         }
 
         if ($this->encrypted) {
-            $value = $this->encrypt($value);
+            $value = $this->security->encrypt($value);
         }
 
         $this->session['sess_data']['flash'][$key] = $value;
