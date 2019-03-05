@@ -9,7 +9,7 @@ use Interart\Flywork\Traits\AutoProperty;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
- * @version     2.1
+ * @version     2.0
  */
 final class Session
 {
@@ -17,33 +17,51 @@ final class Session
 
     private $session;
     private $expire;
+    private $domain;
+    private $secure;
+    private $encrypted;
+    private $security_config = [
+        'cipher' => 'AES-256-XTS',
+        'key'    => '2b66f87fdac6830e',
+        'iv'     => '58077f401138b82f',
+    ];
 
     /**
-     * Default constructor
+     * Default constructor.
+     *
+     * @param string $session_name
+     * @param integer $expire
+     * @param string $domain
+     * @param bool $secure
+     * @param string $encrypt_key
      */
-    public function __construct($session_name = '', $expire = 0, $domain = null, $secure = null)
+    public function __construct($session_name = '', $expire = 0, $domain = null, $secure = null, $encrypt_key = null)
     {
         if (!empty($session_name)) {
-            session_name($session_name . '_fly');
+            session_name($session_name);
         }
 
-        $this->parse_expire($expire);
+        $this->expire = $expire;
+        $this->domain = $domain;
+        $this->secure = $secure;
+        $this->encrypted = !empty($encrypt_key);
+        if ($this->encrypted) {
+            $this->security_config['key'] = $encrypt_key;
+        }
 
-        $this->set_cookie($domain, $secure);
+        $this->parse_expire();
+
+        $this->set_cookie();
 
         $this->start_session();
 
         $this->session = &$_SESSION;
 
         $this->parse_session();
-
-        $this->check_session();
     }
 
-    private function parse_expire($expire)
+    private function parse_expire()
     {
-        $this->expire = $expire;
-
         if ($this->expire) {
             ini_set('session.gc_maxlifetime', $this->expire);
             return;
@@ -52,15 +70,15 @@ final class Session
         $this->expire = ini_get('session.gc_maxlifetime');
     }
 
-    private function set_cookie($domain, $secure)
+    private function set_cookie()
     {
-        if (!empty(filter_input(INPUT_COOKIE, 'PHPSESSID'))) {
+        if (empty(filter_input(INPUT_COOKIE, 'PHPSESSID'))) {
             return;
         }
 
-        $domain = $domain ?? filter_input(INPUT_SERVER, 'SERVER_NAME');
-        $secure = $secure ?? !empty(filter_input(INPUT_SERVER, 'HTTPS'));
-        session_set_cookie_params($this->expire, '/', $domain, $secure);
+        $this->domain == $this->domain ?? filter_input(INPUT_SERVER, 'HTTP_HOST');
+        $this->secure = $this->secure ?? !empty(filter_input(INPUT_SERVER, 'HTTPS'));
+        session_set_cookie_params($this->expire, '/', $this->domain, $this->secure);
     }
 
     private function start_session()
@@ -68,35 +86,30 @@ final class Session
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+
         setcookie("PHPSESSID", session_id(), time() + $this->expire);
     }
 
     private function parse_session()
     {
-        if (!isset($this->session['_data']) || !is_array($this->session['_data'])) {
-            $this->session['_data'] = [];
+        if (!isset($this->session['sess_data']) || !is_array($this->session['sess_data'])) {
+            $this->session['sess_data'] = [];
             return;
         }
 
-        foreach ($this->session['_data'] as $key => $value) {
-            $this->$key = $value;
+        foreach ($this->session['sess_data'] as $key => $value) {
+            $this->$key = $this->decrypt($value);
         }
     }
 
-    private function check_session()
+    private function encrypt($plain)
     {
-        if (self::is_valid_session()) {
-            if (!self::prevent_hijacking()) {
-                $this->session['_ipAddress'] = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
-                $this->session['_userAgent'] = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
-                $this->regenerate_session();
-            } elseif (self::should_randomly_regenerate()) {
-                $this->regenerate_session();
-            }
-            return;
-        }
+        return base64_encode(openssl_encrypt(json_encode($plain), $this->security_config['cipher'], $this->security_config['key'], 0, $this->security_config['iv']));
+    }
 
-        $this->clear();
+    private function decrypt($encrypted)
+    {
+        return json_decode(trim(openssl_decrypt(base64_decode($encrypted), $this->security_config['cipher'], $this->security_config['key'], 0, $this->security_config['iv'])));
     }
 
     /**
@@ -106,7 +119,7 @@ final class Session
      */
     public function id()
     {
-        if (\session_status() == PHP_SESSION_NONE) {
+        if (session_status() == PHP_SESSION_NONE) {
             return;
         }
 
@@ -123,23 +136,21 @@ final class Session
     public function set($data, $value = null)
     {
         if (empty($data)) {
-            throw InvalidArgumentException(sprintf("Value to store in session cannot be empty"));
+            throw \InvalidArgumentException(sprintf("Value to store in session cannot be empty"));
         }
 
         if (is_array($data)) {
             foreach ($data as $key => $val) {
-                $this->session['_data'][$key] = $val;
-                $this->$key = $val;
+                $this->set($key, $val);
             }
             return;
         }
 
         if (empty($value)) {
-            throw InvalidArgumentException(sprintf("Value of '%s' to store in session cannot be empty", $data));
+            throw \InvalidArgumentException(sprintf("Value of '%s' to store in session cannot be empty", $data));
         }
 
-        $this->session['_data'][$data] = $value;
-        $this->$data = $value;
+        $this->session['sess_data'][$data] = $this->encrypted ? $this->encrypt($value) : $value;
     }
 
     /**
@@ -148,9 +159,15 @@ final class Session
      * @param string $key
      * @return mixed Value stored
      */
-    public function get(string $key)
+    public function get(string $key, $default = null)
     {
-        return $this->session['_data'][$key] ?? null;
+        $data = $this->session['sess_data'][$key] ?? null;
+
+        if ($this->encrypted && !empty($data)) {
+            $data = $this->decrypt($data);
+        }
+
+        return $data ?? $default;
     }
 
     /**
@@ -160,7 +177,19 @@ final class Session
      */
     public function all()
     {
-        return $this->session['_data'] ?? [];
+        if ($this->session['sess_data']) {
+            if ($this->encrypted) {
+                $result = [];
+                foreach ($this->session['sess_data'] as $key => $value) {
+                    $result[$key] = $this->decrypt($value);
+                }
+                return $result;
+            }
+
+            return $this->session['sess_data'];
+        }
+
+        return [];
     }
 
     /**
@@ -172,38 +201,40 @@ final class Session
     public function clear(string $key = '')
     {
         if (empty($key)) {
-            session_unset();
             session_destroy();
             return;
         }
 
-        if (isset($this->session['_data'][$key])) {
-            $this->session['_data'][$key] = null;
-            unset($this->session['_data'][$key]);
+        if (isset($this->session['sess_data'][$key])) {
+            $this->session['sess_data'][$key] = null;
+            unset($this->session['sess_data'][$key]);
         }
 
-        if (count($this->session['_data']) == 0) {
-            session_unset();
+        if (count($this->session['sess_data']) == 0) {
             session_destroy();
         }
     }
 
     private function get_flash(string $key, bool $keepFlash)
     {
-        if (!isset($this->session['_data'])
-            || !isset($this->session['_data']['flashmessage'])
-            || !isset($this->session['_data']['flashmessage'][$key])) {
+        if (!isset($this->session['sess_data'])
+            || !isset($this->session['sess_data']['flash'])
+            || !isset($this->session['sess_data']['flash'][$key])) {
             return;
         }
 
-        $result = $this->session['_data']['flashmessage'][$key];
+        $data = $this->session['sess_data']['flash'][$key];
 
-        if (!$keepFlash) {
-            $this->session['_data']['flashmessage'][$key] = null;
-            unset($this->session['_data']['flashmessage'][$key]);
+        if ($this->encrypted && !empty($data)) {
+            $data = $this->decrypt($data);
         }
 
-        return $result;
+        if (!$keepFlash) {
+            $this->session['sess_data']['flash'][$key] = null;
+            unset($this->session['sess_data']['flash'][$key]);
+        }
+
+        return $data;
     }
 
     /**
@@ -215,74 +246,25 @@ final class Session
      * @param bool $keepFlash Define if message should be destroyed after return
      * @return void
      */
-    public function flash(string $key, $message = null, bool $keepFlash = false)
+    public function flash(string $key, $value = null, bool $keepFlash = false)
     {
         if (empty($key)) {
             throw new \InvalidArgumentException('Key cannot be empty.');
         }
 
-        if (empty($message)) {
+        if (empty($value)) {
             return $this->get_flash($key, $keepFlash);
         }
 
-        if (!isset($this->session['_data']['flashmessage'])) {
-            $this->session['_data']['flashmessage'] = [];
-        }
-        $this->session['_data']['flashmessage'][$key] = $message;
-    }
-
-    private function should_randomly_regenerate()
-    {
-        return rand(1, 100) <= 5;
-    }
-
-    private function prevent_hijacking()
-    {
-        if (!isset($this->session['_ipAddress']) || !isset($this->session['_userAgent'])) {
-            return false;
+        if (!isset($this->session['sess_data']['flash'])) {
+            $this->session['sess_data']['flash'] = [];
         }
 
-        if ($this->session['_ipAddress'] != filter_input(INPUT_SERVER, 'REMOTE_ADDR')) {
-            return false;
+        if ($this->encrypted) {
+            $value = $this->encrypt($value);
         }
 
-        if ($this->session['_userAgent'] != filter_input(INPUT_SERVER, 'HTTP_USER_AGENT')) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private function regenerate_session()
-    {
-        if (isset($this->session['_OBSOLETE']) && $this->session['_OBSOLETE'] == true) {
-            return;
-        }
-
-        $this->session['_OBSOLETE'] = true;
-        $this->session['_EXPIRES'] = time() + 10;
-
-        session_regenerate_id(false);
-        $newSession = session_id();
-        session_write_close();
-        session_id($newSession);
-        $this->start_session();
-
-        unset($this->session['_OBSOLETE']);
-        unset($this->session['_EXPIRES']);
-    }
-
-    private function is_valid_session()
-    {
-        if (isset($this->session['_OBSOLETE']) && !isset($this->session['_EXPIRES'])) {
-            return false;
-        }
-
-        if (isset($this->session['_EXPIRES']) && $this->session['_EXPIRES'] < time()) {
-            return false;
-        }
-
-        return true;
+        $this->session['sess_data']['flash'][$key] = $value;
     }
 
 }
