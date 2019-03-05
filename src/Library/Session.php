@@ -2,8 +2,8 @@
 
 namespace Interart\Flywork\Library;
 
-use Interart\Flywork\Traits\AutoProperty;
 use Interart\Flywork\Library\Security;
+use Interart\Flywork\Traits\AutoProperty;
 
 /**
  * Session handling.
@@ -92,7 +92,11 @@ final class Session
         }
 
         foreach ($this->session['sess_data'] as $key => $value) {
-            $this->$key = $this->security->decrypt($value);
+            if ($this->encrypted) {
+                $this->$key = $this->security->decrypt($value);
+            } else {
+                $this->$key = $value;
+            }
         }
     }
 
@@ -164,7 +168,11 @@ final class Session
         if ($this->encrypted) {
             $result = [];
             foreach ($this->session['sess_data'] as $key => $value) {
-                $result[$key] = $this->security->decrypt($value);
+                if ($this->encrypted) {
+                    $result[$key] = $this->security->decrypt($value);
+                } else {
+                    $result[$key] = $value;
+                }
             }
             return $result;
         }
