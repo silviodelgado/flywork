@@ -19,6 +19,10 @@ final class Logger implements LoggerInterface
 
     private $db;
     private $storage_type;
+    private $storage_types = [
+        self::STORAGE_TYPE_FILE,
+        self::STORAGE_TYPE_DB
+    ];
     private $log_path = '';
     private $db_settings;
 
@@ -152,7 +156,7 @@ final class Logger implements LoggerInterface
 
     private function validateSettings()
     {
-        if (!in_array($this->storage_type, [self::STORAGE_TYPE_FILE, self::STORAGE_TYPE_DB])) {
+        if (!in_array($this->storage_type, $this->storage_types)) {
             throw new \Exception('Storage type wasn\'t properly configured.');
         }
 
