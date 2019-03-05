@@ -10,7 +10,7 @@ use Psr\Log\LogLevel;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
- * @version     1.1
+ * @version     1.2
  */
 final class Logger implements LoggerInterface
 {
@@ -152,16 +152,20 @@ final class Logger implements LoggerInterface
 
     private function validateSettings()
     {
+        if (!\in_array($this->storage_type, [self::STORAGE_TYPE_FILE, self::STORAGE_TYPE_DB])) {
+            throw new \Exception('Storage type wasn\'t properly configured.');
+        }
+
         if ($this->storage_type == self::STORAGE_TYPE_FILE && empty($this->log_path)) {
             throw new \Exception('You must set log path before save log entry.');
         }
 
-        if ($this->storage_type == self::STORAGE_TYPE_DB && empty($this->db) && empty($this->db_settings)) {
-            throw new \Exception('You must set database settings before save log entry.');
+        if ($this->storage_type == self::STORAGE_TYPE_FILE && !is_writable($this->log_path)) {
+            throw new \Exception("Directory '{$this->log_path}' is not writable.");
         }
 
-        if (!\in_array($this->storage_type, [self::STORAGE_TYPE_FILE, self::STORAGE_TYPE_DB])) {
-            throw new \Exception('Storage type wasn\'t properly configured.');
+        if ($this->storage_type == self::STORAGE_TYPE_DB && empty($this->db) && empty($this->db_settings)) {
+            throw new \Exception('You must set database settings before save log entry.');
         }
     }
 
