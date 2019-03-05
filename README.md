@@ -43,6 +43,7 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
 * Form fields handling
 * Mail encapsulated handler
 * Log management - PSR-3 compliant
+* Security methods (password, encryption and decryption)
 * Too few settings do start
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=U4XC3N7P7FV7L&item_name=Help+Flywork+development&currency_code=USD&source=url"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate now!"></a>
