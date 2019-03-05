@@ -18,7 +18,6 @@ final class Session
     private $session;
     private $expire;
     private $domain;
-    private $secure;
     private $encrypted;
     private $security_config = [
         'cipher' => 'AES-256-XTS',
@@ -35,7 +34,7 @@ final class Session
      * @param bool $secure
      * @param string $encrypt_key
      */
-    public function __construct($session_name = '', $expire = 0, $domain = null, $secure = null, $encrypt_key = null)
+    public function __construct($session_name = '', $expire = 0, $domain = null, $encrypt_key = null)
     {
         if (!empty($session_name)) {
             session_name($session_name);
@@ -43,7 +42,6 @@ final class Session
 
         $this->expire = $expire;
         $this->domain = $domain;
-        $this->secure = $secure;
         $this->encrypted = !empty($encrypt_key);
         if ($this->encrypted) {
             $this->security_config['key'] = $encrypt_key;
@@ -77,8 +75,7 @@ final class Session
         }
 
         $this->domain == $this->domain ?? filter_input(INPUT_SERVER, 'HTTP_HOST');
-        $this->secure = $this->secure ?? !empty(filter_input(INPUT_SERVER, 'HTTPS'));
-        session_set_cookie_params($this->expire, '/', $this->domain, $this->secure);
+        session_set_cookie_params($this->expire, '/', $this->domain, (filter_input(INPUT_SERVER, 'HTTPS') == 'on'));
     }
 
     private function start_session()
@@ -177,19 +174,15 @@ final class Session
      */
     public function all()
     {
-        if ($this->session['sess_data']) {
-            if ($this->encrypted) {
-                $result = [];
-                foreach ($this->session['sess_data'] as $key => $value) {
-                    $result[$key] = $this->decrypt($value);
-                }
-                return $result;
+        if ($this->encrypted) {
+            $result = [];
+            foreach ($this->session['sess_data'] as $key => $value) {
+                $result[$key] = $this->decrypt($value);
             }
-
-            return $this->session['sess_data'];
+            return $result;
         }
 
-        return [];
+        return $this->session['sess_data'];
     }
 
     /**
