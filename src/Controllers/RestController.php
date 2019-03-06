@@ -70,7 +70,7 @@ abstract class RestController extends Controller
     private function put($id)
     {
         $this->entity = $this->entity->FindById($id, $this->defaul_filter);
-        if (empty($this->entity->rows)) {
+        if (empty($this->entity->numRows())) {
             return $this->kill();
         }
         $result = $this->entity->Update($this->get_input_vars(), $this->defaul_filter);
@@ -80,11 +80,11 @@ abstract class RestController extends Controller
     private function delete($id)
     {
         $this->entity = $this->entity->FindById($id, $this->defaul_filter);
-        if (empty($this->entity->rows)) {
+        if (empty($this->entity->numRows())) {
             return $this->kill();
         }
         $result = $this->entity->Delete($this->defaul_filter);
-        if (!$result->rows) {
+        if (!$result->numRows()) {
             return $this->kill();
         }
 
