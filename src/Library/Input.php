@@ -116,6 +116,28 @@ final class Input
         return $this->field_datetime(INPUT_GET, $field_name, $input_format, 'Y-m-d H:i:s');
     }
 
+    /**
+     * Get the field $field_name content string sanitized.
+     *
+     * @param string $field_name
+     * @return string
+     */
+    public function getClearStr(string $field_name)
+    {
+        return $this->field_clear_string(INPUT_GET, $field_name);
+    }
+
+    /**
+     * Get the field $field_name content email address sanitized.
+     *
+     * @param string $field_name
+     * @return string
+     */
+    public function getEmail(string $field_name)
+    {
+        return $this->field_email(INPUT_GET, $field_name);
+    }
+
     // post
 
     /**
@@ -200,6 +222,28 @@ final class Input
     public function postDatetime(string $field_name, string $input_format = '')
     {
         return $this->field_datetime(INPUT_POST, $field_name, $input_format, 'Y-m-d H:i:s');
+    }
+
+    /**
+     * Get the field $field_name content string sanitized.
+     *
+     * @param string $field_name
+     * @return string
+     */
+    public function postClearStr(string $field_name)
+    {
+        return $this->field_clear_string(INPUT_POST, $field_name);
+    }
+
+    /**
+     * Get the field $field_name content email address sanitized.
+     *
+     * @param string $field_name
+     * @return string
+     */
+    public function postEmail(string $field_name)
+    {
+        return $this->field_email(INPUT_POST, $field_name);
     }
 
     // private methods
@@ -314,6 +358,20 @@ final class Input
                 $data = str_replace(',', '', $data);
         }
         return number_format($data, $decimal_digits, '.', '');
+    }
+
+    public function field_clear_string(int $type, string $field_name)
+    {
+        $value = $this->field($type, $field_name);
+    
+        return filter_var($value, FILTER_SANITIZE_STRING);
+    }
+
+    public function field_email(int $type, string $field_name)
+    {
+        $value = $this->field($type, $field_name);
+
+        return filter_var($value, FILTER_SANITIZE_EMAIL);
     }
 
     private function create_datetime(string $input, string $input_format = '')
