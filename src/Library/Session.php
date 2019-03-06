@@ -92,6 +92,9 @@ final class Session
         }
 
         foreach ($this->session['sess_data'] as $key => $value) {
+            if ($key == 'flash') {
+                continue;
+            }
             $this->$key = $this->encrypted ? $this->security->decrypt($value) : $value;
         }
     }
