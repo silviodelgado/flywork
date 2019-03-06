@@ -38,8 +38,6 @@ abstract class Controller
     {
         self::$instance = &$this;
 
-        $this->session = new Session();
-
         $this->prepare_controller();
     }
 
