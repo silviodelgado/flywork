@@ -88,18 +88,17 @@ final class Session
 
     private function parse_session()
     {
-        if (!empty($this->session_items[$this->data_key])) {
-            foreach ($this->session_items[$this->data_key] as $key => $value) {
-                if (empty($value)) {
-                    continue;
-                }
-                $this->$key = $this->encrypted ? $this->security->decrypt($value) : json_decode(json_encode($value));
-            }
-
+        if (!isset($this->session_items[$this->data_key])) {
+            $this->session_items[$this->data_key] = [];
             return;
         }
-
-        $this->session_items[$this->data_key] = [];
+        
+        foreach ($this->session_items[$this->data_key] as $key => $value) {
+            if (empty($value)) {
+                continue;
+            }
+            $this->$key = $this->encrypted ? $this->security->decrypt($value) : json_decode(json_encode($value));
+        }
     }
 
     /**
