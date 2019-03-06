@@ -16,7 +16,9 @@ final class Session
 {
     use AutoProperty;
 
-    private $session;
+    private $data_key = 'sess_data_app';
+    private $flash_key = 'sess_data_flash';
+    private $session_items;
     private $expire;
     private $domain;
     private $encrypted;
@@ -50,7 +52,7 @@ final class Session
 
         $this->start_session();
 
-        $this->session = &$_SESSION;
+        $this->session_items = &$_SESSION;
 
         $this->parse_session();
     }
@@ -86,17 +88,18 @@ final class Session
 
     private function parse_session()
     {
-        if (!isset($this->session['sess_data']) || !is_array($this->session['sess_data'])) {
-            $this->session['sess_data'] = [];
+        if (!empty($this->session_items[$this->data_key])) {
+            foreach ($this->session_items[$this->data_key] as $key => $value) {
+                if (empty($value)) {
+                    continue;
+                }
+                $this->$key = $this->encrypted ? $this->security->decrypt($value) : json_decode(json_encode($value));
+            }
+
             return;
         }
 
-        foreach ($this->session['sess_data'] as $key => $value) {
-            if ($key == 'flash') {
-                continue;
-            }
-            $this->$key = $this->encrypted ? $this->security->decrypt($value) : $value;
-        }
+        $this->session_items[$this->data_key] = [];
     }
 
     /**
@@ -137,7 +140,7 @@ final class Session
             throw \InvalidArgumentException(sprintf("Value of '%s' to store in session cannot be empty", $data));
         }
 
-        $this->session['sess_data'][$data] = $this->encrypted ? $this->security->encrypt($value) : $value;
+        $this->session_items[$this->data_key][$data] = $this->encrypted ? $this->security->encrypt($value) : $value;
     }
 
     /**
@@ -148,7 +151,7 @@ final class Session
      */
     public function get(string $key, $default = null)
     {
-        $data = $this->session['sess_data'][$key] ?? null;
+        $data = $this->session_items[$this->data_key][$key] ?? null;
 
         if ($this->encrypted && !empty($data)) {
             $data = $this->security->decrypt($data);
@@ -165,11 +168,11 @@ final class Session
     public function all()
     {
         if (!$this->encrypted) {
-            return $this->session['sess_data'];
+            return $this->session_items[$this->data_key];
         }
 
         $result = [];
-        foreach ($this->session['sess_data'] as $key => $value) {
+        foreach ($this->session_items[$this->data_key] as $key => $value) {
             $result[$key] = $this->security->decrypt($value);
         }
         return $result;
@@ -184,37 +187,45 @@ final class Session
     public function clear(string $key = '')
     {
         if (empty($key)) {
-            session_destroy();
+            foreach ($this->session_items[$this->data_key] as $key => $value) {
+                $this->$key = null;
+                unset($this->$key);
+            }
+            $this->session_items = [];
             return;
         }
 
-        if (isset($this->session['sess_data'][$key])) {
-            $this->session['sess_data'][$key] = null;
-            unset($this->session['sess_data'][$key]);
+        if (isset($this->session_items[$this->data_key][$key])) {
+            $this->session_items[$this->data_key][$key] = null;
+            unset($this->session_items[$this->data_key][$key]);
         }
+    }
 
-        if (count($this->session['sess_data']) == 0) {
-            session_destroy();
-        }
+    /**
+     * Destroy session for entire application.
+     *
+     * @return void
+     */
+    public function destroy()
+    {
+        session_destroy();
     }
 
     private function get_flash(string $key, bool $keepFlash)
     {
-        if (!isset($this->session['sess_data'])
-            || !isset($this->session['sess_data']['flash'])
-            || !isset($this->session['sess_data']['flash'][$key])) {
+        if (empty($this->session_items[$this->flash_key][$key])) {
             return;
         }
 
-        $data = $this->session['sess_data']['flash'][$key];
+        $data = $this->session_items[$this->flash_key][$key];
 
         if ($this->encrypted && !empty($data)) {
             $data = $this->security->decrypt($data);
         }
 
         if (!$keepFlash) {
-            $this->session['sess_data']['flash'][$key] = null;
-            unset($this->session['sess_data']['flash'][$key]);
+            $this->session_items[$this->flash_key][$key] = null;
+            unset($this->session_items[$this->flash_key][$key]);
         }
 
         return $data;
@@ -235,19 +246,19 @@ final class Session
             throw new \InvalidArgumentException('Key cannot be empty.');
         }
 
-        if (empty($value)) {
-            return $this->get_flash($key, $keepFlash);
+        if (!isset($this->session_items[$this->flash_key])) {
+            $this->session_items[$this->flash_key] = [];
         }
 
-        if (!isset($this->session['sess_data']['flash'])) {
-            $this->session['sess_data']['flash'] = [];
+        if (empty($value)) {
+            return $this->get_flash($key, $keepFlash);
         }
 
         if ($this->encrypted) {
             $value = $this->security->encrypt($value);
         }
 
-        $this->session['sess_data']['flash'][$key] = $value;
+        $this->session_items[$this->flash_key][$key] = $value;
     }
 
 }
