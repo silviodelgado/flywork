@@ -68,15 +68,15 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as a numeric value
+     * Get the field $field_name content as an integer value
      *
      * @param string $field_name Field name
-     * @param boolean $allow_negative Defines if the returned number can be negative
+     * @param boolean $allow_negative Defines if the returned value can be negative
      * @return long
      */
-    public function getNum(string $field_name, bool $allow_negative = true)
+    public function getInt(string $field_name, bool $allow_negative = true)
     {
-        return $this->field_num(INPUT_GET, $field_name, $allow_negative);
+        return $this->field_int(INPUT_GET, $field_name, $allow_negative);
     }
 
     /**
@@ -176,15 +176,15 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as a numeric value
+     * Get the field $field_name content as an integer value
      *
      * @param string $field_name Field name
-     * @param boolean $allow_negative Defines if the returned number can be negative
+     * @param boolean $allow_negative Defines if the returned value can be negative
      * @return long
      */
-    public function postNum(string $field_name, bool $allow_negative = true)
+    public function postInt(string $field_name, bool $allow_negative = true)
     {
-        return $this->field_num(INPUT_POST, $field_name, $allow_negative);
+        return $this->field_int(INPUT_POST, $field_name, $allow_negative);
     }
 
     /**
@@ -336,7 +336,7 @@ final class Input
         return $this->field($type, $field_name) == $true_value ? 1 : 0;
     }
 
-    private function field_num(int $type, string $field_name, bool $allow_negative = true)
+    private function field_int(int $type, string $field_name, bool $allow_negative = true)
     {
         $data = $this->field($type, $field_name);
         $value = filter_var($data, FILTER_SANITIZE_NUMBER_INT);
