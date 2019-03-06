@@ -339,7 +339,9 @@ final class Input
     private function field_num(int $type, string $field_name, bool $allow_negative = true)
     {
         $data = $this->field($type, $field_name);
-        return preg_replace(($allow_negative ? '/[^0-9\.\,\-]/' : '/[^0-9\.\,]/'), '', $data);
+        $value = filter_var($data, FILTER_SANITIZE_NUMBER_INT);
+
+        return $allow_negative ? $value : abs($value);
     }
 
     private function field_float(int $type, string $field_name, int $decimal_digits = 2, string $input_culture = 'en-us')
@@ -357,6 +359,7 @@ final class Input
             default:
                 $data = str_replace(',', '', $data);
         }
+        $data = filter_var($data, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         return number_format($data, $decimal_digits, '.', '');
     }
 
