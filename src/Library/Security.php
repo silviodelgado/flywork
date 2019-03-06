@@ -52,6 +52,9 @@ final class Security
 
     public function decrypt($encrypted)
     {
+        if (empty($encrypted)) {
+            return null;
+        }
         return json_decode(trim(openssl_decrypt(base64_decode($encrypted), $this->security_config['cipher'], $this->security_config['key'], 0, $this->security_config['iv'])));
     }
 
