@@ -54,13 +54,14 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
 * PHP 7.1+
 * [Composer](https://getcomposer.org/) Dependency Manager
 * [Apache 2.4 Server](https://httpd.apache.org/)
-* ```mod_rewrite``` enabled
+  * ```mod_rewrite``` enabled
 
 ## Dependencies
 
 * Language
   * [PDO](http://php.net/manual/pt_BR/book.pdo.php) (PHP Data Objects) Extension (for Medoo library)
   * [MbString](http://php.net/manual/en/book.mbstring.php) Extension
+  * [OpenSSL](http://php.net/manual/pt_BR/book.openssl.php) Extension
 * External libraries
   * [Medoo](https://medoo.in)
     * DB access/management
