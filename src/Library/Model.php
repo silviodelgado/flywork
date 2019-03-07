@@ -38,6 +38,20 @@ abstract class Model
     abstract protected function validate();
 
     /**
+     * Returns model with resultSet and numRows.
+     *
+     * @param array $resultSet
+     * 
+     * @return Model
+     */
+    protected function resultSet($resultSet = [])
+    {
+        $this->result = $resultSet;
+        $this->num_rows = count($resultSet);
+        return $this;
+    }
+
+    /**
      * Shows the number of rows in result set.
      *
      * @return int
