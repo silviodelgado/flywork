@@ -13,8 +13,6 @@ namespace Interart\Flywork\Controllers;
  */
 abstract class RestController extends Controller
 {
-    protected $order_by = [];
-
     /**
      * Default constructor.
      */
