@@ -3,10 +3,11 @@
 namespace Interart\Flywork\Library\Mail\Components;
 
 /**
- * Message subject and body
+ * Message subject and body.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 final class MailMessage
@@ -17,9 +18,10 @@ final class MailMessage
     protected $body_alt;
 
     /**
-     * Sets mail message subject
+     * Sets mail message subject.
      *
      * @param string $subject
+     *
      * @return void
      */
     public function setSubject(string $subject)
@@ -28,10 +30,11 @@ final class MailMessage
     }
 
     /**
-     * Sets mail message body
+     * Sets mail message body.
      *
      * @param string $body
-     * @param boolean $is_html
+     * @param bool $is_html
+     *
      * @return void
      */
     public function setBody(string $body, bool $is_html = true)
@@ -42,9 +45,10 @@ final class MailMessage
 
     /**
      * Sets mail message alternative body.
-     * Useful if main body is HTML (when this alternative body should be set in plain text)
+     * Useful if main body is HTML (when this alternative body should be set in plain text).
      *
      * @param string $body
+     *
      * @return void
      */
     public function setAlternativeBody(string $body)
@@ -53,7 +57,7 @@ final class MailMessage
     }
 
     /**
-     * Returns message subject
+     * Returns message subject.
      *
      * @return string
      */
@@ -63,9 +67,9 @@ final class MailMessage
     }
 
     /**
-     * Checks if message body is in HTML format
+     * Checks if message body is in HTML format.
      *
-     * @return boolean
+     * @return bool
      */
     public function isHtml() : bool
     {
@@ -73,7 +77,7 @@ final class MailMessage
     }
 
     /**
-     * Gets message body
+     * Gets message body.
      *
      * @return string
      */
@@ -84,7 +88,7 @@ final class MailMessage
 
     /**
      * Gets message alternative body.
-     * If property is empty, body is setted and is HTML format, this will return main body converted to plain text
+     * If property is empty, body is setted and is HTML format, this will return main body converted to plain text.
      *
      * @return string
      */
@@ -97,5 +101,4 @@ final class MailMessage
 
         return $this->body_alt;
     }
-
 }

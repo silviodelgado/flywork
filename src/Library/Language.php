@@ -8,6 +8,7 @@ namespace Interart\Flywork\Library;
  *
  * @copyright   2018 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     1.2
  */
 final class Language
@@ -16,7 +17,7 @@ final class Language
     private $labels = [];
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public function __construct(string $lang_file, string $culture_code)
     {
@@ -24,10 +25,11 @@ final class Language
     }
 
     /**
-     * Load a language file for given language code
+     * Load a language file for given language code.
      *
      * @param string $lang_file File to be loaded
      * @param string $language Language
+     *
      * @return void
      */
     private function load(string $lang_file, string $culture_code)
@@ -47,9 +49,10 @@ final class Language
     }
 
     /**
-     * Get the corresponding string value from given $label
+     * Get the corresponding string value from given $label.
      *
      * @param string $label Label of text
+     *
      * @return string String value
      */
     public function get(string $label)

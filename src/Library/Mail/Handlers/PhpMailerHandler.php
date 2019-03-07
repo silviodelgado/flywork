@@ -2,16 +2,17 @@
 
 namespace Interart\Flywork\Library\Mail\Handlers;
 
-use Interart\Flywork\Library\Mail\MailHandler;
 use Interart\Flywork\Library\Mail\IMailHandler;
+use Interart\Flywork\Library\Mail\MailHandler;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
 /**
- * PHPMailer wrap handler
+ * PHPMailer wrap handler.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 class PhpMailerHandler extends MailHandler implements IMailHandler
@@ -35,7 +36,7 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
             $this->mailer->isSMTP();
         }
     }
-    
+
     private function parse_headers()
     {
         $this->mailer->setFrom($this->sender->getSender()->getEmail(), $this->sender->getSender()->getName());
@@ -44,13 +45,13 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
 
     private function parse_recipients()
     {
-        foreach($this->recipients->getTo() as $to) {
+        foreach ($this->recipients->getTo() as $to) {
             $this->mailer->addAddress($to->getEmail(), $to->getName());
         }
-        foreach($this->recipients->getCc() as $cc) {
+        foreach ($this->recipients->getCc() as $cc) {
             $this->mailer->addCC($cc->getEmail(), $cc->getName());
         }
-        foreach($this->recipients->getBcc() as $bcc) {
+        foreach ($this->recipients->getBcc() as $bcc) {
             $this->mailer->addBCC($bcc->getEmail(), $bcc->getName());
         }
     }
@@ -63,7 +64,7 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
     }
 
     private function parse_attachments()
-    { 
+    {
         foreach ($this->attachments as $attach) {
             $this->mailer->addAttachment($attach->getPath(), $attach->getCustomName());
         }
@@ -75,9 +76,9 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
         $this->mailer->SMTPDebug = ($this->smtp_config->isDebug() ? SMTP::DEBUG_SERVER : SMTP::DEBUG_OFF);
 
         $this->parse_server();
-        
+
         $this->parse_headers();
-        
+
         $this->parse_recipients();
 
         $this->mailer->Subject = $this->message->getSubject();

@@ -3,10 +3,11 @@
 namespace Interart\Flywork\Library\Mail\Components;
 
 /**
- * Configure the sender
+ * Configure the sender.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 final class MailSender
@@ -15,10 +16,11 @@ final class MailSender
     private $reply_to;
 
     /**
-     * Set sender name and email address
+     * Set sender name and email address.
      *
      * @param string $email_address
      * @param string $name
+     *
      * @return void
      */
     public function setSender(string $email_address, string $name = '')
@@ -27,10 +29,11 @@ final class MailSender
     }
 
     /**
-     * Set to where messages should reply to
+     * Set to where messages should reply to.
      *
      * @param string $email_address
      * @param string $name
+     *
      * @return void
      */
     public function setReplyTo(string $email_address, string $name = '')
@@ -39,7 +42,7 @@ final class MailSender
     }
 
     /**
-     * Returns sender
+     * Returns sender.
      *
      * @return MailAddress
      */
@@ -49,7 +52,7 @@ final class MailSender
     }
 
     /**
-     * Returns reply to
+     * Returns reply to.
      *
      * @return MailAddress
      */
@@ -57,5 +60,4 @@ final class MailSender
     {
         return $this->reply_to ?? new MailAddress($this->sender->get_email());
     }
-
 }

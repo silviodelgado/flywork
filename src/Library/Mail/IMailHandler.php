@@ -8,6 +8,7 @@ namespace Interart\Flywork\Library\Mail;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 interface IMailHandler

@@ -3,10 +3,11 @@
 namespace Interart\Flywork\Library\Mail\Components;
 
 /**
- * Mail address x Owner Name keyvaluepair
+ * Mail address x Owner Name keyvaluepair.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 final class MailAddress
@@ -15,7 +16,7 @@ final class MailAddress
     private $name;
 
     /**
-     * Default constructor
+     * Default constructor.
      *
      * @param string $email_address
      * @param string $name
@@ -27,7 +28,7 @@ final class MailAddress
     }
 
     /**
-     * Returns email address
+     * Returns email address.
      *
      * @return string
      */
@@ -37,7 +38,7 @@ final class MailAddress
     }
 
     /**
-     * Returns account's owner name
+     * Returns account's owner name.
      *
      * @return string
      */

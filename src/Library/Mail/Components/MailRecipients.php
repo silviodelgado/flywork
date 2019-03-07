@@ -3,10 +3,11 @@
 namespace Interart\Flywork\Library\Mail\Components;
 
 /**
- * Mail recipients list
+ * Mail recipients list.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 final class MailRecipients
@@ -16,10 +17,11 @@ final class MailRecipients
     private $bcc = [];
 
     /**
-     * Add recipient name and email address
+     * Add recipient name and email address.
      *
      * @param string $email_address
      * @param string $name
+     *
      * @return void
      */
     public function addTo(string $email_address, string $name = '')
@@ -28,10 +30,11 @@ final class MailRecipients
     }
 
     /**
-     * Add recipient name and email address to carbon copy
+     * Add recipient name and email address to carbon copy.
      *
      * @param string $email_address
      * @param string $name
+     *
      * @return void
      */
     public function addCc(string $email_address, string $name = '')
@@ -40,10 +43,11 @@ final class MailRecipients
     }
 
     /**
-     * Add recipient name and email address to blind carbon copy
+     * Add recipient name and email address to blind carbon copy.
      *
      * @param string $email_address
      * @param string $name
+     *
      * @return void
      */
     public function addBcc(string $email_address, string $name = '')
@@ -52,7 +56,7 @@ final class MailRecipients
     }
 
     /**
-     * Gets recipients list
+     * Gets recipients list.
      *
      * @return array
      */
@@ -62,7 +66,7 @@ final class MailRecipients
     }
 
     /**
-     * Gets carbon copy recipients list
+     * Gets carbon copy recipients list.
      *
      * @return array
      */
@@ -72,7 +76,7 @@ final class MailRecipients
     }
 
     /**
-     * Gets blind carbon copy recipients list
+     * Gets blind carbon copy recipients list.
      *
      * @return void
      */
