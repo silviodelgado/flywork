@@ -19,6 +19,7 @@ abstract class Model
     protected $default_order_by = '';
     protected $default_order_dir = 'ASC';
     protected $columns = [];
+    protected $join_columns = [];
     protected $num_rows = 0;
     protected $result = [];
 
@@ -79,6 +80,26 @@ abstract class Model
     public function hasResult()
     {
         return count($this->result) > 0;
+    }
+
+    /**
+     * List all table columns in this entity.
+     *
+     * @return array
+     */
+    public function columns()
+    {
+        return $this->columns;
+    }
+
+    /**
+     * List all join columns used in this entity.
+     *
+     * @return array
+     */
+    public function joinColumns()
+    {
+        return $this->join_columns;
     }
 
     /**
