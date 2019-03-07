@@ -52,7 +52,7 @@ final class Kernel
     private function init(array $settings = [])
     {
         $this->request_uri = filter_input(INPUT_SERVER, 'REQUEST_URI');
-        $this->request_path = trim(explode('?', $this->request_uri)[0], '/');
+        $this->request_path = mb_strtolowerf(trim(explode('?', $this->request_uri)[0], '/'));
         $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
 
         $this->parse_settings_default_route($settings);
@@ -104,7 +104,7 @@ final class Kernel
 
         foreach ($this->routes as $key => $value) {
             $regex = '/^' . str_replace('/', '\/', $key) . '$/';
-            if (preg_match($regex, trim($this->request_path, '/'))) {
+            if (preg_match($regex, $this->request_path)) {
                 $this->request_path = preg_replace($regex, $value, $this->request_path);
                 break;
             }
