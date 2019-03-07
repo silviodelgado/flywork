@@ -148,10 +148,9 @@ abstract class Model
         ? [$this->default_order_by => $this->default_order_dir]
         : [$order_by => ($order_dir ?? $this->default_order_dir)];
 
-        $this->result = $this->db->select($this->table_name, $this->columns, $where, $order);
-        $this->num_rows = count($this->result);
+        $result = $this->db->select($this->table_name, $this->columns, $where, $order);
 
-        return $this;
+        return $this->resultSet($result);
     }
 
     /**
