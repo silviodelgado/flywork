@@ -52,7 +52,7 @@ final class Kernel
     private function init(array $settings = [])
     {
         $this->request_uri = filter_input(INPUT_SERVER, 'REQUEST_URI');
-        $this->request_path = mb_strtolowerf(trim(explode('?', $this->request_uri)[0], '/'));
+        $this->request_path = mb_strtolower(trim(explode('?', $this->request_uri)[0], '/'));
         $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
 
         $this->parse_settings_default_route($settings);
