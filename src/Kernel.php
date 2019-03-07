@@ -10,9 +10,9 @@ use Interart\Flywork\Controllers\Controller;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
-
 final class Kernel
 {
     private $routes = [
@@ -36,6 +36,7 @@ final class Kernel
      * Default constructor.
      *
      * @param array $settings
+     *
      * @return void
      */
     public function __construct(array $settings = [])
@@ -59,7 +60,6 @@ final class Kernel
         $this->parse_settings_custom_routes($settings);
 
         $this->parse_settings_db($settings);
-
     }
 
     private function parse_settings_default_route($settings)
@@ -67,7 +67,7 @@ final class Kernel
         if (empty($settings['default_route'])) {
             return;
         }
-        
+
         if (!empty($settings['default_route']['controller'])) {
             $this->default_route['controller'] = $settings['default_route']['controller'];
         }
@@ -123,6 +123,7 @@ final class Kernel
         if (empty($this->request_path)) {
             $this->controller_name = $this->default_route['controller'];
             $this->action_name = $this->default_route['action'];
+
             return;
         }
 
@@ -143,6 +144,7 @@ final class Kernel
      * Validate if request Controller and Action are valid.
      *
      * @param Controller $controller_obj Instance of Controller class (or derived from it)
+     *
      * @return void
      */
     private function validate_route_parts(Controller $controller_obj)
@@ -180,6 +182,7 @@ final class Kernel
         // throws ArgumentCountError if is wrong parameter count
         if (empty($this->route_parts)) {
             call_user_func([$controller, $this->action_name]);
+
             return;
         }
 

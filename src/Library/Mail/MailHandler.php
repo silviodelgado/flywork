@@ -2,13 +2,12 @@
 
 namespace Interart\Flywork\Library\Mail;
 
-use Interart\Flywork\Library\Mail\Components\MailConfig;
-use Interart\Flywork\Library\Mail\Components\MailSender;
-use Interart\Flywork\Library\Mail\Components\MailRecipients;
-use Interart\Flywork\Library\Mail\Components\MailMessage;
-use Interart\Flywork\Library\Mail\Components\SMTPConfig;
 use Interart\Flywork\Library\Mail\Components\MailAttachment;
-
+use Interart\Flywork\Library\Mail\Components\MailConfig;
+use Interart\Flywork\Library\Mail\Components\MailMessage;
+use Interart\Flywork\Library\Mail\Components\MailRecipients;
+use Interart\Flywork\Library\Mail\Components\MailSender;
+use Interart\Flywork\Library\Mail\Components\SMTPConfig;
 
 /**
  * Mail handler base class.
@@ -16,6 +15,7 @@ use Interart\Flywork\Library\Mail\Components\MailAttachment;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 abstract class MailHandler implements IMailHandler
@@ -38,7 +38,7 @@ abstract class MailHandler implements IMailHandler
     protected $errors = [];
 
     /**
-     * Default constructor
+     * Default constructor.
      *
      * @param array $options Initial settings
      */
@@ -62,10 +62,11 @@ abstract class MailHandler implements IMailHandler
     }
 
     /**
-     * Add recipient
+     * Add recipient.
      *
      * @param string $email_address
      * @param string $name
+     *
      * @return void
      */
     public function addTo(string $email_address, string $name = '')
@@ -74,10 +75,11 @@ abstract class MailHandler implements IMailHandler
     }
 
     /**
-     * Add recipient in carbon copy
+     * Add recipient in carbon copy.
      *
      * @param string $email_address
      * @param string $name
+     *
      * @return void
      */
     public function addCc(string $email_address, string $name = '')
@@ -86,10 +88,11 @@ abstract class MailHandler implements IMailHandler
     }
 
     /**
-     * Add recipient in blind carbon copy
+     * Add recipient in blind carbon copy.
      *
      * @param string $email_address
      * @param string $name
+     *
      * @return void
      */
     public function addBcc(string $email_address, string $name = '')
@@ -98,10 +101,11 @@ abstract class MailHandler implements IMailHandler
     }
 
     /**
-     * Set where email came from
+     * Set where email came from.
      *
      * @param string $email_address
      * @param string $name
+     *
      * @return void
      */
     public function setFrom(string $email_address, string $name)
@@ -110,10 +114,11 @@ abstract class MailHandler implements IMailHandler
     }
 
     /**
-     * Set where to reply message
+     * Set where to reply message.
      *
      * @param string $email_address
      * @param string $name
+     *
      * @return void
      */
     public function setReplyTo(string $email_address, string $name)
@@ -122,10 +127,11 @@ abstract class MailHandler implements IMailHandler
     }
 
     /**
-     * Attach file to message
+     * Attach file to message.
      *
      * @param string $path
      * @param string $name
+     *
      * @return void
      */
     public function addAttachment(string $path, string $name = '')
@@ -135,9 +141,10 @@ abstract class MailHandler implements IMailHandler
     }
 
     /**
-     * Set message subject
+     * Set message subject.
      *
      * @param string $subject
+     *
      * @return void
      */
     public function setSubject(string $subject)
@@ -146,10 +153,11 @@ abstract class MailHandler implements IMailHandler
     }
 
     /**
-     * Set body message
+     * Set body message.
      *
      * @param string $body
-     * @param boolean $is_html
+     * @param bool $is_html
+     *
      * @return void
      */
     public function setBody(string $body, bool $is_html = true)
@@ -162,6 +170,7 @@ abstract class MailHandler implements IMailHandler
      * If main body is HTML, may be a good action to insert a plain text version.
      *
      * @param string $body
+     *
      * @return void
      */
     public function setAlternativeBody(string $body)
@@ -170,9 +179,10 @@ abstract class MailHandler implements IMailHandler
     }
 
     /**
-     * Set if mail handler should operate in debug mode
+     * Set if mail handler should operate in debug mode.
      *
-     * @param boolean $is_debug
+     * @param bool $is_debug
+     *
      * @return void
      */
     public function setDebug(bool $is_debug)
@@ -181,7 +191,7 @@ abstract class MailHandler implements IMailHandler
     }
 
     /**
-     * Send message
+     * Send message.
      *
      * @return void
      */
@@ -201,7 +211,7 @@ abstract class MailHandler implements IMailHandler
     abstract protected function shippingErrors();
 
     /**
-     * Returns all sent errors
+     * Returns all sent errors.
      *
      * @return array
      */

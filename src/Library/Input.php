@@ -8,6 +8,7 @@ namespace Interart\Flywork\Library;
  *
  * @copyright   2018 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 final class Input
@@ -24,7 +25,7 @@ final class Input
     ];
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public function __construct()
     {
@@ -33,9 +34,10 @@ final class Input
     // get
 
     /**
-     * Get the field $field_name content
+     * Get the field $field_name content.
      *
      * @param string $field_name Field name
+     *
      * @return string
      */
     public function get(string $field_name)
@@ -44,10 +46,11 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as safe HTML
+     * Get the field $field_name content as safe HTML.
      *
      * @param string $field_name Field name
      * @param string $additional_tags Additional tags allowed in input value
+     *
      * @return string
      */
     public function getHtml(string $field_name, string $additional_tags = '')
@@ -56,10 +59,11 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as a boolean, if it attends a condition
+     * Get the field $field_name content as a boolean, if it attends a condition.
      *
      * @param string $field_name Field name
      * @param string $true_value Default input value which makes the condition TRUE
+     *
      * @return int
      */
     public function getBool(string $field_name, string $true_value)
@@ -68,10 +72,11 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as an integer value
+     * Get the field $field_name content as an integer value.
      *
      * @param string $field_name Field name
-     * @param boolean $allow_negative Defines if the returned value can be negative
+     * @param bool $allow_negative Defines if the returned value can be negative
+     *
      * @return long
      */
     public function getInt(string $field_name, bool $allow_negative = true)
@@ -80,11 +85,12 @@ final class Input
     }
 
     /**
-     * Get the field $field content as a float
+     * Get the field $field content as a float.
      *
      * @param string $field Field name
      * @param string $input_culture Which culture is the inputted value (currently parses 'en-us' and 'pt-br')
-     * @param integer $decimal_digits Quantity of decimal digits in result
+     * @param int $decimal_digits Quantity of decimal digits in result
+     *
      * @return float
      */
     public function getFloat(string $field, string $input_culture = 'pt-br', int $decimal_digits = 2)
@@ -93,10 +99,11 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as a date string
+     * Get the field $field_name content as a date string.
      *
      * @param string $field_name Field name
      * @param string $input_format Which format of the field value
+     *
      * @return string (Format: Y-m-d)
      */
     public function getDate(string $field_name, string $input_format = '')
@@ -105,10 +112,11 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as a datetime string
+     * Get the field $field_name content as a datetime string.
      *
      * @param string $field_name Field name
      * @param string $input_format Which format of the field value
+     *
      * @return string (Format: Y-m-d H:i:s)
      */
     public function getDatetime(string $field_name, string $input_format = '')
@@ -120,6 +128,7 @@ final class Input
      * Get the field $field_name content string sanitized.
      *
      * @param string $field_name
+     *
      * @return string
      */
     public function getClearStr(string $field_name)
@@ -131,6 +140,7 @@ final class Input
      * Get the field $field_name content email address sanitized.
      *
      * @param string $field_name
+     *
      * @return string
      */
     public function getEmail(string $field_name)
@@ -141,9 +151,10 @@ final class Input
     // post
 
     /**
-     * Get the field $field_name content
+     * Get the field $field_name content.
      *
      * @param string $field_name Field name
+     *
      * @return string
      */
     public function post(string $field_name)
@@ -152,10 +163,11 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as safe HTML
+     * Get the field $field_name content as safe HTML.
      *
      * @param string $field_name Field name
      * @param string $additional_tags Additional tags allowed in input value
+     *
      * @return string
      */
     public function postHtml(string $field_name, string $additional_tags = '')
@@ -164,10 +176,11 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as a boolean, if it attends a condition
+     * Get the field $field_name content as a boolean, if it attends a condition.
      *
      * @param string $field_name Field name
      * @param string $true_value Default input value which makes the condition TRUE
+     *
      * @return bool
      */
     public function postBool(string $field_name, string $true_value)
@@ -176,10 +189,11 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as an integer value
+     * Get the field $field_name content as an integer value.
      *
      * @param string $field_name Field name
-     * @param boolean $allow_negative Defines if the returned value can be negative
+     * @param bool $allow_negative Defines if the returned value can be negative
+     *
      * @return long
      */
     public function postInt(string $field_name, bool $allow_negative = true)
@@ -188,11 +202,12 @@ final class Input
     }
 
     /**
-     * Get the field $field content as a float
+     * Get the field $field content as a float.
      *
      * @param string $field Field name
      * @param string $input_culture Which culture is the inputted value (currently parses 'en-us' and 'pt-br')
-     * @param integer $decimal_digits Quantity of decimal digits in result
+     * @param int $decimal_digits Quantity of decimal digits in result
+     *
      * @return float
      */
     public function postFloat(string $field, string $input_culture = 'pt-br', int $decimal_digits = 2)
@@ -201,10 +216,11 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as a date string
+     * Get the field $field_name content as a date string.
      *
      * @param string $field_name Field name
      * @param string $input_format Which format of the field value
+     *
      * @return string (Format: Y-m-d)
      */
     public function postDate(string $field_name, string $input_format = '')
@@ -213,10 +229,11 @@ final class Input
     }
 
     /**
-     * Get the field $field_name content as a datetime string
+     * Get the field $field_name content as a datetime string.
      *
      * @param string $field_name Field name
      * @param string $input_format Which format of the field value
+     *
      * @return string (Format: Y-m-d H:i:s)
      */
     public function postDatetime(string $field_name, string $input_format = '')
@@ -228,6 +245,7 @@ final class Input
      * Get the field $field_name content string sanitized.
      *
      * @param string $field_name
+     *
      * @return string
      */
     public function postClearStr(string $field_name)
@@ -239,6 +257,7 @@ final class Input
      * Get the field $field_name content email address sanitized.
      *
      * @param string $field_name
+     *
      * @return string
      */
     public function postEmail(string $field_name)
@@ -256,6 +275,7 @@ final class Input
         if (empty($field_name)) {
             throw new InvalidArgumentException('Field name should not be empty or null');
         }
+
         return $this->clear_input($type, $field_name, null, $filter);
     }
 
@@ -272,9 +292,10 @@ final class Input
 
             return $value;
         }
+
         return $value;
     }
-    
+
     private function remove_unsafe_attributes($content)
     {
         $dom = new \DOMDocument('1.0', 'utf-8');
@@ -322,6 +343,7 @@ final class Input
         $result = $this->remove_unsafe_attributes($result);
 
         $result = strip_tags($result, $allowed_tags);
+
         return $result;
     }
 
@@ -360,13 +382,14 @@ final class Input
                 $data = str_replace(',', '', $data);
         }
         $data = filter_var($data, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
         return number_format($data, $decimal_digits, '.', '');
     }
 
     public function field_clear_string(int $type, string $field_name)
     {
         $value = $this->field($type, $field_name);
-    
+
         return filter_var($value, FILTER_SANITIZE_STRING);
     }
 
@@ -406,5 +429,4 @@ final class Input
             return $value->format($output_format);
         }
     }
-
 }

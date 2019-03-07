@@ -8,6 +8,7 @@ namespace Interart\Flywork\Library;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 abstract class Model
@@ -19,7 +20,6 @@ abstract class Model
     protected $columns = [];
     protected $num_rows = 0;
     protected $result = [];
-
 
     /**
      * Default constructor.
@@ -37,7 +37,7 @@ abstract class Model
     abstract protected function validate();
 
     /**
-     * Shows the number of rows in result set
+     * Shows the number of rows in result set.
      *
      * @return int
      */
@@ -47,7 +47,7 @@ abstract class Model
     }
 
     /**
-     * Returns result set after select query
+     * Returns result set after select query.
      *
      * @return array
      */
@@ -57,7 +57,7 @@ abstract class Model
     }
 
     /**
-     * Returns true if result has any row
+     * Returns true if result has any row.
      *
      * @return bool
      */
@@ -68,10 +68,11 @@ abstract class Model
 
     /**
      * Search in database by primary key
-     * Default method
+     * Default method.
      *
      * @param mixed $id
      * @param array $default_filters
+     *
      * @return mixed
      */
     public function findById($id, array $default_filters = [])
@@ -83,15 +84,17 @@ abstract class Model
         $where = array_merge($default_filters, $where);
         $this->result = $this->db->get($this->table_name, $this->columns, $where);
         $this->num_rows = count($this->result) ? 1 : 0;
+
         return $this;
     }
 
     /**
      * Search all occurrences in database.
-     * Default method
+     * Default method.
      *
      * @param string $order_by
      * @param array $default_filters
+     *
      * @return array
      */
     public function findAll(string $order_by = '', array $default_filters = [])
@@ -101,15 +104,17 @@ abstract class Model
         $order = ['ORDER' => $order_by ?? $this->default_order_by];
         $this->result = $this->db->select($this->table_name, $this->columns, $where, $order);
         $this->num_rows = count($this->result);
+
         return $this;
     }
 
     /**
      * Insert an instance into database.
-     * Mainly used in rest requests
+     * Mainly used in rest requests.
      *
      * @param array $params
      * @param array $default_filters
+     *
      * @return Model
      */
     public function insert(array $params, array $default_filters = [])
@@ -132,16 +137,18 @@ abstract class Model
 
     /**
      * Update a registry in database.
-     * Mainly used in rest requests
+     * Mainly used in rest requests.
      *
      * @param array $params
      * @param array $default_filters
+     *
      * @return Model
      */
     public function update(array $params, array $default_filters = [])
     {
         if (!isset($this->result[$this->primary_key])) {
             $this->num_rows = 0;
+
             return $this;
         }
 
@@ -166,21 +173,23 @@ abstract class Model
 
     /**
      * Delete a registry in database.
-     * Mainly used in rest requests
+     * Mainly used in rest requests.
      *
      * @param array $default_filters
+     *
      * @return Model
      */
     public function delete(array $default_filters = [])
     {
         if (!isset($this->result[$this->primary_key])) {
             $this->num_rows = 0;
+
             return $this;
         }
 
         $where = [$this->primary_key => $this->result[$this->primary_key]];
         $where = array_merge($default_filters, $where);
-        
+
         $data = [
             'deleted_at' => date('Y-m-d H:i:s'),
             'deleted'    => true,

@@ -7,6 +7,7 @@ namespace Interart\Flywork\Library;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     1.1
  */
 final class Cache
@@ -17,23 +18,25 @@ final class Cache
     }
 
     /**
-     * Determines whether an item is present in the cache
+     * Determines whether an item is present in the cache.
      *
      * @param string $key The cache item key
-     * @return boolean
+     *
+     * @return bool
      */
     public function has(string $key)
     {
         $key = $this->parse_key($key);
-        
+
         return file_exists(WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache');
     }
 
     /**
-     * Fetches a value from the cache
+     * Fetches a value from the cache.
      *
      * @param string $key The cache item key
      * @param mixed $default_value Default value it should returns
+     *
      * @return mixed The value of the item from the cache, or $default_value in case of cache miss
      */
     public function get(string $key, $default_value = null)
@@ -55,21 +58,23 @@ final class Cache
         }
 
         $this->delete($key);
+
         return $default_value;
     }
 
     /**
-     * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time
+     * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
      *
      * @param string $key The cache item key
      * @param mixed $value Content to save
-     * @param integer $ttl Defines cache life in seconds (default: 60 seconds)
+     * @param int $ttl Defines cache life in seconds (default: 60 seconds)
+     *
      * @return void
      */
     public function save(string $key, $value, int $ttl = 60)
     {
         $key = $this->parse_key($key);
-        
+
         $data = [
             'deadline' => time() + $ttl,
             'content'  => $value,
@@ -83,22 +88,23 @@ final class Cache
     }
 
     /**
-     * Delete an item from the cache by its unique key
+     * Delete an item from the cache by its unique key.
      *
      * @param string $key The cache item key
+     *
      * @return void
      */
     public function delete(string $key)
     {
         $key = $this->parse_key($key);
-        
+
         if (file_exists($file = WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . $key . '.cache')) {
             @unlink($file);
         }
     }
 
     /**
-     * Wipes clean the entire cache's keys
+     * Wipes clean the entire cache's keys.
      *
      * @return void
      */
@@ -106,5 +112,4 @@ final class Cache
     {
         @array_map('unlink', glob(WRITEPATH . 'cache' . DIRECTORY_SEPARATOR . '*.cache') ?? []);
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace Interart\Flywork\Library;
 
-use Interart\Flywork\Library\Security;
 use Interart\Flywork\Traits\AutoProperty;
 
 /**
@@ -10,6 +9,7 @@ use Interart\Flywork\Traits\AutoProperty;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 final class Session
@@ -28,7 +28,7 @@ final class Session
      * Default constructor.
      *
      * @param string $session_name
-     * @param integer $expire
+     * @param int $expire
      * @param string $domain
      * @param bool $secure
      * @param string $encrypt_key
@@ -61,6 +61,7 @@ final class Session
     {
         if ($this->expire) {
             ini_set('session.gc_maxlifetime', $this->expire);
+
             return;
         }
 
@@ -83,16 +84,17 @@ final class Session
             session_start();
         }
 
-        setcookie("PHPSESSID", session_id(), time() + $this->expire);
+        setcookie('PHPSESSID', session_id(), time() + $this->expire);
     }
 
     private function parse_session()
     {
         if (!isset($this->session_items[$this->data_key])) {
             $this->session_items[$this->data_key] = [];
+
             return;
         }
-        
+
         foreach ($this->session_items[$this->data_key] as $key => $value) {
             if (empty($value)) {
                 continue;
@@ -102,7 +104,7 @@ final class Session
     }
 
     /**
-     * Returns Session ID
+     * Returns Session ID.
      *
      * @return string
      */
@@ -120,18 +122,20 @@ final class Session
      *
      * @param mixed $data Data identification or array with key => values
      * @param mixed $value Value to store (optional)
+     *
      * @return void
      */
     public function set($data, $value = null)
     {
         if (empty($data)) {
-            throw \InvalidArgumentException(sprintf("Value to store in session cannot be empty"));
+            throw \InvalidArgumentException(sprintf('Value to store in session cannot be empty'));
         }
 
         if (is_array($data)) {
             foreach ($data as $key => $val) {
                 $this->set($key, $val);
             }
+
             return;
         }
 
@@ -146,6 +150,7 @@ final class Session
      * Get value stored in session.
      *
      * @param string $key
+     *
      * @return mixed Value stored
      */
     public function get(string $key, $default = null)
@@ -174,6 +179,7 @@ final class Session
         foreach ($this->session_items[$this->data_key] as $key => $value) {
             $result[$key] = $this->security->decrypt($value);
         }
+
         return $result;
     }
 
@@ -181,6 +187,7 @@ final class Session
      * Clear value stored in session associated to $key.
      *
      * @param string $key Key data identification (optional)
+     *
      * @return void
      */
     public function clear(string $key = '')
@@ -191,6 +198,7 @@ final class Session
                 unset($this->$key);
             }
             $this->session_items = [];
+
             return;
         }
 
@@ -237,6 +245,7 @@ final class Session
      * @param string $key Key identification
      * @param string $message Message to be stored (null if is getting)
      * @param bool $keepFlash Define if message should be destroyed after return
+     *
      * @return void
      */
     public function flash(string $key, $value = null, bool $keepFlash = false)
@@ -259,5 +268,4 @@ final class Session
 
         $this->session_items[$this->flash_key][$key] = $value;
     }
-
 }

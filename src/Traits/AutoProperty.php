@@ -3,18 +3,20 @@
 namespace Interart\Flywork\Traits;
 
 /**
- * Functions for autoproperties in classes
+ * Functions for autoproperties in classes.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     1.0
  */
 trait AutoProperty
 {
     /**
-     * Get auto-property value
+     * Get auto-property value.
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function __get($name)
@@ -25,7 +27,7 @@ trait AutoProperty
     }
 
     /**
-     * Set auto-property value
+     * Set auto-property value.
      *
      * @param string $name
      * @param mixed $value
