@@ -2,7 +2,6 @@
 
 namespace Interart\Flywork\Controllers;
 
-use Interart\Flywork\Library\Session;
 use Interart\Flywork\Traits\AutoProperty;
 
 /**
@@ -11,6 +10,7 @@ use Interart\Flywork\Traits\AutoProperty;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 abstract class Controller
@@ -69,6 +69,7 @@ abstract class Controller
      * Initialize properties.
      *
      * @param array $options
+     *
      * @return void
      */
     public function _init(array $options)
@@ -78,7 +79,7 @@ abstract class Controller
         }
 
         if (!empty($this->entity_name)) {
-            $entity_name = '\\App\\Models\\' . $this->entity_name;
+            $entity_name = '\\App\\Models\\'.$this->entity_name;
             $this->entity = new $entity_name($this->db);
         }
 
@@ -112,6 +113,7 @@ abstract class Controller
 
         $vars = [];
         parse_str($request_data, $vars);
+
         return $vars;
     }
 
@@ -129,44 +131,46 @@ abstract class Controller
      * Redirects to another uri.
      *
      * @param string $path
-     * @param integer $http_code
+     * @param int    $http_code
+     *
      * @return void
      */
     protected function redirect(string $uri, int $http_code = 0)
     {
         if (headers_sent()) {
             echo '<script type="text/javascript">'
-                . "window.location.href=\"{$uri}\";"
-                . '</script>'
-                . '<noscript>'
-                . "<meta http-equiv=\"refresh\" content=\"0;url={$uri}\">"
-                . '</noscript>';
+                ."window.location.href=\"{$uri}\";"
+                .'</script>'
+                .'<noscript>'
+                ."<meta http-equiv=\"refresh\" content=\"0;url={$uri}\">"
+                .'</noscript>';
             exit;
         }
 
         if ($http_code) {
-            header("Location: " . $uri, true, $http_code);
+            header('Location: '.$uri, true, $http_code);
             exit;
         }
 
-        header("Location: " . $uri);
+        header('Location: '.$uri);
         exit;
     }
 
     /**
      * Native template engine.
      *
-     * @param array $view_bag Array with values to be rendered
-     * @param string $file_view Relative path to template file
-     * @param boolean $return_as_result Specifies if the return should be rendered or returned as string
+     * @param array  $view_bag         Array with values to be rendered
+     * @param string $file_view        Relative path to template file
+     * @param bool   $return_as_result Specifies if the return should be rendered or returned as string
+     *
      * @return mixed If $return_as_result is true, returns rendered view as string, otherwise, renders HTML
      */
     protected function view(array $view_bag = [], string $file_view = '', bool $return_as_result = false)
     {
         if (empty($file_view)) {
             $file_view = debug_backtrace()[1]['function'];
-            $parts = explode("\\", debug_backtrace()[1]['class']);
-            $file_view = array_pop($parts) . DIRECTORY_SEPARATOR . $file_view;
+            $parts = explode('\\', debug_backtrace()[1]['class']);
+            $file_view = array_pop($parts).DIRECTORY_SEPARATOR.$file_view;
         }
 
         if ($return_as_result) {
@@ -177,12 +181,11 @@ abstract class Controller
             extract($view_bag);
         }
 
-        $file_view = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $file_view . '.php';
+        $file_view = ROOTPATH.'Views'.DIRECTORY_SEPARATOR.$file_view.'.php';
         require $file_view;
 
         if ($return_as_result) {
             return ob_get_clean();
         }
     }
-
 }

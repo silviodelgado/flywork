@@ -10,9 +10,9 @@ use Interart\Flywork\Controllers\Controller;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
-
 final class Kernel
 {
     private $routes = [
@@ -36,6 +36,7 @@ final class Kernel
      * Default constructor.
      *
      * @param array $settings
+     *
      * @return void
      */
     public function __construct(array $settings = [])
@@ -59,7 +60,6 @@ final class Kernel
         $this->parse_settings_custom_routes($settings);
 
         $this->parse_settings_db($settings);
-
     }
 
     private function parse_settings_default_route($settings)
@@ -67,7 +67,7 @@ final class Kernel
         if (empty($settings['default_route'])) {
             return;
         }
-        
+
         if (!empty($settings['default_route']['controller'])) {
             $this->default_route['controller'] = $settings['default_route']['controller'];
         }
@@ -103,7 +103,7 @@ final class Kernel
         }
 
         foreach ($this->routes as $key => $value) {
-            $regex = '/^' . str_replace('/', '\/', $key) . '$/';
+            $regex = '/^'.str_replace('/', '\/', $key).'$/';
             if (preg_match($regex, trim($this->request_path, '/'))) {
                 $this->request_path = preg_replace($regex, $value, $this->request_path);
                 break;
@@ -123,16 +123,17 @@ final class Kernel
         if (empty($this->request_path)) {
             $this->controller_name = $this->default_route['controller'];
             $this->action_name = $this->default_route['action'];
+
             return;
         }
 
         $this->route_parts = explode('/', $this->request_path);
         $this->controller_name = str_replace('-', '_', ucfirst(array_shift($this->route_parts)));
-        if (is_dir(ROOTPATH . 'Controllers' . DIRECTORY_SEPARATOR . $this->controller_name)) {
+        if (is_dir(ROOTPATH.'Controllers'.DIRECTORY_SEPARATOR.$this->controller_name)) {
             if (empty($this->route_parts)) {
                 throw new \BadMethodCallException($this->controller_name);
             }
-            $this->controller_name .= '\\' . str_replace('-', '_', ucfirst(array_shift($this->route_parts)));
+            $this->controller_name .= '\\'.str_replace('-', '_', ucfirst(array_shift($this->route_parts)));
         }
         $this->action_name = str_replace('-', '_', (count($this->route_parts) ? array_shift($this->route_parts) : $this->default_route['action']));
 
@@ -143,6 +144,7 @@ final class Kernel
      * Validate if request Controller and Action are valid.
      *
      * @param Controller $controller_obj Instance of Controller class (or derived from it)
+     *
      * @return void
      */
     private function validate_route_parts(Controller $controller_obj)
@@ -170,7 +172,7 @@ final class Kernel
             'db_settings' => $this->db_settings,
         ];
 
-        $controller_name = '\\App\\Controllers\\' . $this->controller_name;
+        $controller_name = '\\App\\Controllers\\'.$this->controller_name;
         // throws Error if class not found
         $controller = new $controller_name();
         $controller->_init($options);
@@ -180,6 +182,7 @@ final class Kernel
         // throws ArgumentCountError if is wrong parameter count
         if (empty($this->route_parts)) {
             call_user_func([$controller, $this->action_name]);
+
             return;
         }
 

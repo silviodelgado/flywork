@@ -3,10 +3,11 @@
 namespace Interart\Flywork\Library\Mail\Components;
 
 /**
- * Mail attachment settings
+ * Mail attachment settings.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 final class MailAttachment
@@ -15,9 +16,9 @@ final class MailAttachment
     protected $custom_name;
 
     /**
-     * Default constructor
+     * Default constructor.
      *
-     * @param string $path File absolute path
+     * @param string $path        File absolute path
      * @param string $custom_name Custom file name
      */
     public function __construct(string $path, string $custom_name = '')
@@ -27,7 +28,7 @@ final class MailAttachment
     }
 
     /**
-     * Return file absolute path
+     * Return file absolute path.
      *
      * @return string
      */
@@ -37,7 +38,7 @@ final class MailAttachment
     }
 
     /**
-     * Return file custom name
+     * Return file custom name.
      *
      * @return string
      */

@@ -3,10 +3,11 @@
 namespace Interart\Flywork\Library\Mail\Components;
 
 /**
- * Mail handler configuration settings
+ * Mail handler configuration settings.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 final class MailConfig
@@ -17,10 +18,10 @@ final class MailConfig
     protected $password;
 
     /**
-     * Default constructor
+     * Default constructor.
      *
      * @param string $host
-     * @param integer $port
+     * @param int    $port
      * @param string $username
      * @param string $password
      */
@@ -33,7 +34,7 @@ final class MailConfig
     }
 
     /**
-     * Returns server host
+     * Returns server host.
      *
      * @return string
      */
@@ -43,7 +44,7 @@ final class MailConfig
     }
 
     /**
-     * Return server port
+     * Return server port.
      *
      * @return int
      */
@@ -53,7 +54,7 @@ final class MailConfig
     }
 
     /**
-     * Return account username
+     * Return account username.
      *
      * @return string
      */
@@ -63,7 +64,7 @@ final class MailConfig
     }
 
     /**
-     * Return account password
+     * Return account password.
      *
      * @return string
      */
@@ -71,5 +72,4 @@ final class MailConfig
     {
         return $this->password;
     }
-
 }

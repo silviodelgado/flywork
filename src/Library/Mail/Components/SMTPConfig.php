@@ -3,10 +3,11 @@
 namespace Interart\Flywork\Library\Mail\Components;
 
 /**
- * SMTP configuration options
+ * SMTP configuration options.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 final class SMTPConfig
@@ -14,13 +15,13 @@ final class SMTPConfig
     protected $secure_method;
     protected $use_auth;
     protected $debug;
-    
+
     /**
-     * Default constructor
+     * Default constructor.
      *
      * @param string $secure_method "tls", "ssl"
-     * @param boolean $use_auth
-     * @param boolean $debug
+     * @param bool   $use_auth
+     * @param bool   $debug
      */
     public function __construct(string $secure_method, bool $use_auth, bool $debug)
     {
@@ -30,9 +31,10 @@ final class SMTPConfig
     }
 
     /**
-     * Set mail handler to debug mode
+     * Set mail handler to debug mode.
      *
-     * @param boolean $is_debug
+     * @param bool $is_debug
+     *
      * @return void
      */
     public function setDebug(bool $is_debug = false)
@@ -41,7 +43,7 @@ final class SMTPConfig
     }
 
     /**
-     * Returns used secure transfer method
+     * Returns used secure transfer method.
      *
      * @return string "tls", "ssl"
      */
@@ -51,7 +53,7 @@ final class SMTPConfig
     }
 
     /**
-     * Checks if SMTP use authentication
+     * Checks if SMTP use authentication.
      *
      * @return bool
      */
@@ -61,9 +63,9 @@ final class SMTPConfig
     }
 
     /**
-     * Returns if mail handler is working in debug mode
+     * Returns if mail handler is working in debug mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDebug()
     {

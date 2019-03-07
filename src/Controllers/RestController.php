@@ -8,6 +8,7 @@ namespace Interart\Flywork\Controllers;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     2.0
  */
 abstract class RestController extends Controller
@@ -38,32 +39,36 @@ abstract class RestController extends Controller
      * Ends application with Error 500 and custom message.
      *
      * @param string $message
+     *
      * @return void
      */
     protected function kill(string $message = 'Invalid request', int $code = 500)
     {
         //header('HTTP/1.1 500 Internal Server Error');
-        header("HTTP/1.1 " . $code);
+        header('HTTP/1.1 '.$code);
 
         $this->JsonResult(false, $message);
         exit(1);
     }
 
-    function list() {
-
+    public function list()
+    {
         $result = $this->entity->FindAll('', $this->defaul_filter);
+
         return $this->JsonResult(true, '', ['data' => $result]);
     }
 
     private function get($id)
     {
         $result = $this->entity->FindById($id, $this->defaul_filter);
+
         return $this->JsonResult(true, '', ['data' => $result]);
     }
 
     private function post()
     {
         $result = $this->entity->Insert($this->get_input_vars(), $this->defaul_filter);
+
         return $this->JsonResult(true, '', ['data' => $result]);
     }
 
@@ -74,6 +79,7 @@ abstract class RestController extends Controller
             return $this->kill();
         }
         $result = $this->entity->Update($this->get_input_vars(), $this->defaul_filter);
+
         return $this->JsonResult(true, '', ['data' => $result]);
     }
 
@@ -92,9 +98,10 @@ abstract class RestController extends Controller
     }
 
     /**
-     * Drives call to respective method
+     * Drives call to respective method.
      *
      * @param mixed $id ID requested, if applicable
+     *
      * @return void
      */
     public function _translate_call($id = null)
@@ -114,9 +121,10 @@ abstract class RestController extends Controller
     /**
      * Prints a json object with known structure for AJAX responses.
      *
-     * @param boolean $success
+     * @param bool   $success
      * @param string $message
-     * @param mixed $data Array of values or a string
+     * @param mixed  $data    Array of values or a string
+     *
      * @return void
      */
     protected function JsonResult(bool $success, string $message, $data = null)
@@ -130,7 +138,7 @@ abstract class RestController extends Controller
             foreach ($data as $key => $value) {
                 $result[$key] = $value;
             }
-        } else if (is_string($data)) {
+        } elseif (is_string($data)) {
             $result['data'] = $data;
         }
 

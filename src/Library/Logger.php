@@ -10,6 +10,7 @@ use Psr\Log\LogLevel;
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
+ *
  * @version     1.2
  */
 final class Logger implements LoggerInterface
@@ -23,9 +24,9 @@ final class Logger implements LoggerInterface
     private $db_settings;
 
     /**
-     * Default constructor
+     * Default constructor.
      *
-     * @param integer $storageType Class static constants
+     * @param int $storageType Class static constants
      */
     public function __construct(int $storageType = self::STORAGE_TYPE_FILE, \PDO $pdo = null)
     {
@@ -37,20 +38,22 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Set path where to save log files
+     * Set path where to save log files.
      *
      * @param string $path
+     *
      * @return void
      */
     public function setPath(string $path)
     {
-        $this->log_path = rtrim($path, '/') . DIRECTORY_SEPARATOR;
+        $this->log_path = rtrim($path, '/').DIRECTORY_SEPARATOR;
     }
 
     /**
      * Set Database configuration.
      *
      * @param mixed $dbSettings Could be an array (with database vars), a string with DSN or a PDO object.
+     *
      * @return void
      */
     public function setDatabase($dbSettings)
@@ -63,10 +66,11 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Save log to file (appending message)
+     * Save log to file (appending message).
      *
      * @param string $filename
      * @param string $message
+     *
      * @return void
      */
     private function appendToFile($filename, $message)
@@ -75,12 +79,13 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Create DSN to connect to Database
+     * Create DSN to connect to Database.
      *
      * @param string $dbType
      * @param string $dbHost
      * @param string $dbName
      * @param string $charset [Optional] Default: 'utf-8'
+     *
      * @return void
      */
     private function createDsn(string $dbType, string $dbHost, string $dbName, string $charset = 'utf-8')
@@ -97,7 +102,7 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Connect to Database
+     * Connect to Database.
      *
      * @return void
      */
@@ -109,6 +114,7 @@ final class Logger implements LoggerInterface
 
         if (is_a($this->db_settings, '\PDO')) {
             $this->db = $this->db_settings;
+
             return $this->db;
         }
 
@@ -123,18 +129,20 @@ final class Logger implements LoggerInterface
                 \PDO::ATTR_ERRMODE                  => \PDO::ERRMODE_EXCEPTION,
                 \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
             ]);
+
             return $db;
         } catch (\PDOException $ex) {
-            throw new \Exception('Falha ao conectar: ' . $ex->getMessage());
+            throw new \Exception('Falha ao conectar: '.$ex->getMessage());
         }
     }
 
     /**
-     * Save log do Database
+     * Save log do Database.
      *
      * @param string $level
      * @param string $message
-     * @param array $context
+     * @param array  $context
+     *
      * @return void
      */
     private function saveToDb($level, $message, array $context = [])
@@ -171,11 +179,12 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Save log to defined level
+     * Save log to defined level.
      *
      * @param string $level
-     * @param mixed $message
-     * @param array $context
+     * @param mixed  $message
+     * @param array  $context
+     *
      * @return void
      */
     public function log($level, $message, array $context = [])
@@ -200,13 +209,13 @@ final class Logger implements LoggerInterface
         }
 
         $now = \DateTime::createFromFormat('U.u', microtime(true));
-        $content = '[' . $now->format("Y-m-d H:i:s.u") . "]\n"
-        . $message . "\n"
-        . str_repeat('==', 30) . "\n\n";
+        $content = '['.$now->format('Y-m-d H:i:s.u')."]\n"
+        .$message."\n"
+        .str_repeat('==', 30)."\n\n";
 
         switch ($this->storage_type) {
             case self::STORAGE_TYPE_FILE:
-                $this->appendToFile($this->log_path . $level . '.log', $content, $context);
+                $this->appendToFile($this->log_path.$level.'.log', $content, $context);
                 break;
             case self::STORAGE_TYPE_DB:
                 $this->saveToDb($level, $content, $context);
@@ -215,10 +224,11 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Save log to emergency level
+     * Save log to emergency level.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
+     *
      * @return void
      */
     public function emergency($message, array $context = [])
@@ -227,10 +237,11 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Save log to alert level
+     * Save log to alert level.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
+     *
      * @return void
      */
     public function alert($message, array $context = [])
@@ -239,10 +250,11 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Save log to critical level
+     * Save log to critical level.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
+     *
      * @return void
      */
     public function critical($message, array $context = [])
@@ -251,10 +263,11 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Save log to error level
+     * Save log to error level.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
+     *
      * @return void
      */
     public function error($message, array $context = [])
@@ -263,10 +276,11 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Save log to warning level
+     * Save log to warning level.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
+     *
      * @return void
      */
     public function warning($message, array $context = [])
@@ -275,10 +289,11 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Save log to notice level
+     * Save log to notice level.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
+     *
      * @return void
      */
     public function notice($message, array $context = [])
@@ -287,10 +302,11 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Save log to debug level
+     * Save log to debug level.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
+     *
      * @return void
      */
     public function debug($message, array $context = [])
@@ -299,10 +315,11 @@ final class Logger implements LoggerInterface
     }
 
     /**
-     * Save log to info level
+     * Save log to info level.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
+     *
      * @return void
      */
     public function info($message, array $context = [])
