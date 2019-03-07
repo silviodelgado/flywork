@@ -3,7 +3,7 @@
 # Flywork
 Lightweight PHP MVC framework
 
-![version](https://img.shields.io/badge/version-2.4-green.svg?maxAge=2592000)
+![version](https://img.shields.io/badge/version-2.0-green.svg?maxAge=2592000)
 [![Latest Stable Version](https://poser.pugx.org/interart/flywork/v/stable)](https://packagist.org/packages/interart/flywork)
 [![Latest Unstable Version](https://poser.pugx.org/interart/flywork/v/unstable)](https://packagist.org/packages/interart/flywork)
 ![composer.lock](https://poser.pugx.org/interart/flywork/composerlock)
