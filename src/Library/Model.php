@@ -143,11 +143,11 @@ abstract class Model
 
         $where = ['deleted' => 0];
         $where = array_merge($default_filters, $where);
-        if (!empty($order_by)) {
-            $order = [$order_by => ($order_dir ?? $this->default_order_dir)];
-        } else {
-            $order = [$this->default_order_by => $this->default_order_dir];
-        }
+        
+        $order = empty($order_by)
+        ? [$this->default_order_by => $this->default_order_dir]
+        : [$order_by => ($order_dir ?? $this->default_order_dir)];
+
         $this->result = $this->db->select($this->table_name, $this->columns, $where, $order);
         $this->num_rows = count($this->result);
 
