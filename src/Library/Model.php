@@ -143,7 +143,7 @@ abstract class Model
 
         $where = ['deleted' => 0];
         $where = array_merge($default_filters, $where);
-        
+
         $order = empty($order_by)
         ? [$this->default_order_by => $this->default_order_dir]
         : [$order_by => ($order_dir ?? $this->default_order_dir)];
