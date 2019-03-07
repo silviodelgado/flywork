@@ -17,6 +17,7 @@ abstract class Model
     protected $table_name;
     protected $primary_key = 'id';
     protected $default_order_by = '';
+    protected $default_order_dir = 'ASC';
     protected $columns = [];
     protected $num_rows = 0;
     protected $result = [];
@@ -97,11 +98,20 @@ abstract class Model
      *
      * @return array
      */
-    public function findAll(string $order_by = '', array $default_filters = [])
+    public function findAll(string $order_by = '', string $order_dir = '', array $default_filters = [])
     {
+        $order_dir = strtoupper($order_dir);
+        if (!empty($order_dir) && !in_array($order_dir, ['ASC', 'DESC'])) {
+            throw new \InvalidArgumentException("Query order direction should be 'ASC' or 'DESC'.");
+        }
+
         $where = ['deleted' => 0];
         $where = array_merge($default_filters, $where);
-        $order = ['ORDER' => $order_by ?? $this->default_order_by];
+        if (!empty($order_by)) {
+            $order = [$order_by => ($order_dir ?? $this->default_order_dir)];
+        } else {
+            $order = [$this->default_order_by => $this->default_order_dir];
+        }
         $this->result = $this->db->select($this->table_name, $this->columns, $where, $order);
         $this->num_rows = count($this->result);
 
