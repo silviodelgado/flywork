@@ -42,13 +42,14 @@ abstract class Model
      * Returns model with resultSet and numRows.
      *
      * @param array $resultSet
-     * 
+     *
      * @return Model
      */
     protected function resultSet($resultSet = [])
     {
         $this->result = $resultSet;
         $this->num_rows = count($resultSet);
+
         return $this;
     }
 
