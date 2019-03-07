@@ -68,7 +68,7 @@ abstract class Model
      *
      * @return array
      */
-    public function result()
+    public function getResult()
     {
         return $this->result;
     }
@@ -88,7 +88,7 @@ abstract class Model
      *
      * @return array
      */
-    public function columns()
+    public function getColumns()
     {
         return $this->columns;
     }
@@ -98,7 +98,7 @@ abstract class Model
      *
      * @return array
      */
-    public function joinColumns()
+    public function getJoinColumns()
     {
         return $this->join_columns;
     }
