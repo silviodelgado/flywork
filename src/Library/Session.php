@@ -2,6 +2,7 @@
 
 namespace Interart\Flywork\Library;
 
+use Interart\Flywork\Library\Security;
 use Interart\Flywork\Traits\AutoProperty;
 
 /**
@@ -42,9 +43,7 @@ final class Session
         $this->expire = $expire;
         $this->domain = $domain;
         $this->encrypted = $encrypt;
-        if ($this->encrypted) {
-            $this->security = new Security();
-        }
+        $this->security = new Security();
 
         $this->parse_expire();
 
