@@ -14,12 +14,12 @@ final class Security
 {
     private $password_algorithm;
     private $security_config = [
-        'cipher' => 'AES-256-XTS',
+        'cipher' => 'AES-256-CBC',
         'key'    => '2b66f87fdac6830e',
         'iv'     => '58077f401138b82f',
     ];
 
-    public function __construct(string $cipherAlgorithm = 'AES-256-XTS', string $cipherKey = '', string $cipherIv = '', int $passwordAlgorithm = PASSWORD_DEFAULT)
+    public function __construct(string $cipherAlgorithm = 'AES-256-CBC', string $cipherKey = '', string $cipherIv = '', int $passwordAlgorithm = PASSWORD_DEFAULT)
     {
         if (!empty($cipherAlgorithm)) {
             $this->security_config['cipher'] = $cipherAlgorithm;
