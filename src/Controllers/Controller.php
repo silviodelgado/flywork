@@ -78,11 +78,11 @@ abstract class Controller
     {
         if (!empty($options['db_settings'])) {
             $this->db = new \Medoo\Medoo($options['db_settings']);
-        }
 
-        if (!empty($this->entity_name)) {
-            $entity_name = '\\App\\Models\\' . $this->entity_name;
-            $this->entity = new $entity_name($this->db);
+            if (!empty($this->entity_name)) {
+                $entity_name = '\\App\\Models\\' . $this->entity_name;
+                $this->entity = new $entity_name($this->db);
+            }
         }
 
         if (!empty($options['mailer_settings'])) {

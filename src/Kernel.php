@@ -24,6 +24,7 @@ final class Kernel
         'action'     => 'index',
     ];
     private $db_settings = [];
+    private $mailer_settings = [];
 
     private $request_uri;
     private $request_path;
@@ -60,6 +61,8 @@ final class Kernel
         $this->parse_settings_custom_routes($settings);
 
         $this->parse_settings_db($settings);
+
+        $this->parse_settings_mailer($settings);
     }
 
     private function parse_settings_default_route($settings)
@@ -88,6 +91,13 @@ final class Kernel
     {
         if (!empty($settings['database_entry'])) {
             $this->db_settings = $settings['database'][$settings['database_entry']];
+        }
+    }
+
+    private function parse_settings_mailer($settings)
+    {
+        if (!empty($settings['mailer_settings'])) {
+            $this->mailer_settings = $settings['mailer_settings'];
         }
     }
 
@@ -169,7 +179,8 @@ final class Kernel
         $this->parse_route_parts();
 
         $options = [
-            'db_settings' => $this->db_settings,
+            'db_settings'     => $this->db_settings,
+            'mailer_settings' => $this->mailer_settings,
         ];
 
         $controller_name = '\\App\\Controllers\\' . $this->controller_name;
