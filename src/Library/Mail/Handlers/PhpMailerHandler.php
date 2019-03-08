@@ -26,6 +26,11 @@ class PhpMailerHandler extends MailHandler implements IMailHandler
 
     private function parse_server()
     {
+        if ($this->mail_server_config->isSendmail()) {
+            $this->mailer->isSendmail();
+            return;
+        }
+        
         $this->mailer->Host = $this->mail_server_config->getHost();
         $this->mailer->Port = $this->mail_server_config->getPort();
         $this->mailer->Username = $this->mail_server_config->getUsername();

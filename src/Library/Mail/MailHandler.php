@@ -50,6 +50,11 @@ abstract class MailHandler implements IMailHandler
             $options['username'] ?? '',
             $options['password'] ?? ''
         );
+
+        if ($options['sendmail']) {
+            $this->mail_server_config->setSendmail();
+        }
+
         $this->sender = new MailSender();
         $this->recipients = new MailRecipients();
         $this->message = new MailMessage();

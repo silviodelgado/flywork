@@ -16,6 +16,7 @@ final class MailConfig
     protected $port;
     protected $username;
     protected $password;
+    protected $is_sendmail = false;
 
     /**
      * Default constructor.
@@ -25,12 +26,22 @@ final class MailConfig
      * @param string $username
      * @param string $password
      */
-    public function __construct(string $host, int $port, string $username, string $password)
+    public function __construct(string $host = '', int $port = 25, string $username = '', string $password = '')
     {
         $this->host = $host;
         $this->port = $port;
         $this->username = $username;
         $this->password = $password;
+    }
+
+    public function setSendmail()
+    {
+        $this->is_sendmail = true;
+    }
+
+    public function isSendmail()
+    {
+        return $this->is_sendmail;
     }
 
     /**
