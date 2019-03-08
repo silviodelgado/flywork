@@ -16,7 +16,7 @@ final class MailConfig
     protected $port;
     protected $username;
     protected $password;
-    protected $is_sendmail = false;
+    protected $use_sendmail = false;
 
     /**
      * Default constructor.
@@ -34,14 +34,14 @@ final class MailConfig
         $this->password = $password;
     }
 
-    public function setSendmail()
+    public function useSendmail()
     {
-        $this->is_sendmail = true;
+        $this->use_sendmail = true;
     }
 
     public function isSendmail()
     {
-        return $this->is_sendmail;
+        return $this->use_sendmail;
     }
 
     /**
