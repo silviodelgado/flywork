@@ -31,6 +31,8 @@ abstract class Controller
     protected $entity;
     protected $entity_name;
 
+    protected $mailer_settings;
+
     /**
      * Default constructor.
      */
@@ -81,6 +83,10 @@ abstract class Controller
         if (!empty($this->entity_name)) {
             $entity_name = '\\App\\Models\\' . $this->entity_name;
             $this->entity = new $entity_name($this->db);
+        }
+
+        if (!empty($options['mailer_settings'])) {
+            $this->mailer_settings = $options['mailer_settings'];
         }
 
         $this->_start();
