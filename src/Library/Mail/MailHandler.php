@@ -40,29 +40,31 @@ abstract class MailHandler implements IMailHandler
     /**
      * Default constructor.
      *
-     * @param array $options Initial settings
+     * @param array $config Initial settings or configuration
      */
-    public function __construct($options)
+    public function __construct($config)
     {
-        $this->mail_server_config = new MailConfig(
-            $options['host'] ?? '',
-            $options['port'] ?? 25,
-            $options['username'] ?? '',
-            $options['password'] ?? ''
-        );
-
-        if ($options['sendmail']) {
-            $this->mail_server_config->setSendmail();
-        }
-
         $this->sender = new MailSender();
         $this->recipients = new MailRecipients();
         $this->message = new MailMessage();
+        
+        if (!empty($config['sendmail']) && $config['sendmail']) {
+            $this->mail_server_config = new MailConfig();
+            $this->mail_server_config->setSendmail();
+            return;
+        }
+        
+        $this->mail_server_config = new MailConfig(
+            $config['host'] ?? '',
+            $config['port'] ?? 25,
+            $config['username'] ?? '',
+            $config['password'] ?? ''
+        );
 
         $this->smtp_config = new SMTPConfig(
-            $options['smtp_secure'] ?? '',
-            $options['use_smtp'] ?? false,
-            $options['debug'] ?? false
+            $config['smtp_secure'] ?? '',
+            $config['use_smtp'] ?? false,
+            $config['debug'] ?? false
         );
     }
 
