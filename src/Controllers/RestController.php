@@ -106,7 +106,7 @@ abstract class RestController extends Controller
     {
         $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
         if (!in_array($method, ['GET', 'POST', 'PUT', 'DELETE'])) {
-            throw new \BadMethodCallException($action);
+            throw new \BadMethodCallException($method);
         }
         if ($method == 'GET' && empty($id)) {
             return $this->list();
