@@ -47,13 +47,14 @@ abstract class MailHandler implements IMailHandler
         $this->sender = new MailSender();
         $this->recipients = new MailRecipients();
         $this->message = new MailMessage();
-        
+
         if (!empty($config['use_sendmail']) && $config['use_sendmail']) {
             $this->mail_server_config = new MailConfig();
             $this->mail_server_config->useSendmail();
+
             return;
         }
-        
+
         $this->mail_server_config = new MailConfig(
             $config['host'] ?? '',
             $config['port'] ?? 25,
