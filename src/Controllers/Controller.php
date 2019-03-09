@@ -24,6 +24,8 @@ abstract class Controller
     protected $need_admin = false;
     protected $is_admin = false;
 
+    protected $errors = [];
+
     protected $session;
     protected $db;
     protected $defaul_filter = [];
@@ -31,6 +33,7 @@ abstract class Controller
     protected $entity;
     protected $entity_name;
 
+    protected $mailer;
     protected $mailer_settings;
 
     /**
