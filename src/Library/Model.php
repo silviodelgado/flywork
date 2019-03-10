@@ -48,7 +48,7 @@ abstract class Model
     protected function resultSet($resultSet = [])
     {
         $this->result = $resultSet;
-        $this->num_rows = count($resultSet);
+        $this->num_rows = is_countable($resultSet) ? count($resultSet) : 0;
 
         return $this;
     }
@@ -80,7 +80,7 @@ abstract class Model
      */
     public function hasResult()
     {
-        return count($this->result) > 0;
+        return is_countable($this->result) && count($this->result) > 0;
     }
 
     /**
