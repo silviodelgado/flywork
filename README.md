@@ -51,7 +51,7 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
 
 ## Requirements
 
-* PHP 7.1+
+* PHP 7.3+
 * [Composer](https://getcomposer.org/) Dependency Manager
 * [Apache 2.4 Server](https://httpd.apache.org/)
   * ```mod_rewrite``` enabled
