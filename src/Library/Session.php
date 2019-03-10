@@ -141,6 +141,11 @@ final class Session
             throw \InvalidArgumentException(sprintf("Value of '%s' to store in session cannot be empty", $data));
         }
 
+        if (is_array($value) && !empty($this->session_items[$this->data_key][$data])) {
+            $atual = (array)$this->security->decrypt($this->session_items[$this->data_key][$data]);
+            $value = array_merge($value, $atual);
+        }
+
         $this->session_items[$this->data_key][$data] = $this->encrypted ? $this->security->encrypt($value) : $value;
     }
 
