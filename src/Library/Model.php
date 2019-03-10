@@ -39,16 +39,16 @@ abstract class Model
     abstract protected function validate();
 
     /**
-     * Returns model with resultSet and numRows.
+     * Set resultset to entity and returns model.
      *
      * @param array $resultSet
      *
      * @return Model
      */
-    protected function resultSet($resultSet = [])
+    protected function setResult($result = [])
     {
-        $this->result = $resultSet;
-        $this->num_rows = is_countable($resultSet) ? count($resultSet) : 0;
+        $this->result = $result;
+        $this->num_rows = is_countable($result) ? count($result) : 0;
 
         return $this;
     }
