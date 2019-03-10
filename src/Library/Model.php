@@ -21,7 +21,7 @@ abstract class Model
     protected $columns = [];
     protected $join_columns = [];
     protected $num_rows = 0;
-    protected $result = [];
+    public $result = [];
 
     /**
      * Default constructor.
@@ -61,16 +61,6 @@ abstract class Model
     public function numRows()
     {
         return $this->num_rows;
-    }
-
-    /**
-     * Returns result set after select query.
-     *
-     * @return array
-     */
-    public function getResult()
-    {
-        return $this->result;
     }
 
     /**
