@@ -42,7 +42,7 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
 * Language (translation) handling
 * Bundle engine for JS e CSS files (with minifier)
 * Form fields handling
-* Mail encapsulated handler
+* Mail encapsulated adapter
 * Log management - PSR-3 compliant
 * Security methods (password, encryption and decryption)
 * Too few settings do start

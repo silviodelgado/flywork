@@ -3,7 +3,7 @@
 namespace Interart\Flywork\Library\Mail\Components;
 
 /**
- * Mail handler configuration settings.
+ * Mail adapter configuration settings.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com

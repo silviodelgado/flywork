@@ -1,21 +1,21 @@
 <?php
 
-namespace Interart\Flywork\Library\Mail\Handlers;
+namespace Interart\Flywork\Library\Mail\Adapters;
 
-use Interart\Flywork\Library\Mail\IMailHandler;
-use Interart\Flywork\Library\Mail\MailHandler;
+use Interart\Flywork\Library\Mail\IMailAdapter;
+use Interart\Flywork\Library\Mail\MailAdapter;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
 /**
- * PHPMailer wrap handler.
+ * PHPMailer wrap adapter.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
  *
  * @version     2.0
  */
-class PhpMailerHandler extends MailHandler implements IMailHandler
+class PhpMailerAdapter extends MailAdapter implements IMailAdapter
 {
     public function __construct(array $options)
     {

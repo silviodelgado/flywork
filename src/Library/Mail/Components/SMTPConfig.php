@@ -31,7 +31,7 @@ final class SMTPConfig
     }
 
     /**
-     * Set mail handler to debug mode.
+     * Set mail adapter to debug mode.
      *
      * @param bool $is_debug
      *
@@ -63,7 +63,7 @@ final class SMTPConfig
     }
 
     /**
-     * Returns if mail handler is working in debug mode.
+     * Returns if mail adapter is working in debug mode.
      *
      * @return bool
      */

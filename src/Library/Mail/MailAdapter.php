@@ -10,15 +10,15 @@ use Interart\Flywork\Library\Mail\Components\MailSender;
 use Interart\Flywork\Library\Mail\Components\SMTPConfig;
 
 /**
- * Mail handler base class.
- * All mail handlers should be inherited from this class.
+ * Mail adapter base class.
+ * All mail adapters should be inherited from this class.
  *
  * @copyright   2019 Silvio Delgado
  * @author      Silvio Delgado - silviomdelgado@gmail.com
  *
  * @version     2.0
  */
-abstract class MailHandler implements IMailHandler
+abstract class MailAdapter implements IMailAdapter
 {
     protected $mailer;
     protected $send_method_name;
@@ -187,7 +187,7 @@ abstract class MailHandler implements IMailHandler
     }
 
     /**
-     * Set if mail handler should operate in debug mode.
+     * Set if mail adapter should operates in debug mode.
      *
      * @param bool $is_debug
      *
