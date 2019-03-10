@@ -140,7 +140,7 @@ abstract class Model
 
         $result = $this->db->select($this->table_name, $this->columns, $where, $order);
 
-        return $this->resultSet($result);
+        return $this->setResult($result);
     }
 
     /**
