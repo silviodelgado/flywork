@@ -142,7 +142,7 @@ final class Session
         }
 
         if (is_array($value) && !empty($this->session_items[$this->data_key][$data])) {
-            $atual = (array)$this->security->decrypt($this->session_items[$this->data_key][$data]);
+            $atual = (array) $this->security->decrypt($this->session_items[$this->data_key][$data]);
             $value = array_merge($value, $atual);
         }
 
