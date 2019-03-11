@@ -84,7 +84,7 @@ trait BundleManager
         $key = strtolower($prefix) . '_' . md5(serialize($files)) . '.' . $type;
 
         if (ENV == 'dev' || !file_exists($bundle_path . $key)) {
-            foreach ($files as $file) {
+            foreach ($this->$bundle_name as $file) {
                 $minifier->add($file_path . str_replace('/', DIRECTORY_SEPARATOR, $file) . '.' . $type);
             }
 
