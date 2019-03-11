@@ -33,7 +33,6 @@ abstract class Controller
     protected $entity;
     protected $entity_name;
 
-    protected $mailer;
     protected $mailer_settings;
 
     /**
