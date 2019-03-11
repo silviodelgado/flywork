@@ -146,13 +146,7 @@ abstract class Controller
     protected function redirect(string $uri, int $http_code = 0)
     {
         if (headers_sent()) {
-            echo '<script type="text/javascript">'
-                . "window.location.href=\"{$uri}\";"
-                . '</script>'
-                . '<noscript>'
-                . "<meta http-equiv=\"refresh\" content=\"0;url={$uri}\">"
-                . '</noscript>';
-            exit;
+            header_remove();
         }
 
         if ($http_code) {
