@@ -161,7 +161,7 @@ final class Session
         if (empty($key)) {
             throw new \InvalidArgumentException('Session key should not be empty.');
         }
-        
+
         $data = $this->session_items[$this->data_key][$key] ?? null;
 
         if ($this->encrypted && !empty($data)) {
