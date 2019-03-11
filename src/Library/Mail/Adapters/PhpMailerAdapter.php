@@ -40,13 +40,13 @@ class PhpMailerAdapter extends MailAdapter implements IMailAdapter
         $this->mailer->SMTPAuth = $this->smtp_config->useAuth();
         if ($this->mailer->SMTPAuth) {
             $this->mailer->isSMTP();
-            $this->mailer->SMTPOptions = array(
-                'ssl' => array(
+            $this->mailer->SMTPOptions = [
+                'ssl' => [
                     'verify_peer'       => false,
                     'verify_peer_name'  => false,
                     'allow_self_signed' => true,
-                ),
-            );
+                ],
+            ];
         }
     }
 
