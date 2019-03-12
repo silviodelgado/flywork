@@ -242,7 +242,7 @@ final class Session
             unset($this->session_items[$this->flash_key][$key]);
         }
 
-        return $data;
+        return addslashes($data);
     }
 
     /**
