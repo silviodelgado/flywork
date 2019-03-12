@@ -95,7 +95,7 @@ trait BundleManager
     }
 
     /**
-     * Wipes clean the entire bundle by type.
+     * Wipes clean the entire bundle folder by type.
      *
      * @param string $type
      *
@@ -107,5 +107,28 @@ trait BundleManager
         $this->check_type($type);
 
         @array_map('unlink', glob(WEBPATH . 'bundles' . DIRECTORY_SEPARATOR . '*.' . $type) ?? []);
+    }
+
+    /**
+     * Wipes clean bundle list by type.
+     *
+     * @param string $type
+     * @return void
+     */
+    public function reset(string $type)
+    {
+        $bundle_name = 'bundle' . ucfirst(strtolower($type));
+        $this->$bundle_name = [];
+    }
+
+    /**
+     * Wipes clean bundle list of all types.
+     *
+     * @return void
+     */
+    public function resetAll()
+    {
+        $this->reset('css');
+        $this->reset('js');
     }
 }
