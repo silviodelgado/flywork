@@ -113,6 +113,7 @@ trait BundleManager
      * Wipes clean bundle list by type.
      *
      * @param string $type
+     *
      * @return void
      */
     public function reset(string $type)
