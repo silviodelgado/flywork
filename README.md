@@ -25,7 +25,7 @@ Lightweight PHP MVC framework
 
 ## What is this?
 
-**Flywork** is a lightweight **PHP framework**, using **MVC** pattern, to help you to create web applications rapidly.
+**Flywork** is a lightweight **PHP framework**, using **MVC** pattern, which helps you to quickly create web applications.
 
 You can see a proof of concept project in [Flywork-poc](https://github.com/silviodelgado/flywork-poc) project.
 
