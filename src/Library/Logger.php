@@ -211,7 +211,7 @@ final class Logger implements LoggerInterface
         $now = \DateTime::createFromFormat('U.u', microtime(true));
         $content = '[' . $now->format('Y-m-d H:i:s.u') . "]\n"
         . $message . "\n"
-        . str_repeat('==', 30) . "\n\n";
+        . str_repeat('=', 20) . "\n\n";
 
         switch ($this->storage_type) {
             case self::STORAGE_TYPE_FILE:
