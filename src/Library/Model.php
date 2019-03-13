@@ -48,7 +48,7 @@ abstract class Model
     protected function setResult($result = [])
     {
         $this->result = $result;
-        $this->num_rows = is_countable($result) ? count($result) : 0;
+        $this->num_rows = is_array($result) ? count($result) : 0;
 
         return $this;
     }
@@ -70,7 +70,7 @@ abstract class Model
      */
     public function hasResult()
     {
-        return is_countable($this->result) && count($this->result) > 0;
+        return is_array($this->result) && count($this->result) > 0;
     }
 
     /**
@@ -109,10 +109,9 @@ abstract class Model
             'deleted'          => 0,
         ];
         $where = array_merge($default_filters, $where);
-        $this->result = $this->db->get($this->table_name, $this->columns, $where);
-        $this->num_rows = count($this->result) ? 1 : 0;
+        $result = $this->db->get($this->table_name, $this->columns, $where);
 
-        return $this;
+        return $this->setResult($result);
     }
 
     /**
@@ -156,7 +155,7 @@ abstract class Model
     {
         $data = $default_filters;
         foreach ($params as $key => $value) {
-            if (in_array($key, $this->columns)) {
+            if (in_array($key, $this->columns)) { // TODO: verificar colunas readonly
                 $data[$key] = $value;
             }
         }
@@ -192,7 +191,7 @@ abstract class Model
 
         $data = [];
         foreach ($params as $key => $value) {
-            if (in_array($key, $this->columns)) {
+            if (in_array($key, $this->columns)) { // TODO: verificar colunas readonly
                 $data[$key] = $value;
             }
         }
