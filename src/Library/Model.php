@@ -19,6 +19,7 @@ abstract class Model
     protected $default_order_by = '';
     protected $default_order_dir = 'ASC';
     protected $columns = [];
+    protected $columns_readonly = [];
     protected $join_columns = [];
     protected $num_rows = 0;
     public $result = [];
@@ -155,7 +156,7 @@ abstract class Model
     {
         $data = $default_filters;
         foreach ($params as $key => $value) {
-            if (in_array($key, $this->columns)) { // TODO: verificar colunas readonly
+            if (in_array($key, $this->columns) && !in_array($key, $this->columns_readonly)) {
                 $data[$key] = $value;
             }
         }
@@ -191,7 +192,7 @@ abstract class Model
 
         $data = [];
         foreach ($params as $key => $value) {
-            if (in_array($key, $this->columns)) { // TODO: verificar colunas readonly
+            if (in_array($key, $this->columns) && !in_array($key, $this->columns_readonly)) {
                 $data[$key] = $value;
             }
         }
