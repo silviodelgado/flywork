@@ -19,7 +19,7 @@ abstract class Model
     protected $default_order_by = '';
     protected $default_order_dir = 'ASC';
     protected $columns = [];
-    protected $columns_readonly = ['id', 'created_at', 'updated_at'];
+    protected $columns_readonly = [];
     protected $join_columns = [];
     protected $num_rows = 0;
     public $result = [];
