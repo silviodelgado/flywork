@@ -115,7 +115,7 @@ abstract class Model
     }
 
     /**
-     * Search all occurrences in database.
+     * Retrives all rows from database.
      * Default method.
      *
      * @param string $order_by
@@ -130,7 +130,7 @@ abstract class Model
             throw new \InvalidArgumentException("Query order direction should be 'ASC' or 'DESC'.");
         }
 
-        $where = ['deleted' => 0];
+        $where = in_array('deleted', $this->columns) ? ['deleted' => 0] : [];
         $where = array_merge($default_filters, $where);
 
         $order = empty($order_by)
