@@ -101,7 +101,7 @@ trait BundleManager
      *
      * @return void
      */
-    public function clear(string $type)
+    public function clearBundles(string $type)
     {
         $type = strtolower($type);
         $this->check_type($type);
@@ -116,7 +116,7 @@ trait BundleManager
      *
      * @return void
      */
-    public function reset(string $type)
+    public function resetBundles(string $type)
     {
         $bundle_name = 'bundle' . ucfirst(strtolower($type));
         $this->$bundle_name = [];
@@ -127,7 +127,7 @@ trait BundleManager
      *
      * @return void
      */
-    public function resetAll()
+    public function resetAllBundles()
     {
         $this->reset('css');
         $this->reset('js');
