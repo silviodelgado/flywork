@@ -42,13 +42,13 @@ abstract class Model
     abstract protected function before_update();
 
     abstract protected function after_update();
-    
+
     abstract protected function before_insert();
-    
+
     abstract protected function after_insert();
 
     abstract protected function before_delete();
-    
+
     abstract protected function after_delete();
 
     /**
@@ -176,7 +176,7 @@ abstract class Model
         }
         $pdo = $this->db->insert($this->table_name, $data);
         $this->num_rows = $pdo->rowCount();
-        
+
         $this->after_insert();
 
         if ($this->num_rows) {
@@ -255,7 +255,7 @@ abstract class Model
         $this->num_rows = $pdo->rowCount();
 
         $this->after_delete();
-        
+
         if ($this->num_rows) {
             $this->result = array_merge($this->result, $data);
         }
