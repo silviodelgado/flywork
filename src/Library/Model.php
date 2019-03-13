@@ -39,6 +39,18 @@ abstract class Model
 
     abstract protected function validate();
 
+    abstract protected function before_update();
+
+    abstract protected function after_update();
+    
+    abstract protected function before_insert();
+    
+    abstract protected function after_insert();
+
+    abstract protected function before_delete();
+    
+    abstract protected function after_delete();
+
     /**
      * Set resultset to entity and returns model.
      *
@@ -154,6 +166,8 @@ abstract class Model
      */
     public function insert(array $params, array $default_filters = [])
     {
+        $this->before_insert();
+
         $data = $default_filters;
         foreach ($params as $key => $value) {
             if (in_array($key, $this->columns) && !in_array($key, $this->columns_readonly)) {
@@ -162,6 +176,8 @@ abstract class Model
         }
         $pdo = $this->db->insert($this->table_name, $data);
         $this->num_rows = $pdo->rowCount();
+        
+        $this->after_insert();
 
         if ($this->num_rows) {
             return $this->FindById($this->db->id());
@@ -187,6 +203,8 @@ abstract class Model
             return $this;
         }
 
+        $this->before_update();
+
         $where = [$this->primary_key => $this->result[$this->primary_key]];
         $where = array_merge($default_filters, $where);
 
@@ -198,6 +216,8 @@ abstract class Model
         }
         $pdo = $this->db->update($this->table_name, $data, $where);
         $this->num_rows = $pdo->rowCount();
+
+        $this->after_update();
 
         if ($this->num_rows) {
             return $this->FindById($this->result[$this->primary_key]);
@@ -222,6 +242,8 @@ abstract class Model
             return $this;
         }
 
+        $this->before_delete();
+
         $where = [$this->primary_key => $this->result[$this->primary_key]];
         $where = array_merge($default_filters, $where);
 
@@ -232,6 +254,8 @@ abstract class Model
         $pdo = $this->db->update($this->table_name, $data, $where);
         $this->num_rows = $pdo->rowCount();
 
+        $this->after_delete();
+        
         if ($this->num_rows) {
             $this->result = array_merge($this->result, $data);
         }
