@@ -180,7 +180,7 @@ abstract class Model
         $this->after_insert();
 
         if ($this->num_rows) {
-            return $this->FindById($this->db->id());
+            $this->result = $this->FindById($this->db->id())->result;
         }
 
         return $this;
@@ -220,7 +220,7 @@ abstract class Model
         $this->after_update();
 
         if ($this->num_rows) {
-            return $this->FindById($this->result[$this->primary_key]);
+            $this->result = $this->FindById($this->result[$this->primary_key])->result;
         }
 
         return $this;
