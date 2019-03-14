@@ -80,7 +80,7 @@ abstract class Model
     /**
      * Get last executed statement result.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuccess()
     {
