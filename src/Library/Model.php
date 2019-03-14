@@ -22,6 +22,7 @@ abstract class Model
     protected $columns_readonly = [];
     protected $join_columns = [];
     protected $num_rows = 0;
+    protected $success = true;
     public $result = [];
 
     /**
@@ -77,6 +78,16 @@ abstract class Model
     }
 
     /**
+     * Get last executed statement result.
+     *
+     * @return boolean
+     */
+    public function isSuccess()
+    {
+        return $this->success;
+    }
+
+    /**
      * Returns true if result has any row.
      *
      * @return bool
@@ -123,6 +134,7 @@ abstract class Model
         ];
         $where = array_merge($default_filters, $where);
         $result = $this->db->get($this->table_name, $this->columns, $where);
+        $this->success = !empty($result);
 
         return $this->setResult($result);
     }
@@ -152,6 +164,8 @@ abstract class Model
 
         $result = $this->db->select($this->table_name, $this->columns, $where, $order);
 
+        $this->success = !empty($result);
+
         return $this->setResult($result);
     }
 
@@ -176,6 +190,7 @@ abstract class Model
         }
         $pdo = $this->db->insert($this->table_name, $data);
         $this->num_rows = $pdo->rowCount();
+        $this->success = !empty($pdo);
 
         $this->after_insert();
 
@@ -216,6 +231,7 @@ abstract class Model
         }
         $pdo = $this->db->update($this->table_name, $data, $where);
         $this->num_rows = $pdo->rowCount();
+        $this->success = !empty($pdo);
 
         $this->after_update();
 
@@ -253,6 +269,7 @@ abstract class Model
         ];
         $pdo = $this->db->update($this->table_name, $data, $where);
         $this->num_rows = $pdo->rowCount();
+        $this->success = !empty($pdo);
 
         $this->after_delete();
 
