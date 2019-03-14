@@ -12,11 +12,11 @@ Lightweight PHP MVC framework
 [![Code Climate](https://codeclimate.com/github/silviodelgado/flywork/badges/gpa.svg)](https://codeclimate.com/github/silviodelgado/flywork)
 [![StyleCI](https://github.styleci.io/repos/171210922/shield?branch=master)](https://github.styleci.io/repos/171210922)
 
-<a href="https://github.com/silviodelgado/flywork/issues">
-  <img src="https://img.shields.io/github/issues/silviodelgado/flywork.svg" alt="Issues">
-</a>
 <a href="https://github.com/silviodelgado/flywork/blob/master/LICENSE">
   <img src="https://img.shields.io/github/license/silviodelgado/flywork.svg" alt="MIT license">
+</a>
+<a href="https://github.com/silviodelgado/flywork/issues">
+  <img src="https://img.shields.io/github/issues/silviodelgado/flywork.svg" alt="Issues">
 </a>
 <a href="https://github.com/silviodelgado/flywork/">
   <img src="https://img.shields.io/badge/forkable-yes-green.svg" alt="This is a forkable respository">
