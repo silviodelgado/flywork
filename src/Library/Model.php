@@ -23,6 +23,7 @@ abstract class Model
     protected $join_columns = [];
     protected $num_rows = 0;
     protected $success = true;
+    protected $last_id = 0;
     public $result = [];
 
     /**
@@ -85,6 +86,16 @@ abstract class Model
     public function isSuccess()
     {
         return $this->success;
+    }
+
+    /**
+     * Returns last inserted id.
+     *
+     * @return mixed
+     */
+    public function lastId()
+    {
+        return $this->last_id;
     }
 
     /**
@@ -191,6 +202,7 @@ abstract class Model
         $pdo = $this->db->insert($this->table_name, $data);
         $this->num_rows = $pdo->rowCount();
         $this->success = !empty($pdo);
+        $this->last_id = $this->db->id();
 
         $this->after_insert();
 
