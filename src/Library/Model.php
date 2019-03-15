@@ -27,7 +27,7 @@ abstract class Model
      *
      * @var int
      */
-    protected $num_rows = 0;
+    public $num_rows = 0;
 
     /**
      * Contains last executed statement result.
