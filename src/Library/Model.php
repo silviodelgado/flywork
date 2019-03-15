@@ -94,7 +94,9 @@ abstract class Model
     protected function setResult($result = [])
     {
         $this->result = $result;
-        $this->num_rows = is_array($result) ? count($result) : 0;
+        $this->num_rows = is_array($result) && count($result)
+        ? (isset($result[0]) && is_array($result[0]) ? count($result) : 1)
+        : 0;
 
         return $this;
     }
