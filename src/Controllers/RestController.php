@@ -51,40 +51,40 @@ abstract class RestController extends Controller
 
     public function list()
     {
-        $result = $this->entity->FindAll('', $this->defaul_filter);
+        $result = $this->entity->findAll('', '', $this->defaul_filter);
 
         return $this->JsonResult(true, '', ['data' => $result]);
     }
 
     private function get($id)
     {
-        $result = $this->entity->FindById($id, $this->defaul_filter);
+        $result = $this->entity->findById($id, $this->defaul_filter);
 
         return $this->JsonResult(true, '', ['data' => $result]);
     }
 
     private function post()
     {
-        $result = $this->entity->Insert($this->get_input_vars(), $this->defaul_filter);
+        $result = $this->entity->insert($this->get_input_vars(), $this->defaul_filter);
 
         return $this->JsonResult(true, '', ['data' => $result]);
     }
 
     private function put($id)
     {
-        $this->entity = $this->entity->FindById($id, $this->defaul_filter);
-        if (empty($this->entity->numRows())) {
+        $this->entity = $this->entity->findById($id, $this->defaul_filter);
+        if (empty($this->entity->num_rows)) {
             return $this->kill();
         }
-        $result = $this->entity->Update($this->get_input_vars(), $this->defaul_filter);
+        $result = $this->entity->update($this->get_input_vars(), $this->defaul_filter);
 
         return $this->JsonResult(true, '', ['data' => $result]);
     }
 
     private function delete($id)
     {
-        $this->entity = $this->entity->FindById($id, $this->defaul_filter);
-        if (empty($this->entity->numRows())) {
+        $this->entity = $this->entity->findById($id, $this->defaul_filter);
+        if (empty($this->entity->num_rows)) {
             return $this->kill();
         }
         $result = $this->entity->Delete($this->defaul_filter);
@@ -106,7 +106,7 @@ abstract class RestController extends Controller
     {
         $method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
         if (!in_array($method, ['GET', 'POST', 'PUT', 'DELETE'])) {
-            throw new \BadMethodCallException($method);
+            throw new \BadMethodCallException("Invalid method '{$method}'");
         }
         if ($method == 'GET' && empty($id)) {
             return $this->list();
