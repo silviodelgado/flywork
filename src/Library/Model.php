@@ -226,8 +226,7 @@ abstract class Model
 
         $this->before_update();
 
-        $where = [$this->primary_key => $this->result[$this->primary_key]];
-        $where = array_merge($default_filters, $where);
+        $where = array_merge($default_filters, [$this->primary_key => $this->result[$this->primary_key]]);
 
         $data = [];
         foreach ($params as $key => $value) {
@@ -235,6 +234,7 @@ abstract class Model
                 $data[$key] = $value;
             }
         }
+
         $pdo = $this->db->update($this->table_name, $data, $where);
         $this->num_rows = $pdo->rowCount();
         $this->success = !empty($pdo);
