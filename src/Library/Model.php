@@ -77,6 +77,13 @@ abstract class Model
 
     abstract protected function after_delete();
 
+    private function get_default_where_pk()
+    {
+        return [
+            $this->primary_key => $this->result[$this->primary_key]
+        ];
+    }
+
     /**
      * Set resultset to entity and returns model.
      *
@@ -226,7 +233,7 @@ abstract class Model
 
         $this->before_update();
 
-        $where = array_merge($default_filters, [$this->primary_key => $this->result[$this->primary_key]]);
+        $where = array_merge($default_filters, $this->get_default_where_pk());
 
         $data = [];
         foreach ($params as $key => $value) {
@@ -266,8 +273,7 @@ abstract class Model
 
         $this->before_delete();
 
-        $where = [$this->primary_key => $this->result[$this->primary_key]];
-        $where = array_merge($default_filters, $where);
+        $where = array_merge($default_filters, $this->get_default_where_pk());
 
         $data = [
             'deleted_at' => date('Y-m-d H:i:s'),
