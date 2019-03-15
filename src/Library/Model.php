@@ -21,9 +21,33 @@ abstract class Model
     protected $columns = [];
     protected $columns_readonly = [];
     protected $join_columns = [];
+
+    /**
+     * Contains the number of rows in result set.
+     *
+     * @var int
+     */
     protected $num_rows = 0;
-    protected $success = true;
-    protected $last_id = 0;
+
+    /**
+     * Contains last executed statement result.
+     *
+     * @var bool
+     */
+    public $success = true;
+
+    /**
+     * Contains last inserted id.
+     *
+     * @var int
+     */
+    public $last_id = 0;
+
+    /**
+     * Contains query result.
+     *
+     * @var array
+     */
     public $result = [];
 
     /**
@@ -66,36 +90,6 @@ abstract class Model
         $this->num_rows = is_array($result) ? count($result) : 0;
 
         return $this;
-    }
-
-    /**
-     * Shows the number of rows in result set.
-     *
-     * @return int
-     */
-    public function numRows()
-    {
-        return $this->num_rows;
-    }
-
-    /**
-     * Get last executed statement result.
-     *
-     * @return bool
-     */
-    public function isSuccess()
-    {
-        return $this->success;
-    }
-
-    /**
-     * Returns last inserted id.
-     *
-     * @return mixed
-     */
-    public function lastId()
-    {
-        return $this->last_id;
     }
 
     /**
