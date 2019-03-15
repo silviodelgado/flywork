@@ -80,7 +80,7 @@ abstract class Model
     private function get_default_where_pk()
     {
         return [
-            $this->primary_key => $this->result[$this->primary_key]
+            $this->primary_key => $this->result[$this->primary_key],
         ];
     }
 
