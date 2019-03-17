@@ -4,8 +4,8 @@ namespace Interart\Flywork\Library\Mail\Adapters;
 
 use Interart\Flywork\Library\Mail\IMailAdapter;
 use Interart\Flywork\Library\Mail\MailAdapter;
-use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
+use Interart\Flywork\Library\Mail\Wrappers\PHPMailerWrapper;
 
 /**
  * PHPMailer wrap adapter.
@@ -85,7 +85,8 @@ class PhpMailerAdapter extends MailAdapter implements IMailAdapter
 
     protected function parse_options()
     {
-        $this->mailer = new PHPMailer(ENV == 'dev');
+        //$this->mailer = new PHPMailer(ENV == 'dev');
+        $this->mailer = new PHPMailerWrapper(ENV == 'dev');
         $this->mailer->SMTPDebug = ($this->smtp_config->isDebug() ? SMTP::DEBUG_SERVER : SMTP::DEBUG_OFF);
         $this->mailer->CharSet = 'UTF-8';
 
