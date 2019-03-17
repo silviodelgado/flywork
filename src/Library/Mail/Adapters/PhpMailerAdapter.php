@@ -4,8 +4,8 @@ namespace Interart\Flywork\Library\Mail\Adapters;
 
 use Interart\Flywork\Library\Mail\IMailAdapter;
 use Interart\Flywork\Library\Mail\MailAdapter;
-use PHPMailer\PHPMailer\SMTP;
 use Interart\Flywork\Library\Mail\Wrappers\PHPMailerWrapper;
+use PHPMailer\PHPMailer\SMTP;
 
 /**
  * PHPMailer wrap adapter.
