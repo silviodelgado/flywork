@@ -11,7 +11,6 @@ use PHPMailer\PHPMailer\PHPMailer;
  */
 class PHPMailerWrapper extends PHPMailer
 {
-
     public function __construct($exceptions = null)
     {
         parent::__construct($exceptions);
@@ -34,7 +33,7 @@ class PHPMailerWrapper extends PHPMailer
         if (filter_var('http://' . $host, FILTER_VALIDATE_URL)) {
             return true;
         }
-        
+
         return false;
     }
 }
