@@ -26,10 +26,10 @@ class PHPMailerWrapper extends PHPMailer
             return false;
         }
         if (trim($host, '[]') != $host) {
-            return (boolean) filter_var(trim($host, '[]'), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+            return (bool) filter_var(trim($host, '[]'), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
         }
         if (is_numeric(str_replace('.', '', $host))) {
-            return (boolean) filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+            return (bool) filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
         }
         if (filter_var('http://' . $host, FILTER_VALIDATE_URL)) {
             return true;
