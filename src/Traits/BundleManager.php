@@ -129,7 +129,7 @@ trait BundleManager
      */
     public function resetAllBundles()
     {
-        $this->reset('css');
-        $this->reset('js');
+        $this->resetBundles('css');
+        $this->resetBundles('js');
     }
 }
