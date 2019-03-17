@@ -34,6 +34,7 @@ class PHPMailerWrapper extends PHPMailer
         if (filter_var('http://' . $host, FILTER_VALIDATE_URL)) {
             return true;
         }
+        
         return false;
     }
 }
