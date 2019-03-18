@@ -148,7 +148,6 @@ abstract class Model
         ];
         $where = array_merge($default_filters, $where);
         $result = $this->db->get($this->table_name, $this->columns, $where);
-        $this->success = !empty($result);
 
         return $this->setResult($result);
     }
@@ -177,8 +176,6 @@ abstract class Model
         : [$order_by => ($order_dir ?? $this->default_order_dir)];
 
         $result = $this->db->select($this->table_name, $this->columns, array_merge($where, $order));
-
-        $this->success = !empty($result);
 
         return $this->setResult($result);
     }
