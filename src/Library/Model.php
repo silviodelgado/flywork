@@ -175,7 +175,9 @@ abstract class Model
         ? [$this->default_order_by => $this->default_order_dir]
         : [$order_by => ($order_dir ?? $this->default_order_dir)];
 
-        $result = $this->db->select($this->table_name, $this->columns, array_merge($where, $order));
+        $where['ORDER'] = $order;
+
+        $result = $this->db->select($this->table_name, $this->columns, $where);
 
         return $this->setResult($result);
     }
