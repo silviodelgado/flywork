@@ -28,6 +28,7 @@ class PhpMailerAdapter extends MailAdapter implements IMailAdapter
     {
         if ($this->mail_server_config->isSendmail()) {
             $this->mailer->isSendmail();
+            $this->mailer->isMail();
 
             return;
         }

@@ -48,6 +48,12 @@ abstract class MailAdapter implements IMailAdapter
         $this->recipients = new MailRecipients();
         $this->message = new MailMessage();
 
+        $this->smtp_config = new SMTPConfig(
+            $config['smtp_secure'] ?? '',
+            $config['use_smtp'] ?? false,
+            $config['debug'] ?? false
+        );
+
         if (!empty($config['use_sendmail']) && $config['use_sendmail']) {
             $this->mail_server_config = new MailConfig();
             $this->mail_server_config->useSendmail();
@@ -60,12 +66,6 @@ abstract class MailAdapter implements IMailAdapter
             $config['port'] ?? 25,
             $config['username'] ?? '',
             $config['password'] ?? ''
-        );
-
-        $this->smtp_config = new SMTPConfig(
-            $config['smtp_secure'] ?? '',
-            $config['use_smtp'] ?? false,
-            $config['debug'] ?? false
         );
     }
 
