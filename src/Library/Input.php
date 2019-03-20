@@ -388,7 +388,7 @@ final class Input
 
     public function field_clear_string(int $type, string $field_name)
     {
-        $value = $this->field($type, $field_name);
+        $value = trim($this->field($type, $field_name));
 
         return filter_var($value, FILTER_SANITIZE_STRING);
     }
