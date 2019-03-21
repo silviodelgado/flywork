@@ -87,8 +87,8 @@ abstract class RestController extends Controller
         if (empty($this->entity->num_rows)) {
             return $this->kill();
         }
-        $result = $this->entity->Delete($this->defaul_filter);
-        if (!$result->numRows()) {
+        $result = $this->entity->delete($this->defaul_filter);
+        if (!$result->success) {
             return $this->kill();
         }
 
