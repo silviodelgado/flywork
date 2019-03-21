@@ -140,13 +140,13 @@ abstract class Model
      *
      * @return mixed
      */
-    public function findById($id, array $default_filters = [])
+    public function findById($id, array $filters = [])
     {
         $where = [
             $this->primary_key => $id,
             'deleted'          => 0,
         ];
-        $where = array_merge($default_filters, $where);
+        $where = array_merge($filters, $where);
         $result = $this->db->get($this->table_name, $this->columns, $where);
 
         return $this->setResult($result);
@@ -161,7 +161,7 @@ abstract class Model
      *
      * @return array
      */
-    public function findAll(string $order_by = '', string $order_dir = '', array $default_filters = [])
+    public function findAll(string $order_by = '', string $order_dir = '', array $filters = [])
     {
         $order_dir = strtoupper($order_dir);
         if (!empty($order_dir) && !in_array($order_dir, ['ASC', 'DESC'])) {
@@ -169,7 +169,7 @@ abstract class Model
         }
 
         $where = in_array('deleted', $this->columns) ? ['deleted' => 0] : [];
-        $where = array_merge($default_filters, $where);
+        $where = array_merge($filters, $where);
 
         $order = empty($order_by)
         ? [$this->default_order_by => $this->default_order_dir]
@@ -191,11 +191,11 @@ abstract class Model
      *
      * @return Model
      */
-    public function insert(array $params, array $default_filters = [])
+    public function insert(array $params, array $filters = [])
     {
         $this->before_insert();
 
-        $data = $default_filters;
+        $data = $filters;
         foreach ($params as $key => $value) {
             if (in_array($key, $this->columns) && !in_array($key, $this->columns_readonly)) {
                 $data[$key] = $value;
@@ -224,7 +224,7 @@ abstract class Model
      *
      * @return Model
      */
-    public function update(array $params, array $default_filters = [])
+    public function update(array $params, array $filters = [])
     {
         if (!isset($this->result[$this->primary_key])) {
             $this->num_rows = 0;
@@ -234,7 +234,7 @@ abstract class Model
 
         $this->before_update();
 
-        $where = array_merge($default_filters, $this->get_default_where_pk());
+        $where = array_merge($filters, $this->get_default_where_pk());
 
         $data = [];
         foreach ($params as $key => $value) {
@@ -264,7 +264,7 @@ abstract class Model
      *
      * @return Model
      */
-    public function delete(array $default_filters = [])
+    public function delete(array $filters = [])
     {
         if (!isset($this->result[$this->primary_key])) {
             $this->num_rows = 0;
@@ -274,7 +274,7 @@ abstract class Model
 
         $this->before_delete();
 
-        $where = array_merge($default_filters, $this->get_default_where_pk());
+        $where = array_merge($filters, $this->get_default_where_pk());
 
         $data = [
             'deleted_at' => date('Y-m-d H:i:s'),
