@@ -65,7 +65,7 @@ final class Kernel
         $this->parse_settings_mailer($settings);
     }
 
-    private function parse_settings_default_route($settings)
+    private function parse_settings_default_route(array $settings = [])
     {
         if (empty($settings['default_route'])) {
             return;
@@ -80,21 +80,21 @@ final class Kernel
         }
     }
 
-    private function parse_settings_custom_routes($settings)
+    private function parse_settings_custom_routes(array $settings = [])
     {
         if (!empty($settings['custom_routes'])) {
             $this->routes = array_merge($this->routes, $settings['custom_routes']);
         }
     }
 
-    private function parse_settings_db($settings)
+    private function parse_settings_db(array $settings = [])
     {
         if (!empty($settings['database_entry'])) {
             $this->db_settings = $settings['database'][$settings['database_entry']];
         }
     }
 
-    private function parse_settings_mailer($settings)
+    private function parse_settings_mailer(array $settings = [])
     {
         if (!empty($settings['mailer_settings'])) {
             $this->mailer_settings = $settings['mailer_settings'];
