@@ -99,6 +99,18 @@ final class Input
     }
 
     /**
+     * Get only number from the field $field content.
+     *
+     * @param string $field Field name
+     *
+     * @return long
+     */
+    public function getNum(string $field)
+    {
+        return $this->field_num(INPUT_GET, $field);
+    }
+
+    /**
      * Get the field $field_name content as a date string.
      *
      * @param string $field_name Field name
@@ -213,6 +225,18 @@ final class Input
     public function postFloat(string $field, string $input_culture = 'pt-br', int $decimal_digits = 2)
     {
         return $this->field_float(INPUT_POST, $field, $decimal_digits, $input_culture);
+    }
+
+    /**
+     * Get only number from the field $field content.
+     *
+     * @param string $field Field name
+     *
+     * @return long
+     */
+    public function postNum(string $field)
+    {
+        return $this->field_num(INPUT_POST, $field);
     }
 
     /**
@@ -384,6 +408,12 @@ final class Input
         $data = filter_var($data, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
         return number_format($data, $decimal_digits, '.', '');
+    }
+
+    private function field_num(int $type, string $field_name)
+    {
+        $data = $this->field($type, $field_name);
+        return preg_replace('/[^0-9]/', '', $data);
     }
 
     public function field_clear_string(int $type, string $field_name)
