@@ -185,6 +185,10 @@ final class Kernel
 
         $controller_name = '\\App\\Controllers\\' . $this->controller_name;
         // throws Error if class not found
+        if (!class_exists($controller_name)) {
+            throw new \BadMethodCallException($controller_name);
+        }
+
         $controller = new $controller_name();
         $controller->_init($options);
 
