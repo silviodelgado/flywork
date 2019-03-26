@@ -413,6 +413,7 @@ final class Input
     private function field_num(int $type, string $field_name)
     {
         $data = $this->field($type, $field_name);
+        
         return preg_replace('/[^0-9]/', '', $data);
     }
 
