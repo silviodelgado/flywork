@@ -156,7 +156,8 @@ abstract class Model
      * Retrives all rows from database.
      * Default method.
      *
-     * @param string $order_by
+     * @param string $order_by Order column
+     * @param string $order_dir Order direction
      * @param array $default_filters
      *
      * @return array
@@ -173,7 +174,7 @@ abstract class Model
 
         $order = empty($order_by)
         ? [$this->default_order_by => $this->default_order_dir]
-        : [$order_by => ($order_dir ?? $this->default_order_dir)];
+        : [$order_by => (!empty($order_dir) ? $order_dir : $this->default_order_dir)];
 
         $where['ORDER'] = $order;
 
