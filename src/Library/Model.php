@@ -122,6 +122,21 @@ abstract class Model
     }
 
     /**
+     * Returns an empty result set.
+     *
+     * @return array
+     */
+    public function getEmpty()
+    {
+        $result = [];
+        foreach ($this->columns as $col) {
+            $result[$col] = null;
+        }
+
+        return $result;
+    }
+
+    /**
      * List all join columns used in this entity.
      *
      * @return array
