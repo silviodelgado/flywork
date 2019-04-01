@@ -132,8 +132,11 @@ abstract class Model
         foreach ($this->columns as $col) {
             $columns[$col] = null;
         }
+        foreach ($this->join_columns as $col) {
+            $columns[$col] = null;
+        }
 
-        return array_merge($this->join_columns, $columns);
+        return $columns;
     }
 
     /**
