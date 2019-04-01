@@ -128,12 +128,12 @@ abstract class Model
      */
     public function getEmpty()
     {
-        $result = [];
+        $columns = [];
         foreach ($this->columns as $col) {
-            $result[$col] = null;
+            $columns[$col] = null;
         }
 
-        return $result;
+        return array_merge($this->join_columns, $columns);
     }
 
     /**
