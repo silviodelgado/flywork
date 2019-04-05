@@ -162,8 +162,11 @@ abstract class Model
     {
         $where = [
             $this->primary_key => $id,
-            'deleted'          => 0,
         ];
+        if (in_array('deleted', $this->columns)) {
+            $where['deleted'] = 0;
+        }
+
         $where = array_merge($filters, $where);
         $result = $this->db->get($this->table_name, $this->columns, $where);
 
