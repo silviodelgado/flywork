@@ -103,7 +103,7 @@ final class Input
      *
      * @param string $field Field name
      *
-     * @return long
+     * @return string
      */
     public function getNum(string $field)
     {
@@ -232,7 +232,7 @@ final class Input
      *
      * @param string $field Field name
      *
-     * @return long
+     * @return string
      */
     public function postNum(string $field)
     {
