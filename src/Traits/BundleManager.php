@@ -80,7 +80,21 @@ trait BundleManager
         $bundle_class = 'MatthiasMullie\\Minify\\' . strtoupper($type);
         $minifier = new $bundle_class();
 
-        $prefix = str_replace('/', '-', trim(filter_input(INPUT_SERVER, 'PATH_INFO'), '/'));
+        $path = trim(filter_input(INPUT_SERVER, 'PATH_INFO'), '/');
+        $parts = explode('/', $path);
+        $idx = 0;
+        if (count($parts) > 0) {
+            $path = $parts[$idx];
+            $idx++;
+            if ($parts[0] == 'rest') {
+                $path.= '/' . $parts[$idx];
+                $idx++;
+            }
+        }
+        if (count($parts) > ($idx - 1)) {
+            $path .= '/' . $parts[$idx];
+        }
+        $prefix = str_replace('/', '-', $path);
         $key = strtolower($prefix) . '_' . md5(serialize($files)) . '.' . $type;
 
         if (ENV == 'dev' || !file_exists($bundle_path . $key)) {
