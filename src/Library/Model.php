@@ -223,7 +223,7 @@ abstract class Model
                 $this->data[$key] = $value;
             }
         }
-        
+
         $this->before_insert();
 
         $pdo = $this->db->insert($this->table_name, $this->data);
