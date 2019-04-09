@@ -58,6 +58,31 @@ trait BundleManager
     }
 
     /**
+     * Generate bundle prefix according requested path.
+     *
+     * @return string Prefix
+     */
+    private function get_prefix()
+    {
+        $path = trim(filter_input(INPUT_SERVER, 'PATH_INFO'), '/');
+        $parts = explode('/', $path);
+        $idx = 0;
+        if (count($parts) > 0) {
+            $path = $parts[$idx];
+            $idx++;
+            if ($parts[0] == 'rest') {
+                $path .= '/' . $parts[$idx];
+                $idx++;
+            }
+        }
+        if (count($parts) > $idx) {
+            $path .= '/' . $parts[$idx];
+        }
+
+        return strtolower(str_replace('/', '-', $path));
+    }
+
+    /**
      * Generate bundle file for specified type.
      *
      * @param string $type Bundle type ('js' or 'css')
@@ -80,22 +105,7 @@ trait BundleManager
         $bundle_class = 'MatthiasMullie\\Minify\\' . strtoupper($type);
         $minifier = new $bundle_class();
 
-        $path = trim(filter_input(INPUT_SERVER, 'PATH_INFO'), '/');
-        $parts = explode('/', $path);
-        $idx = 0;
-        if (count($parts) > 0) {
-            $path = $parts[$idx];
-            $idx++;
-            if ($parts[0] == 'rest') {
-                $path .= '/' . $parts[$idx];
-                $idx++;
-            }
-        }
-        if (count($parts) > $idx) {
-            $path .= '/' . $parts[$idx];
-        }
-        $prefix = str_replace('/', '-', $path);
-        $key = strtolower($prefix) . '_' . md5(serialize($files)) . '.' . $type;
+        $key = $this->get_prefix() . '_' . md5(serialize($files)) . '.' . $type;
 
         if (ENV == 'dev' || !file_exists($bundle_path . $key)) {
             foreach ($this->$bundle_name as $file) {
