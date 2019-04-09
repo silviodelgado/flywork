@@ -91,7 +91,7 @@ trait BundleManager
                 $idx++;
             }
         }
-        if (count($parts) > ($idx - 1)) {
+        if (count($parts) > $idx) {
             $path .= '/' . $parts[$idx];
         }
         $prefix = str_replace('/', '-', $path);
