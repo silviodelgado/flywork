@@ -22,6 +22,8 @@ abstract class Model
     protected $columns_readonly = [];
     protected $join_columns = [];
 
+    protected $data = [];
+
     /**
      * Contains the number of rows in result set.
      *
@@ -215,15 +217,16 @@ abstract class Model
      */
     public function insert(array $params, array $filters = [])
     {
-        $this->before_insert();
-
-        $data = $filters;
+        $this->data = $filters;
         foreach ($params as $key => $value) {
             if (in_array($key, $this->columns) && !in_array($key, $this->columns_readonly)) {
-                $data[$key] = $value;
+                $this->data[$key] = $value;
             }
         }
-        $pdo = $this->db->insert($this->table_name, $data);
+        
+        $this->before_insert();
+
+        $pdo = $this->db->insert($this->table_name, $this->data);
         $this->num_rows = $pdo->rowCount();
         $this->success = !empty($pdo);
         $this->last_id = $this->db->id();
@@ -254,18 +257,18 @@ abstract class Model
             return $this;
         }
 
-        $this->before_update();
-
         $where = array_merge($filters, $this->get_default_where_pk());
 
-        $data = [];
+        $this->data = [];
         foreach ($params as $key => $value) {
             if (in_array($key, $this->columns) && !in_array($key, $this->columns_readonly)) {
-                $data[$key] = $value;
+                $this->data[$key] = $value;
             }
         }
 
-        $pdo = $this->db->update($this->table_name, $data, $where);
+        $this->before_update();
+
+        $pdo = $this->db->update($this->table_name, $this->data, $where);
         $this->num_rows = $pdo->rowCount();
         $this->success = !empty($pdo);
 
