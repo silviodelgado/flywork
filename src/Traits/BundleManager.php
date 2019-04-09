@@ -87,7 +87,7 @@ trait BundleManager
             $path = $parts[$idx];
             $idx++;
             if ($parts[0] == 'rest') {
-                $path.= '/' . $parts[$idx];
+                $path .= '/' . $parts[$idx];
                 $idx++;
             }
         }
