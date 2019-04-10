@@ -38,9 +38,11 @@ abstract class Controller
     /**
      * Default constructor.
      */
-    public function __construct()
+    public function __construct(array $options = [])
     {
         self::$instance = &$this;
+
+        $this->_init($options);
 
         $this->prepare_controller();
     }
@@ -76,7 +78,7 @@ abstract class Controller
      *
      * @return void
      */
-    public function _init(array $options)
+    private function _init(array $options)
     {
         if (!empty($options['db_settings'])) {
             $this->db = new \Medoo\Medoo($options['db_settings']);
@@ -90,16 +92,7 @@ abstract class Controller
         if (!empty($options['mailer_settings'])) {
             $this->mailer_settings = $options['mailer_settings'];
         }
-
-        $this->_start();
     }
-
-    /**
-     * Executes routines after Controller initialization.
-     *
-     * @return void
-     */
-    abstract public function _start();
 
     /**
      * Obtains all input vars sent in request.

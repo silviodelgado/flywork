@@ -189,8 +189,7 @@ final class Kernel
             throw new \BadMethodCallException($controller_name);
         }
 
-        $controller = new $controller_name();
-        $controller->_init($options);
+        $controller = new $controller_name($options);
 
         $this->validate_route_parts($controller);
 

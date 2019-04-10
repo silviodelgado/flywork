@@ -16,11 +16,11 @@ abstract class RestController extends Controller
     /**
      * Default constructor.
      */
-    public function __construct()
+    public function __construct(array $options = [])
     {
         header('Content-type:application/json;charset=utf-8');
 
-        parent::__construct();
+        parent::__construct($options);
     }
 
     protected function handle_not_authenticated()
