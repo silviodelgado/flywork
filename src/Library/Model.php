@@ -126,6 +126,8 @@ abstract class Model
     /**
      * Returns an empty result set.
      *
+     * @param array $extra Extra parameters to overwrite columns default value.
+     *
      * @return array
      */
     public function getEmpty(array $extra = [])
@@ -137,7 +139,7 @@ abstract class Model
         foreach ($this->join_columns as $col) {
             $columns[$col] = null;
         }
-        foreach($extra as $key => $value) {
+        foreach ($extra as $key => $value) {
             $columns[$key] = $value;
         }
 
