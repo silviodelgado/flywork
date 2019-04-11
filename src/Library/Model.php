@@ -128,7 +128,7 @@ abstract class Model
      *
      * @return array
      */
-    public function getEmpty()
+    public function getEmpty(array $extra = [])
     {
         $columns = [];
         foreach ($this->columns as $col) {
@@ -136,6 +136,9 @@ abstract class Model
         }
         foreach ($this->join_columns as $col) {
             $columns[$col] = null;
+        }
+        foreach($extra as $key => $value) {
+            $columns[$key] = $value;
         }
 
         return $columns;
