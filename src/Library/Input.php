@@ -14,11 +14,11 @@ namespace Interart\Flywork\Library;
 final class Input
 {
     private $date_patterns = [
-        'Y-m'         => '/^([0-9]{4})-(0[1-9]|1[0-2])$/',
+        'Y-m'           => '/^([0-9]{4})-(0[1-9]|1[0-2])$/',
         'Y-m-d'         => '/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/',
         'Y-m-d H:i'     => '/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]})\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/',
         'Y-m-d H:i:s'   => '/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/',
-        'm/Y'         => '/^(0[1-9]|1[0-2])\/([0-9]{4})$/',
+        'm/Y'           => '/^(0[1-9]|1[0-2])\/([0-9]{4})$/',
         'd/m/Y'         => '/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/([0-9]{4})$/',
         'd/m/Y H:i'     => '/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/([0-9]{4})\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/',
         'd/m/Y H:i:s'   => '/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/([0-9]{4})\s(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/',
@@ -136,6 +136,19 @@ final class Input
     public function getDatetime(string $field_name, string $input_format = '')
     {
         return $this->field_datetime(INPUT_GET, $field_name, $input_format, 'Y-m-d H:i:s');
+    }
+
+    /**
+     * Get the field $field_name content as a date string with first day of month.
+     *
+     * @param string $field_name Field name
+     * @param string $input_format Which format of the field value
+     *
+     * @return string (Format: Y-m-01)
+     */
+    public function getCompetency(string $field_name, string $input_format = '')
+    {
+        return $this->field_datetime(INPUT_GET, $field_name, $input_format, 'Y-m-01');
     }
 
     /**
@@ -265,6 +278,19 @@ final class Input
     public function postDatetime(string $field_name, string $input_format = '')
     {
         return $this->field_datetime(INPUT_POST, $field_name, $input_format, 'Y-m-d H:i:s');
+    }
+
+    /**
+     * Get the field $field_name content as a date string with first day of month.
+     *
+     * @param string $field_name Field name
+     * @param string $input_format Which format of the field value
+     *
+     * @return string (Format: Y-m-01)
+     */
+    public function postCompetency(string $field_name, string $input_format = '')
+    {
+        return $this->field_datetime(INPUT_POST, $field_name, $input_format, 'Y-m-01');
     }
 
     /**
