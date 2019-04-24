@@ -18,7 +18,7 @@ trait BundleManager
     private function check_type(string $type)
     {
         if (!in_array($type, ['js', 'css'])) {
-            throw new InvalidArgumentException('Type mismatch [js, css]');
+            throw new \InvalidArgumentException('Type mismatch [js, css]');
         }
     }
 

@@ -322,10 +322,10 @@ final class Input
     private function field(int $type, string $field_name, int $filter = FILTER_DEFAULT)
     {
         if (!in_array($type, [INPUT_GET, INPUT_POST])) {
-            throw new InvalidArgumentException('Invalid field type.');
+            throw new \InvalidArgumentException('Invalid field type.');
         }
         if (empty($field_name)) {
-            throw new InvalidArgumentException('Field name should not be empty or null');
+            throw new \InvalidArgumentException('Field name should not be empty or null');
         }
 
         return $this->clear_input($type, $field_name, null, $filter);
