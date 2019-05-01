@@ -134,6 +134,10 @@ abstract class Model
     {
         $columns = [];
         foreach ($this->columns as $col) {
+            if (in_array($col, ['created_at', 'updated_at', 'deleted_at', 'deleted'])) {
+                continue;
+            }
+
             $columns[$col] = null;
         }
         foreach ($this->join_columns as $col) {
