@@ -43,7 +43,7 @@ final class Security
 
     public function encryptPassword(string $plainPassword)
     {
-        return password_hash($plainPassword, PASSWORD_DEFAULT);
+        return password_hash($plainPassword, $this->password_algorithm);
     }
 
     public function encrypt($plain)
