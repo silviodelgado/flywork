@@ -2,9 +2,9 @@
 
 namespace Interart\Flywork\Library;
 
+use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Psr\Log\AbstractLogger;
 
 /**
  * Log Management class.
