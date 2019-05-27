@@ -4,6 +4,7 @@ namespace Interart\Flywork\Library;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Psr\Log\AbstractLogger;
 
 /**
  * Log Management class.
@@ -13,7 +14,7 @@ use Psr\Log\LogLevel;
  *
  * @version     1.2
  */
-final class Logger implements LoggerInterface
+final class Logger extends AbstractLogger implements LoggerInterface
 {
     const STORAGE_TYPE_FILE = 1;
     const STORAGE_TYPE_DB = 2;
@@ -221,109 +222,5 @@ final class Logger implements LoggerInterface
                 $this->saveToDb($level, $content, $context);
                 break;
         }
-    }
-
-    /**
-     * Save log to emergency level.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function emergency($message, array $context = [])
-    {
-        $this->log(LogLevel::EMERGENCY, $message, $context);
-    }
-
-    /**
-     * Save log to alert level.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function alert($message, array $context = [])
-    {
-        $this->log(LogLevel::ALERT, $message, $context);
-    }
-
-    /**
-     * Save log to critical level.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function critical($message, array $context = [])
-    {
-        $this->log(LogLevel::CRITICAL, $message, $context);
-    }
-
-    /**
-     * Save log to error level.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function error($message, array $context = [])
-    {
-        $this->log(LogLevel::ERROR, $message, $context);
-    }
-
-    /**
-     * Save log to warning level.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function warning($message, array $context = [])
-    {
-        $this->log(LogLevel::WARNING, $message, $context);
-    }
-
-    /**
-     * Save log to notice level.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function notice($message, array $context = [])
-    {
-        $this->log(LogLevel::NOTICE, $message, $context);
-    }
-
-    /**
-     * Save log to debug level.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function debug($message, array $context = [])
-    {
-        $this->log(LogLevel::DEBUG, $message, $context);
-    }
-
-    /**
-     * Save log to info level.
-     *
-     * @param string $message
-     * @param array $context
-     *
-     * @return void
-     */
-    public function info($message, array $context = [])
-    {
-        $this->log(LogLevel::INFO, $message, $context);
     }
 }
