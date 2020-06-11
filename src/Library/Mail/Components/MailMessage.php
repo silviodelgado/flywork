@@ -71,7 +71,7 @@ final class MailMessage
      *
      * @return bool
      */
-    public function isHtml() : bool
+    public function isHtml(): bool
     {
         return $this->is_html;
     }
