@@ -92,16 +92,14 @@ final class Logger extends AbstractLogger implements LoggerInterface
     private function createDsn(string $dbType, string $dbHost, string $dbName, string $charset = 'utf-8')
     {
         switch ($dbType) {
-            case 'mysql': // mysql
-            case 'pgsql': // postgresql
-
-                return "{$dbType}:dbname={$dbName};host={$dbHost}";
-            case 'sqlsrv': // ms sql server
-
-                return "sqlsrv:Server={$dbHost};Database={$dbName}";
-            case 'oci': // oracle
-                
-                return "oci:dbname={$dbHost}/{$dbName};charset={$charset}";
+            // mysql
+            case 'mysql':
+            // postgresql
+            case 'pgsql':return "{$dbType}:dbname={$dbName};host={$dbHost}";
+            // ms sql server
+            case 'sqlsrv':return "sqlsrv:Server={$dbHost};Database={$dbName}";
+            // oracle
+            case 'oci':return "oci:dbname={$dbHost}/{$dbName};charset={$charset}";
         }
     }
 
