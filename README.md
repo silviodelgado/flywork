@@ -101,7 +101,7 @@ You can use [Paypal (click in this link)](https://www.paypal.com/cgi-bin/webscr?
 
 ## Contributing
 
-If you have any idea how this project can be improved, plese see [Contributing](https://github.com/silviodelgado/flywork/blob/master/CONTRIBUTING.md) section to get details. Thank you. :)
+If you have any idea how this project can be improved, please see [Contributing](https://github.com/silviodelgado/flywork/blob/master/CONTRIBUTING.md) section to get details. Thank you. :)
 
 ## Roadmap
 
