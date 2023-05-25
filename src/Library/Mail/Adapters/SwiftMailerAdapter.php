@@ -22,12 +22,12 @@ class SwiftMailerAdapter extends MailAdapter implements IMailAdapter
         parent::__construct($options);
     }
 
-    
     protected function parse_options()
     {
         $transport = new Swift_SmtpTransport(
             $this->mail_server_config->getHost(),
-            $this->mail_server_config->getPort());
+            $this->mail_server_config->getPort()
+        );
         $transport->setUsername($this->mail_server_config->getUsername());
         $transport->setPassword($this->mail_server_config->getPassword());
 
@@ -47,7 +47,7 @@ class SwiftMailerAdapter extends MailAdapter implements IMailAdapter
 
         $this->parse_attachments();
     }
-    
+
     protected function validate()
     {
         // TODO: implement email validation
