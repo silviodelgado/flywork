@@ -7,4 +7,4 @@ disabled:
     - concat_without_spaces
     - phpdoc_align
     - phpdoc_indent
-    - phpdoc_to_comment
+#    - phpdoc_to_comment
