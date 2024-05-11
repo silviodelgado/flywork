@@ -145,7 +145,7 @@ final class Kernel
             }
             $this->controller_name .= '\\' . str_replace('-', '_', ucfirst(array_shift($this->route_parts)));
         }
-        $this->action_name = str_replace('-', '_', (count($this->route_parts) ? array_shift($this->route_parts) : $this->default_route['action']));
+        $this->action_name = str_replace('-', '_', count($this->route_parts) ? array_shift($this->route_parts) : $this->default_route['action']);
 
         //$this->action_name = (($this->method != 'GET') ? strtolower($this->method) . '_' : '') . $this->action_name;
     }

@@ -73,7 +73,7 @@ final class Session
         }
 
         $this->domain == $this->domain ?? filter_input(INPUT_SERVER, 'HTTP_HOST');
-        session_set_cookie_params($this->expire, '/', $this->domain, (filter_input(INPUT_SERVER, 'HTTPS') == 'on'));
+        session_set_cookie_params($this->expire, '/', $this->domain, filter_input(INPUT_SERVER, 'HTTPS') == 'on');
     }
 
     private function start_session()

@@ -94,11 +94,11 @@ final class Logger extends AbstractLogger implements LoggerInterface
         switch ($dbType) {
             // mysql
             case 'mysql':
-            // postgresql
+                // postgresql
             case 'pgsql':return "{$dbType}:dbname={$dbName};host={$dbHost}";
-            // ms sql server
+                // ms sql server
             case 'sqlsrv':return "sqlsrv:Server={$dbHost};Database={$dbName}";
-            // oracle
+                // oracle
             case 'oci':return "oci:dbname={$dbHost}/{$dbName};charset={$charset}";
         }
     }
