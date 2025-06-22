@@ -2,8 +2,6 @@
 
 namespace Interart\Flywork\Controllers;
 
-use Interart\Flywork\Traits\AutoProperty;
-
 /**
  * Main controller class.
  * All application controllers should be inherited from this class.
@@ -193,11 +191,11 @@ abstract class Controller
 
     /**
      * Native template engine with layout file.
-     * 
+     *
      * @param string $file_view Relative path to template file
      * @param array $view_bag Array with values to be rendered
      * @param bool $return_as_result Specifies if the return should be rendered or returned as string
-     * 
+     *
      * @return mixed If $return_as_result is true, returns rendered view as string, otherwise, renders HTML
      */
     protected function render($view_file, array $view_bag = [], bool $return_as_result = false)
