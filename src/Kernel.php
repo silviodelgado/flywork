@@ -161,7 +161,7 @@ final class Kernel
             $controller_parts = explode('_', $this->controller_name);
             $controller_name = implode('', array_map(function ($elem) { return ucfirst($elem); }, $controller_parts));
             $controller_pathname = $namespace . $controller_name;
-            
+
             if (!class_exists($controller_pathname)) {
                 // throws Error if class not found
                 throw new \BadMethodCallException($controller_pathname);
@@ -203,9 +203,9 @@ final class Kernel
             'db_settings'     => $this->db_settings,
             'mailer_settings' => $this->mailer_settings,
         ];
-        
+
         $this->validate_route_controller('\\App\\Controllers\\');
-        
+
         $controller_name = '\\App\\Controllers\\' . $this->controller_name;
 
         $controller = new $controller_name($options);
