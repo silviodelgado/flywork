@@ -160,7 +160,7 @@ abstract class Controller
      *
      * @return mixed If $return_as_result is true, returns rendered view as string, otherwise, renders HTML
      */
-    protected function view(array $view_bag = [], string $file_view = '', bool $return_as_result = false)
+    protected function view(string $file_view = '', array $view_bag = [], bool $return_as_result = false)
     {
         if (empty($file_view)) {
             $file_view = debug_backtrace()[1]['function'];
