@@ -19,7 +19,7 @@ final class Security
         'iv'     => '58077f401138b82f',
     ];
 
-    public function __construct(string $cipherAlgorithm = 'AES-256-CBC', string $cipherKey = '', string $cipherIv = '', int $passwordAlgorithm = PASSWORD_DEFAULT)
+    public function __construct(string $cipherAlgorithm = 'AES-256-CBC', string $cipherKey = '', string $cipherIv = '', $passwordAlgorithm = PASSWORD_DEFAULT)
     {
         if (!empty($cipherAlgorithm)) {
             $this->security_config['cipher'] = $cipherAlgorithm;
