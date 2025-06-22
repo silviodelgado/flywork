@@ -29,7 +29,7 @@ final class Logger extends AbstractLogger implements LoggerInterface
      *
      * @param int $storageType Class static constants
      */
-    public function __construct(int $storageType = self::STORAGE_TYPE_FILE, \PDO $pdo = null)
+    public function __construct(int $storageType = self::STORAGE_TYPE_FILE, ?\PDO $pdo = null)
     {
         if (!in_array($storageType, [self::STORAGE_TYPE_FILE, self::STORAGE_TYPE_DB])) {
             throw new \InvalidArgumentException('Unknown storage type');
