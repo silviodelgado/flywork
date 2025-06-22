@@ -151,6 +151,27 @@ final class Kernel
     }
 
     /**
+     * Validate if request Controller is valid.
+     */
+    private function validate_route_controller(string $namespace)
+    {
+        $controller_name = $this->controller_name;
+        $controller_pathname = $namespace . $controller_name;
+        if (!class_exists($controller_pathname)) {
+            $controller_parts = explode('_', $this->controller_name);
+            $controller_name = implode('', array_map(function ($elem) { return ucfirst($elem); }, $controller_parts));
+            $controller_pathname = $namespace . $controller_name;
+            
+            if (!class_exists($controller_pathname)) {
+                // throws Error if class not found
+                throw new \BadMethodCallException($controller_pathname);
+            }
+
+            $this->controller_name = $controller_name;
+        }
+    }
+
+    /**
      * Validate if request Controller and Action are valid.
      *
      * @param Controller $controller_obj Instance of Controller class (or derived from it)
@@ -182,12 +203,10 @@ final class Kernel
             'db_settings'     => $this->db_settings,
             'mailer_settings' => $this->mailer_settings,
         ];
-
+        
+        $this->validate_route_controller('\\App\\Controllers\\');
+        
         $controller_name = '\\App\\Controllers\\' . $this->controller_name;
-        // throws Error if class not found
-        if (!class_exists($controller_name)) {
-            throw new \BadMethodCallException($controller_name);
-        }
 
         $controller = new $controller_name($options);
 
