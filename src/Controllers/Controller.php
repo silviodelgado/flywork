@@ -40,6 +40,10 @@ abstract class Controller
      */
     public function __construct(array $options = [])
     {
+        if (!defined('ROOTPATH')) {
+            throw new \Exception("Required var 'ROOTPATH' not defined.");
+        }
+
         self::$instance = &$this;
 
         $this->_init($options);
@@ -47,6 +51,10 @@ abstract class Controller
         $this->prepare_controller();
     }
 
+    /**
+     * Check if need authentication and user is logged.
+     * Check if admin level is required and user is admin.
+     */
     protected function prepare_controller()
     {
         if ($this->need_auth && !$this->is_logged) {
@@ -154,8 +162,8 @@ abstract class Controller
     /**
      * Native template engine.
      *
-     * @param array $view_bag Array with values to be rendered
      * @param string $file_view Relative path to template file
+     * @param array $view_bag Array with values to be rendered
      * @param bool $return_as_result Specifies if the return should be rendered or returned as string
      *
      * @return mixed If $return_as_result is true, returns rendered view as string, otherwise, renders HTML
@@ -178,6 +186,45 @@ abstract class Controller
 
         $file_view = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $file_view . '.php';
         require $file_view;
+
+        if ($return_as_result) {
+            return ob_get_clean();
+        }
+    }
+
+    /**
+     * Native template engine with layout file.
+     * 
+     * @param string $file_view Relative path to template file
+     * @param array $view_bag Array with values to be rendered
+     * @param bool $return_as_result Specifies if the return should be rendered or returned as string
+     * 
+     * @return mixed If $return_as_result is true, returns rendered view as string, otherwise, renders HTML
+     */
+    protected function render($view_file, array $view_bag = [], bool $return_as_result = false)
+    {
+        ob_start();
+        $_ctrl = $this;
+        if (!empty($view_bag)) {
+            extract($view_bag);
+        }
+        $file_view = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $view_file . '.php';
+        require $file_view;
+        $bodyContents = ob_get_clean();
+
+        if ($return_as_result) {
+            ob_start();
+        }
+
+        $layout = $layout ?? 'layout';
+        $layout_file = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $layout . '.php';
+        if (!file_exists($layout_file)) {
+            $layout_file = str_replace($layout, 'Shared' . DIRECTORY_SEPARATOR . $layout, $layout_file);
+            if (!file_exists($layout_file)) {
+                throw new \Exception("Layout '$layout' not found.");
+            }
+        }
+        require $layout_file;
 
         if ($return_as_result) {
             return ob_get_clean();
