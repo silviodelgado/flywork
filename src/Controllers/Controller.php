@@ -213,15 +213,17 @@ abstract class Controller
             ob_start();
         }
 
-        $layout = $layout ?? 'layout';
-        $layout_file = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $layout . '.php';
-        if (!file_exists($layout_file)) {
-            $layout_file = str_replace($layout, 'Shared' . DIRECTORY_SEPARATOR . $layout, $layout_file);
+        if (!isset($layout) || $layout != null) {
+            $layout = $layout ?? 'layout';
+            $layout_file = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $layout . '.php';
             if (!file_exists($layout_file)) {
-                throw new \Exception("Layout '$layout' not found.");
+                $layout_file = str_replace($layout, 'Shared' . DIRECTORY_SEPARATOR . $layout, $layout_file);
+                if (!file_exists($layout_file)) {
+                    throw new \Exception("Layout '$layout' not found.");
+                }
             }
+            require $layout_file;
         }
-        require $layout_file;
 
         if ($return_as_result) {
             return ob_get_clean();
