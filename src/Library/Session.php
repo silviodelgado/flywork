@@ -1,8 +1,5 @@
 <?php
-
 namespace Interart\Flywork\Library;
-
-use Interart\Flywork\Traits\AutoProperty;
 
 /**
  * Session handling.
@@ -14,8 +11,6 @@ use Interart\Flywork\Traits\AutoProperty;
  */
 final class Session
 {
-    use AutoProperty;
-
     private $data_key = 'sess_data_app';
     private $flash_key = 'sess_data_flash';
     private $session_items;
@@ -51,8 +46,6 @@ final class Session
         $this->start_session();
 
         $this->session_items = &$_SESSION;
-
-        $this->parse_session();
     }
 
     private function parse_expire()
@@ -83,22 +76,6 @@ final class Session
         }
 
         setcookie('PHPSESSID', session_id(), time() + $this->expire);
-    }
-
-    private function parse_session()
-    {
-        if (!isset($this->session_items[$this->data_key])) {
-            $this->session_items[$this->data_key] = [];
-
-            return;
-        }
-
-        foreach ($this->session_items[$this->data_key] as $key => $value) {
-            if (empty($value)) {
-                continue;
-            }
-            $this->$key = $this->encrypted ? $this->security->decrypt($value) : json_decode(json_encode($value));
-        }
     }
 
     /**
@@ -162,6 +139,10 @@ final class Session
             throw new \InvalidArgumentException('Session key should not be empty.');
         }
 
+        if (!array_key_exists($key, $this->session_items[$this->data_key])) {
+            throw new \InvalidArgumentException("Session key '$key' is not initiated.");
+        }
+
         $data = $this->session_items[$this->data_key][$key] ?? null;
 
         if ($this->encrypted && !empty($data)) {
@@ -200,12 +181,7 @@ final class Session
     public function clear(string $key = '')
     {
         if (empty($key)) {
-            foreach ($this->session_items[$this->data_key] as $key => $value) {
-                $this->$key = null;
-                unset($this->$key);
-            }
             $this->session_items = [];
-
             return;
         }
 
@@ -227,9 +203,7 @@ final class Session
 
     private function get_flash(string $key, bool $keepFlash)
     {
-        if (empty($this->session_items[$this->flash_key][$key])) {
-            return;
-        }
+        if (empty($this->session_items[$this->flash_key][$key])) return;
 
         $data = $this->session_items[$this->flash_key][$key];
 
