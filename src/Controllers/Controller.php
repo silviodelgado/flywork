@@ -15,8 +15,6 @@ use Interart\Flywork\Traits\AutoProperty;
  */
 abstract class Controller
 {
-    use AutoProperty;
-
     protected static $instance;
 
     protected $need_auth = false;
@@ -28,6 +26,7 @@ abstract class Controller
 
     protected $session;
     protected $db;
+    protected $input;
     protected $defaul_filter = [];
 
     protected $entity;
