@@ -159,18 +159,18 @@ abstract class Controller
     /**
      * Native template engine.
      *
-     * @param string $file_view Relative path to template file
+     * @param string $view_file Relative path to template file
      * @param array $view_bag Array with values to be rendered
      * @param bool $return_as_result Specifies if the return should be rendered or returned as string
      *
      * @return mixed If $return_as_result is true, returns rendered view as string, otherwise, renders HTML
      */
-    protected function view(string $file_view = '', array $view_bag = [], bool $return_as_result = false)
+    protected function view(string $view_file = '', array $view_bag = [], bool $return_as_result = false)
     {
-        if (empty($file_view)) {
-            $file_view = debug_backtrace()[1]['function'];
+        if (empty($view_file) || $view_file == 'index') {
+            $view_file = debug_backtrace()[1]['function'];
             $parts = explode('\\', debug_backtrace()[1]['class']);
-            $file_view = array_pop($parts) . DIRECTORY_SEPARATOR . $file_view;
+            $view_file = array_pop($parts) . DIRECTORY_SEPARATOR . $view_file;
         }
 
         if ($return_as_result) {
@@ -181,8 +181,8 @@ abstract class Controller
             extract($view_bag);
         }
 
-        $file_view = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $file_view . '.php';
-        require $file_view;
+        $view_file = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $view_file . '.php';
+        require $view_file;
 
         if ($return_as_result) {
             return ob_get_clean();
@@ -192,7 +192,7 @@ abstract class Controller
     /**
      * Native template engine with layout file.
      *
-     * @param string $file_view Relative path to template file
+     * @param string $view_file Relative path to template file
      * @param array $view_bag Array with values to be rendered
      * @param bool $return_as_result Specifies if the return should be rendered or returned as string
      *
@@ -205,8 +205,8 @@ abstract class Controller
         if (!empty($view_bag)) {
             extract($view_bag);
         }
-        $file_view = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $view_file . '.php';
-        require $file_view;
+        $view_file = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $view_file . '.php';
+        require $view_file;
         $bodyContents = ob_get_clean();
 
         if ($return_as_result) {
