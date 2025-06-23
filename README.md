@@ -1,4 +1,4 @@
-<img src="https://www.interart.com/utils/logo-flywork2.png" alt="Flywork">
+<span style="display:block;text-align:center;background-color:white"><img src="https://www.interart.com/utils/logo-flywork2.png" alt="Flywork"></span>
 
 # Flywork
 Lightweight PHP MVC framework
@@ -27,7 +27,7 @@ Lightweight PHP MVC framework
 
 **Flywork** is a lightweight **PHP framework**, using **MVC** pattern, which helps you to quickly create web applications.
 
-You can see a proof of concept project in [Flywork-poc](https://github.com/silviodelgado/flywork-poc) project.
+You can see a proof of concept project in [Flywork-poc](https://github.com/silviodelgado/flywork-poc) project (will be updated soon).
 
 ## Main Features
 
@@ -51,7 +51,7 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
 
 ## Requirements
 
-* PHP 7.3+
+* PHP 8.2+
 * [Composer](https://getcomposer.org/) Dependency Manager
 * [Apache 2.4 Server](https://httpd.apache.org/)
   * ```mod_rewrite``` enabled
@@ -68,6 +68,8 @@ You can see a proof of concept project in [Flywork-poc](https://github.com/silvi
   * [Minify](https://www.minifier.org)
     * Minify assets (CSS and JS) files
   * [PHPMailer](https://phpmailer.github.io/PHPMailer)
+    * Library for send e-mails
+  * [SymfonyMailer](https://symfony.com/packages/Mailer)
     * Library for send e-mails
   * [PSR/Log](https://packagist.org/packages/psr/log)
     * Log management interface
