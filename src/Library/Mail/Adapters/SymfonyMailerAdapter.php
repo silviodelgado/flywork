@@ -16,10 +16,10 @@ class SymfonyMailerAdapter extends MailAdapter implements IMailAdapter
     public function __construct(array $options)
     {
         $this->send_method_name = 'send';
+        
+        parent::__construct($options);
 
         $this->dsn = `smtp://{$this->mail_server_config->getUsername()}:{$this->mail_server_config->getPassword()}@{$this->mail_server_config->getHost()}:{$this->mail_server_config->getPort()}`;
-
-        parent::__construct($options);
     }
 
     private function parse_headers()
