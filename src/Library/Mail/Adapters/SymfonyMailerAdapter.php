@@ -79,7 +79,7 @@ class SymfonyMailerAdapter extends MailAdapter implements IMailAdapter
 
         $this->parse_attachments();
     }
-    
+
     protected function validate()
     {
         // TODO: implement email validation
