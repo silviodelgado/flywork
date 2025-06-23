@@ -22,6 +22,7 @@ abstract class MailAdapter implements IMailAdapter
 {
     protected $mailer;
     protected $send_method_name;
+    protected $send_parameter;
 
     protected $mail_server_config;
     protected $is_smtp = false;
@@ -210,7 +211,7 @@ abstract class MailAdapter implements IMailAdapter
 
         try {
             $send_method = $this->send_method_name;
-            $this->mailer->$send_method();
+            $this->mailer->$send_method($this->send_parameter);
         } catch (\Exception $ex) {
             $this->errors[] = $this->shippingErrors();
         }
