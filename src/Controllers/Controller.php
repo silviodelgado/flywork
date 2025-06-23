@@ -165,8 +165,13 @@ abstract class Controller
      *
      * @return mixed If $return_as_result is true, returns rendered view as string, otherwise, renders HTML
      */
-    protected function view(string $view_file = '', array $view_bag = [], bool $return_as_result = false)
+    protected function view(mixed $view_file = '', array $view_bag = [], bool $return_as_result = false)
     {
+        if (gettype($view_file) == 'array') {
+            $view_bag = $view_file;
+            $view_file = '';
+        }
+
         if (empty($view_file) || $view_file == 'index') {
             $view_file = debug_backtrace()[1]['function'];
             $parts = explode('\\', debug_backtrace()[1]['class']);
