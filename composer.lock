@@ -4,31 +4,33 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "07a2d7828c13adcac4c12072fe5845e8",
+    "content-hash": "00d42722d0a425b78a691a5a22107b0f",
     "packages": [
         {
             "name": "catfan/medoo",
-            "version": "v1.7.10",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/catfan/Medoo.git",
-                "reference": "2d675f73e23f63bbaeb9a8aa33318659a3d3c32f"
+                "reference": "347515fe63339387738c5c1c93d1d6726cc9774a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/catfan/Medoo/zipball/2d675f73e23f63bbaeb9a8aa33318659a3d3c32f",
-                "reference": "2d675f73e23f63bbaeb9a8aa33318659a3d3c32f",
+                "url": "https://api.github.com/repos/catfan/Medoo/zipball/347515fe63339387738c5c1c93d1d6726cc9774a",
+                "reference": "347515fe63339387738c5c1c93d1d6726cc9774a",
                 "shasum": ""
             },
             "require": {
                 "ext-pdo": "*",
-                "php": ">=5.4"
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0"
             },
             "suggest": {
                 "ext-pdo_dblib": "For MSSQL or Sybase database on Linux/UNIX platform",
                 "ext-pdo_mysql": "For MySQL or MariaDB database",
                 "ext-pdo_oci": "For Oracle database",
-                "ext-pdo_oci8": "For Oracle version 8 database",
                 "ext-pdo_pqsql": "For PostgreSQL database",
                 "ext-pdo_sqlite": "For SQLite database",
                 "ext-pdo_sqlsrv": "For MSSQL database on both Window/Liunx platform"
@@ -36,7 +38,7 @@
             "type": "framework",
             "autoload": {
                 "psr-4": {
-                    "Medoo\\": "/src"
+                    "Medoo\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -46,7 +48,7 @@
             "authors": [
                 {
                     "name": "Angel Lai",
-                    "email": "angel@catfan.me"
+                    "email": "angel@medoo.in"
                 }
             ],
             "description": "The lightweight PHP database framework to accelerate development",
@@ -68,20 +70,30 @@
                 "issues": "https://github.com/catfan/Medoo/issues",
                 "source": "https://github.com/catfan/Medoo"
             },
-            "time": "2020-02-11T08:20:42+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/AngelaonLai",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://opencollective.com/medoo",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2025-03-31T07:37:23+00:00"
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.3.66",
+            "version": "1.3.74",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "45fd3b0f1dfa2c965857c6d4a470bea52adc31a6"
+                "reference": "a2593286a4135d03c6a6a9e9aeded5d41e931ce4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/45fd3b0f1dfa2c965857c6d4a470bea52adc31a6",
-                "reference": "45fd3b0f1dfa2c965857c6d4a470bea52adc31a6",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/a2593286a4135d03c6a6a9e9aeded5d41e931ce4",
+                "reference": "a2593286a4135d03c6a6a9e9aeded5d41e931ce4",
                 "shasum": ""
             },
             "require": {
@@ -90,8 +102,8 @@
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.0",
-                "matthiasmullie/scrapbook": "dev-master",
+                "friendsofphp/php-cs-fixer": ">=2.0",
+                "matthiasmullie/scrapbook": ">=1.3",
                 "phpunit/phpunit": ">=4.8"
             },
             "suggest": {
@@ -115,12 +127,12 @@
                 {
                     "name": "Matthias Mullie",
                     "email": "minify@mullie.eu",
-                    "homepage": "http://www.mullie.eu",
+                    "homepage": "https://www.mullie.eu",
                     "role": "Developer"
                 }
             ],
             "description": "CSS & JavaScript minifier, in PHP. Removes whitespace, strips comments, combines files (incl. @import statements and small assets in CSS files), and optimizes/shortens a few common programming patterns.",
-            "homepage": "http://www.minifier.org",
+            "homepage": "https://github.com/matthiasmullie/minify",
             "keywords": [
                 "JS",
                 "css",
@@ -130,23 +142,15 @@
             ],
             "support": {
                 "issues": "https://github.com/matthiasmullie/minify/issues",
-                "source": "https://github.com/matthiasmullie/minify/tree/1.3.66"
+                "source": "https://github.com/matthiasmullie/minify/tree/1.3.74"
             },
             "funding": [
                 {
-                    "url": "https://github.com/[user1",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/matthiasmullie] # Replace with up to 4 GitHub Sponsors-enabled usernames e.g.",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/user2",
+                    "url": "https://github.com/matthiasmullie",
                     "type": "github"
                 }
             ],
-            "time": "2021-01-06T15:18:10+00:00"
+            "time": "2025-06-12T08:06:04+00:00"
         },
         {
             "name": "matthiasmullie/path-converter",
@@ -331,10 +335,10 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
