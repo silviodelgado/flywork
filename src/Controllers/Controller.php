@@ -159,67 +159,46 @@ abstract class Controller
     /**
      * Native template engine.
      *
-     * @param string $view_file Relative path to template file
-     * @param array $view_bag Array with values to be rendered
+     * @param mixed $view_file Relative path to template file
+     * @param mixed $view_bag Array with values to be rendered
      * @param bool $return_as_result Specifies if the return should be rendered or returned as string
      *
      * @return mixed If $return_as_result is true, returns rendered view as string, otherwise, renders HTML
      */
-    protected function view(mixed $view_file = '', array $view_bag = [], bool $return_as_result = false)
+    protected function view(mixed $view_file = '', mixed $view_bag = [], bool $return_as_result = false)
     {
+        if (gettype($view_bag) == 'boolean') {
+            $return_as_result = $view_bag;
+            $view_bag = null;
+        }
         if (gettype($view_file) == 'array') {
             $view_bag = $view_file;
             $view_file = '';
         }
-
         if (empty($view_file) || $view_file == 'index') {
             $view_file = debug_backtrace()[1]['function'];
             $parts = explode('\\', debug_backtrace()[1]['class']);
             $view_file = array_pop($parts) . DIRECTORY_SEPARATOR . $view_file;
+            if (!file_exists(ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $view_file . '.php')) {
+                $view_file = str_replace('_', '-', $view_file);
+            }
         }
 
-        if ($return_as_result) {
-            ob_start();
-        }
-        $_ctrl = $this;
-        if (!empty($view_bag)) {
-            extract($view_bag);
-        }
-
-        $view_file = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $view_file . '.php';
-        require $view_file;
-
-        if ($return_as_result) {
-            return ob_get_clean();
-        }
-    }
-
-    /**
-     * Native template engine with layout file.
-     *
-     * @param string $view_file Relative path to template file
-     * @param array $view_bag Array with values to be rendered
-     * @param bool $return_as_result Specifies if the return should be rendered or returned as string
-     *
-     * @return mixed If $return_as_result is true, returns rendered view as string, otherwise, renders HTML
-     */
-    protected function render($view_file, array $view_bag = [], bool $return_as_result = false)
-    {
         ob_start();
         $_ctrl = $this;
         if (!empty($view_bag)) {
             extract($view_bag);
         }
-        $view_file = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $view_file . '.php';
-        require $view_file;
+        $view_file_path = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $view_file . '.php';
+        require $view_file_path;
         $bodyContents = ob_get_clean();
 
         if ($return_as_result) {
             ob_start();
         }
 
-        if (!isset($layout) || $layout != null) {
-            $layout = $layout ?? 'layout';
+        if (!isset($layout) || $layout !== false) {
+            $layout = $layout ?? 'layout.default';
             $layout_file = ROOTPATH . 'Views' . DIRECTORY_SEPARATOR . $layout . '.php';
             if (!file_exists($layout_file)) {
                 $layout_file = str_replace($layout, 'Shared' . DIRECTORY_SEPARATOR . $layout, $layout_file);
@@ -228,6 +207,8 @@ abstract class Controller
                 }
             }
             require $layout_file;
+        } else {
+            echo $bodyContents;
         }
 
         if ($return_as_result) {
