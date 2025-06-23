@@ -1,4 +1,5 @@
 <?php
+
 namespace Interart\Flywork\Library;
 
 /**
@@ -182,6 +183,7 @@ final class Session
     {
         if (empty($key)) {
             $this->session_items = [];
+            
             return;
         }
 
@@ -203,7 +205,9 @@ final class Session
 
     private function get_flash(string $key, bool $keepFlash)
     {
-        if (empty($this->session_items[$this->flash_key][$key])) return;
+        if (empty($this->session_items[$this->flash_key][$key])) {
+            return;
+        }
 
         $data = $this->session_items[$this->flash_key][$key];
 
