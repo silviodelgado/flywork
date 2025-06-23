@@ -35,15 +35,13 @@ abstract class Controller
     /**
      * Default constructor.
      */
-    public function __construct(array $options = [])
+    public function __construct()
     {
         if (!defined('ROOTPATH')) {
             throw new \Exception("Required var 'ROOTPATH' not defined.");
         }
 
         self::$instance = &$this;
-
-        $this->_init($options);
 
         $this->prepare_controller();
     }
@@ -83,7 +81,7 @@ abstract class Controller
      *
      * @return void
      */
-    private function _init(array $options)
+    public function init(array $options = [])
     {
         if (!empty($options['db_settings'])) {
             $this->db = new \Medoo\Medoo($options['db_settings']);
