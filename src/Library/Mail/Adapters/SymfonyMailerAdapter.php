@@ -22,7 +22,6 @@ class SymfonyMailerAdapter extends MailAdapter implements IMailAdapter
         parent::__construct($options);
     }
 
-    
     private function parse_headers()
     {
         $this->send_parameter->from(new Address($this->sender->getSender()->getEmail(), $this->sender->getSender()->getName()));
