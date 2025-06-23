@@ -49,8 +49,6 @@ class SymfonyMailerAdapter extends MailAdapter implements IMailAdapter
 
     private function parse_body()
     {
-        $this->mailer->isHTML($this->message->isHtml());
-
         $this->send_parameter->html($this->message->getBody());
         $this->send_parameter->text($this->message->getAlternativeBody());
     }
