@@ -24,7 +24,6 @@ abstract class Controller
 
     protected $session;
     protected $db;
-    protected $input;
     protected $defaul_filter = [];
 
     protected $entity;
