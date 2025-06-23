@@ -136,6 +136,10 @@ final class Session
      */
     public function get(string $key, $default = null)
     {
+        if (!array_key_exists($this->data_key, $this->session_items)) {
+            return $default;    
+        }
+
         if (empty($key)) {
             throw new \InvalidArgumentException('Session key should not be empty.');
         }
