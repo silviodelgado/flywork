@@ -183,7 +183,7 @@ final class Session
     {
         if (empty($key)) {
             $this->session_items = [];
-            
+
             return;
         }
 
