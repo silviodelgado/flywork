@@ -18,8 +18,11 @@ class SymfonyMailerAdapter extends MailAdapter implements IMailAdapter
         $this->send_method_name = 'send';
 
         parent::__construct($options);
+    }
 
-        $this->dsn = `smtp://{$this->mail_server_config->getUsername()}:{$this->mail_server_config->getPassword()}@{$this->mail_server_config->getHost()}:{$this->mail_server_config->getPort()}`;
+    private function parse_dsn()
+    {
+        $this->dsn = 'smtp://' . $this->mail_server_config->getUsername() . ':' . $this->mail_server_config->getPassword() . '@' . $this->mail_server_config->getHost() . ':' . $this->mail_server_config->getPort();
     }
 
     private function parse_headers()
@@ -61,6 +64,8 @@ class SymfonyMailerAdapter extends MailAdapter implements IMailAdapter
 
     protected function parse_options()
     {
+        $this->parse_dsn();
+
         $transport = Transport::fromDsn($this->dsn);
 
         $this->mailer = new Mailer($transport);
