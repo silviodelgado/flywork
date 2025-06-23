@@ -51,7 +51,7 @@ class SymfonyMailerAdapter extends MailAdapter implements IMailAdapter
         $this->send_parameter->html($this->message->getBody());
         $this->send_parameter->text($this->message->getAlternativeBody());
     }
-    
+
     private function parse_attachments()
     {
         foreach ($this->attachments as $attach) {
