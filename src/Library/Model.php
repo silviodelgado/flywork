@@ -317,7 +317,7 @@ abstract class Model
         if (in_array('deleted_at', $this->columns)) {
             $data['deleted_at'] = date('Y-m-d H:i:s');
         }
-        
+
         $pdo = $this->db->update($this->table_name, $data, $where);
         $this->num_rows = $pdo->rowCount();
         $this->success = !empty($pdo);
