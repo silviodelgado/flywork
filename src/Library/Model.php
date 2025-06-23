@@ -312,7 +312,7 @@ abstract class Model
 
         $data = [];
         if (in_array('deleted', $this->columns)) {
-            $data['delete'] = true;
+            $data['deleted'] = true;
         }
         if (in_array('deleted_at', $this->columns)) {
             $data['deleted_at'] = date('Y-m-d H:i:s');
