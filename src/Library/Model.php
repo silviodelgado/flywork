@@ -310,10 +310,14 @@ abstract class Model
 
         $where = array_merge($filters, $this->get_default_where_pk());
 
-        $data = [
-            'deleted_at' => date('Y-m-d H:i:s'),
-            'deleted'    => true,
-        ];
+        $data = [];
+        if (in_array('deleted', $this->columns)) {
+            $data['delete'] = true;
+        }
+        if (in_array('deleted_at', $this->columns)) {
+            $data['deleted_at'] = date('Y-m-d H:i:s');
+        }
+        
         $pdo = $this->db->update($this->table_name, $data, $where);
         $this->num_rows = $pdo->rowCount();
         $this->success = !empty($pdo);
