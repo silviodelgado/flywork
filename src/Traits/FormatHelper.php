@@ -37,6 +37,7 @@ trait FormatHelper
         }
 
         $preffixLength = strlen($number) >= 11 ? 5 : 4;
+
         return '(' . substr($number, 0, 2) . ') ' . substr($number, 2, $preffixLength) . '-' . substr($number, 7);
     }
 
