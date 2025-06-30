@@ -6,23 +6,35 @@ trait FormatHelper
 {
     public function formatDateTime(?string $datetime, ?string $format = null, ?string $default = null)
     {
-        if (!$datetime) return $default;
-        if (!$format) $format = 'd/m/Y H:i:s';
-        
+        if (!$datetime) {
+            return $default;
+        }
+
+        if (!$format) {
+            $format = 'd/m/Y H:i:s';
+        }
+
         return date($format, strtotime($datetime));
     }
     
     public function formatDate($date, ?string $format = null, ?string $default = null)
     {
-        if (!$date) return $default;
-        if (!$format) $format = 'd/m/Y';
-        
+        if (!$date) {
+            return $default;
+        }
+
+        if (!$format) {
+            $format = 'd/m/Y';
+        }
+
         return date($format, strtotime($date));
     }
 
-    public function formatPhone($number)
+    public function formatPhone($number, ?string $default = null)
     {
-        if (empty($number)) return;
+        if (empty($number)) {
+            return $default;
+        }
 
         $preffixLength = strlen($number) >= 11 ? 5 : 4;
         return '(' . substr($number, 0, 2) . ') ' . substr($number, 2, $preffixLength) . '-' . substr($number, 7);
