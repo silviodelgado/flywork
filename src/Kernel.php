@@ -53,8 +53,6 @@ final class Kernel
      */
     private function init(array $settings = [])
     {
-        $this->custom_settings = $settings;
-
         $this->request_uri = filter_input(INPUT_SERVER, 'REQUEST_URI');
         $this->request_path = mb_strtolower(trim(explode('?', $this->request_uri)[0], '/'));
         $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
@@ -66,6 +64,8 @@ final class Kernel
         $this->parse_settings_db($settings);
 
         $this->parse_settings_mailer($settings);
+
+        $this->parse_settings_custom_settings($settings);
     }
 
     private function parse_settings_default_route(array $settings = [])
@@ -101,6 +101,13 @@ final class Kernel
     {
         if (!empty($settings['mailer_settings'])) {
             $this->mailer_settings = $settings['mailer_settings'];
+        }
+    }
+
+    private function parse_settings_custom_settings(array $settings = [])
+    {
+        if (!empty($settings['custom_settings'])) {
+            $this->custom_settings = $settings['custom_settings'];
         }
     }
 
