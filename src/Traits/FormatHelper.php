@@ -16,7 +16,7 @@ trait FormatHelper
 
         return date($format, strtotime($datetime));
     }
-    
+
     public function formatDate($date, ?string $format = null, ?string $default = null)
     {
         if (!$date) {
