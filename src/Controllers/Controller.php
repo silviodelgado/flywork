@@ -30,6 +30,7 @@ abstract class Controller
     protected $entity_name;
 
     protected $mailer_settings;
+    protected $custom_settings;
 
     /**
      * Default constructor.
