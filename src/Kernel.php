@@ -25,6 +25,7 @@ final class Kernel
     ];
     private $db_settings = [];
     private $mailer_settings = [];
+    private $custom_settings = [];
 
     private $request_uri;
     private $request_path;
@@ -52,6 +53,8 @@ final class Kernel
      */
     private function init(array $settings = [])
     {
+        $this->custom_settings = $settings;
+
         $this->request_uri = filter_input(INPUT_SERVER, 'REQUEST_URI');
         $this->request_path = mb_strtolower(trim(explode('?', $this->request_uri)[0], '/'));
         $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
@@ -203,6 +206,9 @@ final class Kernel
             'db_settings'     => $this->db_settings,
             'mailer_settings' => $this->mailer_settings,
         ];
+        if (!empty($this->custom_settings)) {
+            $options['custom_settings'] = $this->custom_settings;
+        }
 
         $this->validate_route_controller('\\App\\Controllers\\');
 
