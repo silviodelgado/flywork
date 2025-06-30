@@ -95,6 +95,10 @@ abstract class Controller
         if (!empty($options['mailer_settings'])) {
             $this->mailer_settings = $options['mailer_settings'];
         }
+
+        if (!empty($options['custom_settings'])) {
+            $this->custom_settings = $options['custom_settings'];
+        }
     }
 
     /**
